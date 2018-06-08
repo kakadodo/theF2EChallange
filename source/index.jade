@@ -1,0 +1,30 @@
+extends ./partials/layout.jade
+
+block pageTitle
+	title The F2E Challenge - 前端修練精神時光屋挑戰作品集
+
+block css
+	link(rel="stylesheet", href="./css/index.css")
+
+block content
+	.jumbotron.jumbotron-fluid.KV_banner
+		.container
+			img.img-fluid(src="./img/the_F2E_KV.jpg")
+		.KV_decoration
+	.card-columns.card_wrapper
+		.card
+			img.card-img-top(src='./img/week1.jpg', alt='Week 1 - todolist image')
+			.card-body
+				h5.card-title Week 1 - todolist
+				p.card-text
+					| Skill Point:   
+					span.badge.badge-warning.mr-1 #Pug
+					span.badge.badge-warning.mr-1 #jQuery
+					span.badge.badge-warning.mr-1 #localStorage
+			.card-footer
+				small.text-muted 2018/6/8
+			.card_cover
+				a(href="./todolist.html")
+					button.btn.btn-outline-light.btn-lg Checkout
+	footer
+		| Created by Chelsea Chang

@@ -1,0 +1,62 @@
+extends ./partials/layout.jade
+
+block pageTitle
+	title Week 1 - todolist
+
+block css
+	link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	link(rel="stylesheet", href="./css/todolist.css")
+
+block content
+	header
+		ul.container.nav
+			li.nav_list.active(data-mode="all") My Tasks
+			li.nav_list(data-mode="progress") In Progress
+			li.nav_list(data-mode="completed") Completed
+	.container
+		.addTask_area
+			input.addTask_input(type="text", placeholder="+ Add Task")
+			.task_panel.d_none
+				.task_panel_top
+					.d_flex
+						input.completed_check(type="checkbox", name="completed_check", disabled)
+						input.title_input(type="text", placeholder="Type Something Here...", name="title_input",)
+						input.star_check(type="checkbox", name="star_check", disabled)
+						a.edit_btn.active(href="#")
+							i.fas.fa-pencil-alt
+				.task_panel_bottom
+					.form_group
+						h4
+							i.far.fa-calendar-alt
+							| Deadline
+						input.ml-1(type="date", placeholder="yyyy/mm/dd", name="task_date")
+						input(type="time", placeholder="hh:mm", style="margin-left:5px", name="task_time")
+					.form_group
+						h4
+							i.far.fa-file
+							| File
+						.d_flex
+							.file_info.ml-1.d_none
+								p.name
+								p.upload
+							label.file_btn.ml-1(for="task_file")
+								input(id="task_file", type="file", name="task_file", hidden)
+					.form_group
+						h4
+							i.far.fa-comment-dots
+							| Comment
+						textarea.ml-1(name="task_comment", rows="6", placeholder="Type Your Memo Here...")
+					.button_group
+						button#js_cancelAddTask.btn_cancel X Cancel
+						button#js_addTask.btn_primary + Add Task
+		.task_lists
+		h3.task_left_info
+	footer
+		i.fas.fa-pen-square
+		span  code writting by Chelsea Chang
+
+
+block script
+	script(src="./js/jquery.min.js")
+	script(src="./js/jquery-ui-sortable.min.js")
+	script(src="./js/todolist.js")

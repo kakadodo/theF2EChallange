@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
+// variables
+$color_brand: #4A90E2;
+$color_lightGray:#C8C8C8;
+$color_danger:#D0021B;
+
+@mixin font_awesome($unicode, $weight){
+  content: $unicode;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: $weight;
+}
+
+@mixin font_size_weight($size, $weight){
+  font-size: $size;
+  font-weight: $weight;
+}
+
+@mixin absolute_center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+//global reset
+*{
+  box-sizing: border-box;
+}
+
+html,body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', 'Microsoft JhengHei', serif;
+}
+
+body{
+  background-color: #E1E1E1;
+}
+
+ul, li{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+input,textarea{
+  font-family: 'Roboto', 'Microsoft JhengHei', serif;
+}
+
+.d_flex{
+  display: flex;
+}
+
+.d_none{
+  display: none;
+}
+
+.ml-1{
+  margin-left: 1.2rem;
+}
+
+.container{
+  margin: 0 auto;
+  width: 768px;
+}
+
+//header--------------------------------------------------------
+header{
+  background-color: $color_brand;
+}
+
+.nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .nav_list{
+    padding: 15px 50px;
+    @include font_size_weight(24px, 500);
+    border-bottom: 5px solid transparent;
+    letter-spacing: 1px;
+    color: #00408B;
+    cursor: pointer;
+    &.active{
+      color: #fff;
+      border-color: #00408B;
+    }
+  }
+}
+
+//task lists-------------------------------------------------------
+.addTask_area{
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .addTask_input{
+    width: 100%;
+    padding: 15px;
+    font-size: 24px;
+    border-radius: 5px;
+    border: 2px solid $color_lightGray;
+    outline: none;
+  }
+}
+.task_panel{
+  width: 100%;
+  background: #F2F2F2;
+  box-shadow: 0 4px 4px 0 #C8C8C8;
+  border-radius: 5px;
+  &.star{
+    .task_panel_top{
+      background-color: #FFF2DC;
+      border-radius: 5px;
+      &:before{
+        content:'';
+      }
+    }
+  }
+  &.completed{
+    .title_input{
+      text-decoration: line-through;
+    }
+  }
+  .task_panel_top{
+    padding: 15px;
+    background: #F2F2F2;
+    .d_flex{
+      align-items: center;
+    }
+    .completed_check, .star_check{
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .completed_check{
+      position: relative;
+      background-color: #fff;
+      border-radius: 2px;
+      margin-right: 15px;
+      &.checked{
+        background-color: $color_brand;
+        &:after{
+          @include absolute_center;
+          @include font_awesome('\f00c', 900);
+          color: #fff;
+        }
+      }
+    }
+    .star_check{
+      position: relative;
+      margin-left: auto;
+      &:after{
+        @include absolute_center;
+        @include font_awesome('\f005', 400);
+        font-size: 20px;
+      }
+      &.checked:after{
+        @include font_awesome('\f005', 900);
+        color: #F5A623;
+      }
+    }
+    .title_input{
+      width: 80%;
+      background-color: transparent;
+      border: none;
+      color: #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      outline: none;
+      @include font_size_weight(24px, 500);
+    }
+    .edit_btn{
+      margin-left: 15px;
+      font-size: 20px;
+      color: #000;
+      &.active, &:hover{
+        color: $color_brand;
+      }
+    }
+    .task_icons{
+      margin-top: 10px;
+      margin-left: 40px;
+      color: #757575;
+    }
+  }
+  .task_panel_bottom{
+    position: relative;
+    padding: 10px 55px;
+    padding-bottom: 80px;
+    border-top: 2px solid $color_lightGray;
+    .form_group{
+      h4{
+        margin: 15px 0 5px 0;
+        font-weight: 500;
+        letter-spacing: 1px;
+      }
+      i{
+        margin-right: 5px;
+      }
+      input, textarea{
+        border: none;
+        padding: 8px;
+        font-size: 16px;
+      }
+      textarea{
+        width: 90%;
+      }
+    }
+    .d_flex{
+      align-items: center;
+    }
+    .file_info{
+      p{
+        margin: 5px 0;
+      }
+      .upload{
+        color: #757575;
+      }
+    }
+    .file_btn{
+      position: relative;
+      display: block;
+      width: 30px;
+      height: 30px;
+      background-color: $color_lightGray;
+      cursor: pointer;
+      transition: .5s;
+      &:hover{
+        background-color: $color_brand;
+      }
+      &:after{
+        @include absolute_center;
+        @include font_awesome('\f067', 900);
+        color: #fff;
+      }
+    }
+    .button_group{
+      position: absolute;
+      display: flex;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+    .btn_cancel, .btn_primary{
+      width: 50%;
+      padding: 15px 0;
+      border: 0;
+      text-align: center;
+      font-size: 24px;
+      cursor: pointer;
+      transition: .5s;
+    }
+    .btn_cancel{
+      border-bottom-left-radius: 5px;
+      background-color: #fff;
+      color: $color_danger;
+      &:hover{
+        background-color: darken(#fff, 10%);
+      }
+    }
+    .btn_primary{
+      border-bottom-right-radius: 5px;
+      background-color: $color_brand;
+      color: #fff;
+      &:hover{
+        background-color: darken($color_brand, 10%);
+      }
+    }
+  }
+}
+
+.task_lists{
+  margin-top: 24px;
+  .task_panel{
+    position: relative;
+    margin-top: 10px;
+    &:hover{
+      .delete_btn{
+        transform: translate(30px, -50%);
+      }
+    }
+  }
+  .delete_btn{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    transition: transform .5s;
+    color: #fff;
+    background-color: $color_danger;
+  }
+  .task_panel_top{
+    position: relative;
+    &:before{
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      @include font_awesome('\f142', 900);
+      cursor: move;
+      color: #D8D8D8;
+    }
+  }
+}
+
+.task_left_info{
+  margin-top: 10px;
+  padding-left: 15px;
+  @include font_size_weight(24px, 400);
+  color: #C8C8C8;
+  font-style: italic;
+}
+
+//footer----------------------------------------------------
+footer{
+  width: 100%;
+  bottom: 10px;
+  left: 0;
+  text-align: center;
+  color: $color_lightGray;
+  letter-spacing: 1px;
+}
+
+//media query for mobile-------------------------------------------
+@media (max-width:768px){
+  .container{
+    width: 80%;
+  }
+  .nav{
+    align-items: stretch;
+    .nav_list{
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      @include font_size_weight(18px, 500);
+    }
+  }
+  .task_panel{
+    .task_panel_bottom{
+      padding: 10px 20px 70px 20px;
+      .form_group input[name="task_time"]{
+        margin-left: 1.2rem !important;
+        margin-top: 5px;
+      }
+      .btn_cancel, .btn_primary{
+        font-size: 18px;
+      }
+    }
+  }
+}

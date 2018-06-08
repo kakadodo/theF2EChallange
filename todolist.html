@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Week 1 - todolist</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/todolist.css">
+  </head>
+  <body>
+    <header>
+      <ul class="container nav">
+        <li data-mode="all" class="nav_list active">My Tasks</li>
+        <li data-mode="progress" class="nav_list">In Progress</li>
+        <li data-mode="completed" class="nav_list">Completed</li>
+      </ul>
+    </header>
+    <div class="container">
+      <div class="addTask_area">
+        <input type="text" placeholder="+ Add Task" class="addTask_input">
+        <div class="task_panel d_none">
+          <div class="task_panel_top">
+            <div class="d_flex">
+              <input type="checkbox" name="completed_check" disabled class="completed_check">
+              <input type="text" placeholder="Type Something Here..." name="title_input" class="title_input">
+              <input type="checkbox" name="star_check" disabled class="star_check"><a href="#" class="edit_btn active"><i class="fas fa-pencil-alt"></i></a>
+            </div>
+          </div>
+          <div class="task_panel_bottom">
+            <div class="form_group">
+              <h4><i class="far fa-calendar-alt"></i>Deadline</h4>
+              <input type="date" placeholder="yyyy/mm/dd" name="task_date" class="ml-1">
+              <input type="time" placeholder="hh:mm" style="margin-left:5px" name="task_time">
+            </div>
+            <div class="form_group">
+              <h4><i class="far fa-file"></i>File</h4>
+              <div class="d_flex">
+                <div class="file_info ml-1 d_none">
+                  <p class="name"></p>
+                  <p class="upload"></p>
+                </div>
+                <label for="task_file" class="file_btn ml-1">
+                  <input id="task_file" type="file" name="task_file" hidden>
+                </label>
+              </div>
+            </div>
+            <div class="form_group">
+              <h4><i class="far fa-comment-dots"></i>Comment</h4>
+              <textarea name="task_comment" rows="6" placeholder="Type Your Memo Here..." class="ml-1"></textarea>
+            </div>
+            <div class="button_group">
+              <button id="js_cancelAddTask" class="btn_cancel">X Cancel</button>
+              <button id="js_addTask" class="btn_primary">+ Add Task</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="task_lists"></div>
+      <h3 class="task_left_info"></h3>
+    </div>
+    <footer><i class="fas fa-pen-square"></i><span> code writting by Chelsea Chang</span></footer>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery-ui-sortable.min.js"></script>
+    <script src="./js/todolist.js"></script>
+  </body>
+</html>

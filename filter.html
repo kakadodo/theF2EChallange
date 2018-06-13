@@ -45,7 +45,7 @@
                     <input id="filter_time" type="checkbox" v-model="filterInputData.AvailableTime">
                   </label><span class="ml-2 align-top">24 HR</span>
                 </div>
-                <div class="copy_write"><i class="fas fa-pen-square"></i><span> Created by Chelsea Chang</span></div>
+                <div class="copy_write"><i class="fas fa-pen-square"></i><span>Created by Chelsea Chang</span><small class="d-block">資料來源: <a href="https://wapi.gogoro.com/tw/api/vm/list" _blank class="text-white">gogoro API</a></small></div>
               </div>
               <button v-if="!filterOpen" v-on:click="filterOpen = !filterOpen" class="side_menu_btn"></button>
               <button v-else v-on:click="filterOpen = !filterOpen" class="side_menu_btn cross"><i class="fas fa-times-circle fa-2x"></i></button>

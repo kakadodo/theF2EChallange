@@ -7800,7 +7800,7 @@ body {
     transition: .3s; }
     .filter_area.active {
       visibility: visible;
-      height: 325px;
+      height: 360px;
       -webkit-transform: scaleY(1);
           -ms-transform: scaleY(1);
               transform: scaleY(1);

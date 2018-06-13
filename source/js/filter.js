@@ -105,7 +105,7 @@ $(function(){
         this.modalLocName = JSON.parse(data.LocName).List[1].Value;
         const _this = this;
         const pos = {lat: data.Latitude, lng: data.Longitude};
-        const icon = '../img/week2/battery-icon.png';
+        const icon = 'https://kakadodo.github.io/theF2EChallange/img/week2/battery-icon.png';
         const content = `
           <div>
             <h5>${JSON.parse(data.LocName).List[1].Value}</h5>

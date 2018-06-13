@@ -106,10 +106,15 @@ $(function(){
         const _this = this;
         const pos = {lat: data.Latitude, lng: data.Longitude};
         const icon = 'https://raw.githubusercontent.com/kakadodo/theF2EChallange/gh-pages/img/week2/battery-icon.png';
+        const address = JSON.parse(data.Address).List[1].Value.replace(/\(.+\)/g,'');
         const content = `
           <div>
             <h5>${JSON.parse(data.LocName).List[1].Value}</h5>
-            <p>${JSON.parse(data.Address).List[1].Value}</p>
+            <p>
+              <a href='https://www.google.com/maps/place/${address}' target='_blank'>
+                ${JSON.parse(data.Address).List[1].Value}
+              </a>
+            </p>
           </div>
         `;
         this.googleMap.map = new google.maps.Map(document.getElementById('map'), {

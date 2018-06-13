@@ -110,7 +110,7 @@ $(function () {
         this.modalLocName = JSON.parse(data.LocName).List[1].Value;
         var _this = this;
         var pos = { lat: data.Latitude, lng: data.Longitude };
-        var icon = './img/week2/battery-icon.png';
+        var icon = 'https://raw.githubusercontent.com/kakadodo/theF2EChallange/gh-pages/img/week2/battery-icon.png';
         var content = '\n          <div>\n            <h5>' + JSON.parse(data.LocName).List[1].Value + '</h5>\n            <p>' + JSON.parse(data.Address).List[1].Value + '</p>\n          </div>\n        ';
         this.googleMap.map = new google.maps.Map(document.getElementById('map'), {
           center: pos,

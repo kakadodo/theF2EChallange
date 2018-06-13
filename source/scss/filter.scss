@@ -10,7 +10,6 @@ $color_red: #FF1D25;
 
 body{
   background-color: $color_darkGray;
-  overflow: hidden;
 }
 
 //cover bootstrap style
@@ -50,6 +49,7 @@ body{
   width: 100%;
   height: 100%;
   background-color: $color_darkGray;
+  overflow: hidden;
   z-index: 1021; //要比sticky-top高
   .icon{
     position: absolute;

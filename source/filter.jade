@@ -1,0 +1,114 @@
+extends ./partials/layout.jade
+
+block pageTitle
+	title Week 2 - filter
+
+block css
+	link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	link(rel="stylesheet", href="./css/filter.css")
+
+block content
+	#app
+		transition(name='fade')
+			.loading.d-flex.justify-content-center.align-items-center.flex-column(v-if='loading')
+				.icon.d-flex.align-items-center
+					i.fab.fa-cloudversify.text-goblue
+					i.fas.fa-motorcycle.fa-5x.text-goblue
+				.info
+					h2 資料載入中...
+		.container
+			.row
+				.col-md-4.side_wrapper
+					.side_menu.sticky-top
+						h1.logo GO BETTERY FUN
+						.filter_area(:class='{active:filterOpen}')
+							.form-group
+								label(for='') 站點名稱:
+								input.form-control(type='text', placeholder='Gogoro 饒河服務中心站', v-model='filterInputData.LocName')
+							.form-group
+								label(for='') 縣市/區域:
+								select.form-control(v-model='filterInputData.City')
+									option(value='') --
+									option(v-for='city in getCity') {{city}}
+								select.form-control.mt-2(v-model='filterInputData.District', v-on:change='filterLists')
+									option(value='') --
+									option(v-if='filterInputData.City' v-for='dist in getDistrict') {{dist}}
+							.form-group
+								label.d-block 營運時間:
+								label.custom_checkbox(for='filter_time', :class='{active:filterInputData.AvailableTime}')
+									input#filter_time(type="checkbox", v-model='filterInputData.AvailableTime')
+								span.ml-2.align-top 24 HR
+							.copy_write
+								i.fas.fa-pen-square
+								span  Created by Chelsea Chang
+						button.side_menu_btn(v-if='!filterOpen' v-on:click='filterOpen = !filterOpen')
+						button.side_menu_btn.cross(v-else v-on:click='filterOpen = !filterOpen')
+							i.fas.fa-times-circle.fa-2x
+				.col-md-8.col-lg-7.offset-lg-1.content.pt-5
+					h5.filter_result(v-if='filterMode')
+						| 有
+						span.count {{filterData.length}}
+						| 項結果符合:
+					transition-group(tag='ul', class='filter_lists', name='fade')
+						//篩選模式下顯示的列表
+						li.list_item(v-if='filterMode' v-for='data in filterData', :key='data.Id', data-toggle="modal", data-target="#googleMapModal")
+							h2.p-3.mb-0
+								i.fas.fa-battery-full.text-gogreen.mr-3
+								| {{JSON.parse(data.LocName).List[1].Value}}
+							hr.mt-0
+							.content.px-3.py-2
+								p
+									i.fas.fa-map-marker-alt.fa-lg.fa-fw.text-danger.mr-3
+									| {{JSON.parse(data.Address).List[1].Value}}
+								p
+									i.fas.fa-clock.fa-lg.fa-fw.text-goblue.mr-3
+									| {{data.AvailableTime}}
+							.cover(v-on:click='showMap(data)')
+								i.fas.fa-map.fa-3x
+								h4 Google 位置
+						//初始模式下顯示的列表
+					transition-group(tag='ul', class='filter_lists', name='fade')
+						li.list_item(v-if='!filterMode' v-for='data in pageData[currentPage-1]', :key='data.Id', data-toggle="modal", data-target="#googleMapModal")
+							h2.p-3.mb-0
+								i.fas.fa-battery-full.text-gogreen.mr-3
+								| {{JSON.parse(data.LocName).List[1].Value}}
+							hr.mt-0
+							.content.px-3.py-2
+								p
+									i.fas.fa-map-marker-alt.fa-lg.fa-fw.text-danger.mr-3
+									| {{JSON.parse(data.Address).List[1].Value}}
+								p
+									i.fas.fa-clock.fa-lg.fa-fw.text-goblue.mr-3
+									| {{data.AvailableTime}}
+							.cover(v-on:click='showMap(data)')
+								i.fas.fa-map.fa-3x
+								h4 Google 位置
+					nav(v-if='!filterMode')
+						ul.pagination.justify-content-center
+							li.page-item(:class='{disabled: currentPage <= 1}')
+								a.page-link(href='#', v-on:click.prevent="movePage('prev')")
+									span(aria-hidden='true') «
+									span.sr-only Previous
+							li.page-item(v-for='(num,i) in showPages', :class='{active: currentPage == (num+1)}')
+								a.page-link(href='#', v-on:click.prevent="movePage(num+1)") {{num+1}}
+							li.page-item(:class='{disabled: currentPage == pagination.length}')
+								a.page-link(href='#', v-on:click.prevent="movePage('next')")
+									span(aria-hidden='true') »
+									span.sr-only Next
+		#googleMapModal.modal.fade(tabindex='-1', role='dialog')
+			.modal-dialog.modal-lg(role='document')
+				.modal-content
+					.modal-header
+						h5.modal-title {{modalLocName}}
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') ×
+					.modal-body
+						#map
+
+block script
+	script(src="./js/vendors.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js")
+	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIRUyJZX45SNydQS43paAqayP7J-irgVw" async defer)
+	script(src="./js/filter.js")

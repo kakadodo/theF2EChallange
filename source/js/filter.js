@@ -1,12 +1,4 @@
 $(function(){
-  //render map
-  // $('#googleMapModal').on('show.bs.modal', function (e) {
-  //   new google.maps.Map(document.getElementById('map'), {
-  //     center: {lat: -34.397, lng: 150.644},
-  //     zoom: 8
-  //   });
-  // });
-
   let API = 'https://wapi.gogoro.com/tw/api/vm/list';
 
   const vm = new Vue({
@@ -34,17 +26,15 @@ $(function(){
       filterOpen:false
     },
     computed:{
-      sliceNum(){
-        //判斷頁數顯示的範圍
-        if(this.currentPage > this.pagination.length -10){
-          return this.pagination.length;
-        }else{
-          return 9 + this.currentPage;
-        }
-      },
       showPages(){
-        //固定顯示10筆頁數
-        return this.currentPage+10 <= this.pagination.length? this.pagination.slice(this.currentPage-1, this.sliceNum) : this.pagination.slice(this.pagination.length-10, this.sliceNum);
+        //依 currentPage 決定當前的頁數範圍
+        let pageRange = {
+          min: this.currentPage % 10 == 0 ? (this.currentPage - 9) : (Math.floor(this.currentPage / 10) * 10 + 1),
+          max: this.currentPage % 10 == 0 ? this.currentPage : Math.ceil(this.currentPage / 10) * 10
+        };
+        // max 計算超過 pagination 總長度的話，max 就改為總長度
+        if(pageRange.max > this.pagination.length) pageRange.max = this.pagination.length;
+        return this.pagination.filter((page,i)=>{return page >= pageRange.min-1 && page <= pageRange.max-1});
       },
       getCity(){
         const citys = this.listsData.map((list,i)=> JSON.parse(list.City).List[1].Value);
@@ -95,7 +85,7 @@ $(function(){
       movePage(move){
         if(move == 'prev'){
           this.currentPage--;
-        }else if(move == 'prev'){
+        }else if(move == 'next'){
           this.currentPage++;
         }else{
           this.currentPage = parseInt(move);

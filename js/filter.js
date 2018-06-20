@@ -9,23 +9,23 @@ $(function () {
       loading: true,
       listsData: [],
       pageData: [],
+      pagination: [],
+      currentPage: 1,
+      filterMode: false,
+      filterData: [],
       filterInputData: {
         LocName: '',
         City: '',
         District: '',
         AvailableTime: false
       },
-      filterData: [],
-      filterMode: false,
-      pagination: [],
-      currentPage: 1,
+      filterOpen: false,
       modalLocName: '',
       googleMap: {
         map: {},
         marker: {},
         infowindow: {}
-      },
-      filterOpen: false
+      }
     },
     computed: {
       showPages: function showPages() {

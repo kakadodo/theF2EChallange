@@ -84,7 +84,8 @@ $theme-colors: map-merge((
   "light":      $light,
   "dark":       $dark,
   "gogreen":    $gogreen,
-  "goblue":     $goblue
+  "goblue":     $goblue,
+  "black":      $black
 ), $theme-colors);
 // stylelint-enable
 

@@ -1,0 +1,428 @@
+extends ./partials/layout.jade
+
+block pageTitle
+	title Week 3 - Admin Order
+
+block css
+	link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.2/c3.min.css")
+	link(rel="stylesheet", href="./css/admin-order.css")
+
+block content
+	#app
+		nav.navbar.navbar-expand-lg.navbar-dark.bg-black
+			.container
+				a.navbar-brand.font-weight-bold.mr-5(href='#') Shoptime
+				button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-label='Toggle navigation')
+					span.navbar-toggler-icon
+				#navbar.collapse.navbar-collapse
+					ul.navbar-nav.mr-auto.font-weight-bold
+						li.nav-item.active
+							a.nav-link.px-3(href='#home') HOME
+						li.nav-item
+							a.nav-link.px-3(href='#order') ORDERS
+						li.nav-item
+							a.nav-link.px-3(href='#product') PRODUCT
+					h6.text-white ADMIN
+		#home.js_mainContent.container.mt-4
+			.d-flex.align-items-center.mb-2
+				h4.font-weight-bold.mr-auto OVERVIEW
+				.date_select.d-flex.align-items-center
+					span 2018/06/18
+					i.fas.fa-caret-right.px-2
+					span 2018/06/24
+					a.dropdown
+						a.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+							| Weekly
+						.dropdown-menu.text-center
+							a.dropdown-item(href='#') Daily
+							a.dropdown-item(href='#') Weekly
+							a.dropdown-item(href='#') Monthly
+							a.dropdown-item(href='#') Yearly
+							a.dropdown-item(href='#') Custom
+			.row
+				.col-4
+					.card
+						.card-body.text-center
+							h6.card-title
+								i.fas.fa-hand-holding-usd.mr-2
+								| TOTAL REVENUE
+							p.card-text.text-gogreen 54,540
+				.col-4
+					.card
+						.card-body.text-center
+							h6.card-title
+								i.fas.fa-boxes.mr-2
+								| TOTAL COST
+							p.card-text.text-danger 12,660
+				.col-4
+					.card
+						.card-body.text-center
+							h6.card-title
+								i.fas.fa-money-bill.mr-2
+								| NET INCOME
+							p.card-text.text-primary 41,880
+			.row.mt-3
+				.col-12
+					.card
+						.card-body
+							h4.font-weight-bold Activity
+							#chart
+			.row.mt-3
+				.col-lg-6
+					.card
+						.card-body.pb-0
+							h4.font-weight-bold Transaction Website
+							ul.lists_group.list-unstyled
+								li.d-flex.align-items-center.py-3
+									i.fab.fa-facebook-square.fa-3x.mr-3
+									span.mr-auto.text_gray Facebook.com
+									span.mr-3.text_black 45,836
+									.tip_wrapper.success(tabindex="0")
+										i.fas.fa-arrow-up.mr-1
+										span 20%
+										.tip.text-center
+											span
+												| INCREASE
+												span.success.px-1 899
+												| VIEWS
+											small last week: 44,937
+								li.d-flex.align-items-center.py-3
+									i.fab.fa-google.fa-3x.mr-3
+									span.mr-auto.text_gray Google.com
+									span.mr-3.text_black 23,582
+									.tip_wrapper.success(tabindex="0")
+										i.fas.fa-arrow-up.mr-1
+										span 23%
+										.tip.text-center
+											span
+												| INCREASE
+												span.success.px-1 1,024
+												| VIEWS
+											small last week: 54,037
+								li.d-flex.align-items-center.py-3
+									i.fas.fa-shopping-bag.fa-3x.mr-3
+									span.mr-auto.text_gray Shopify.com
+									span.mr-3.text_black 24,58
+									.tip_wrapper.text-danger(tabindex="0")
+										i.fas.fa-arrow-down.mr-1
+										span 15%
+										.tip.text-center
+											span
+												| DECREASE
+												span.text-danger.px-1 508
+												| VIEWS
+											small last week: 25,085
+								li.d-flex.align-items-center.py-3
+									i.fab.fa-wordpress.fa-3x.mr-3
+									span.mr-auto.text_gray Wordpress.com
+									span.mr-3.text_black 1,057
+									.tip_wrapper.text-danger(tabindex="0")
+										i.fas.fa-arrow-up.mr-1
+										span 30%
+										.tip.text-center
+											span
+												| DECREASE
+												span.text-danger.px-1 385
+												| VIEWS
+											small last week: 620
+				.col-lg-6.mt-3.mt-lg-0
+					.card
+						.card-body.pb-0
+							h4.font-weight-bold Latest Orders
+							ul.lists_group.list-unstyled
+								li.d-flex.align-items-end.py-3
+									img(src="https://scene7.zumiez.com/is/image/zumiez/pdp_hero/adidas-Trefoil-White-T-Shirt-_289236-front-US.jpg" width="100")
+									.order_info.ml-2
+										h5.font-weight-bold Vintage T-shirt
+										.time
+											i.fas.fa-clock.fa-fw.mr-2
+											| 2018/6/13  13:42
+										.buyer
+											i.fas.fa-male.fa-fw.mr-2
+											| Belle Willis
+									.order_price.text-right.ml-auto
+										| Total
+										strong.d-block 3,200
+								li.d-flex.align-items-end.py-3
+									img(src="https://ae01.alicdn.com/kf/HTB1cRVQSVXXXXcwXpXXq6xXFXXXI/Jackets-Men-Winter-Denim-Jacket-Mens-Fashion-Thick-Cotton-Cowboy-Jeans-Jacket-Jaqueta-Masculino-Military-Tactical.jpg_640x640.jpg" width="100")
+									.order_info.ml-2
+										h5.font-weight-bold Cowboy Jacket
+										.time
+											i.fas.fa-clock.fa-fw.mr-2
+											| 2018/6/13  10:45
+										.buyer
+											i.fas.fa-male.fa-fw.mr-2
+											| Adrian Cummings
+									.order_price.text-right.ml-auto
+										| Total
+										strong.d-block 2,800
+								li.d-flex.align-items-end.py-3
+									img(src="https://img3.cohimg.net/is/image/Coach/86636_nav_a0?fmt=jpeg&wid=360&hei=452&qlt=80,0&op_sharpen=0&resMode=bicub&op_usm=5,0.2,0,0&iccEmbed=0&fit=vfit" width="100")
+									.order_info.ml-2
+										h5.font-weight-bold Coach Coat
+										.time
+											i.fas.fa-clock.fa-fw.mr-2
+											| 2018/6/13  8:26
+										.buyer
+											i.fas.fa-male.fa-fw.mr-2
+											| Lura Holland
+									.order_price.text-right.ml-auto
+										| Total
+										strong.d-block 1,600
+		#order.js_mainContent.container.mt-4.d-none
+			.d-flex.align-items-center
+				input.order_check.ml-2(type="checkbox", name="")
+				.dropdown.show
+					a.dropdown-toggle.ml-1(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', style='color:#000')
+					.dropdown-menu
+						a.dropdown-item(href='#') Select All
+						a.dropdown-item(href='#') Unselect All
+						a.dropdown-item(href='#') Paid
+						a.dropdown-item(href='#') Unpaid
+						a.dropdown-item(href='#') Shipping
+						a.dropdown-item(href='#') Done
+				.tip_wrapper.ml-4
+					a(href="#", role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', style='color:#000')
+						i.fas.fa-tags
+					.dropdown-menu
+						h6.dropdown-header Change Status to…
+						a.dropdown-item(href='#') Paid
+						a.dropdown-item(href='#') Unpaid
+						a.dropdown-item(href='#') Shipping
+						a.dropdown-item(href='#') Done
+				.ml-auto
+					a.dropdown-toggle.font-weight-bold(href="#", role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', style='color:#000')
+						| EDIT SECTION
+					.dropdown-menu.pl-3.font-weight-bold
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Order ID
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Customer
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Product List
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Total
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Add to Cart
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Check-out
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Address
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Phone
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Emaill
+						.check_group
+							input.order_check(type="checkbox", name="")
+							label Status
+			table.table.table-striped.mt-3.bg-light
+				thead
+					tr
+						th(scope='col') Customer
+						th(scope='col') Product List
+						th(scope='col') Total
+						th(scope='col') Add to Cart
+						th(scope='col') Check-out
+						th(scope='col', width='20%') Address
+						th(scope='col') Status
+				tbody
+					- for(var i=0; i<5; i++)
+						tr
+							td
+								input.order_check.mr-2(type="checkbox", name="")
+								|Ian Medina
+							td
+								.pd
+									h6 Vestibulum
+									.d-flex.justify-content-between
+										p $1,400
+										small 1
+								.pd
+									h6 Fusce vehicu
+									.d-flex.justify-content-between
+										p $800
+										small 1
+							td $2,200
+							td 2018/6/8 <br> 13:39
+							td 2018/6/8 <br> 20:23
+							td 386 Windler Drives Apt. 358
+							td
+								.dropdown
+									button.btn.btn-gogreen.text-white.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+										| PAID
+									.dropdown-menu
+										a.dropdown-item(href='#') Paid
+										a.dropdown-item(href='#') Unpaid
+										a.dropdown-item(href='#') Shipping
+										a.dropdown-item(href='#') Done
+			nav
+				ul.pagination.justify-content-end
+					li.page-item
+						a.page-link(href='#', aria-label='Previous')
+							span(aria-hidden='true') «
+					li.page-item.active
+						a.page-link(href='#') 1
+					li.page-item
+						a.page-link(href='#') 2
+					li.page-item
+						a.page-link(href='#') 3
+					li.page-item
+						a.page-link(href='#') 4
+					li.page-item
+						a.page-link(href='#') 5
+					li.page-item
+						a.page-link(href='#', aria-label='Next')
+							span(aria-hidden='true') »
+		#product.js_mainContent.container.mt-4.d-none
+			.d-flex.align-items-center
+				input.order_check.ml-2(type="checkbox", name="")
+				.dropdown.show
+					a.dropdown-toggle.ml-1(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', style='color:#000')
+					.dropdown-menu
+						a.dropdown-item(href='#') Select All
+						a.dropdown-item(href='#') Unselect All
+						a.dropdown-item(href='#') Published
+						a.dropdown-item(href='#') Unpublished
+				.tip_wrapper.ml-4
+					a(href="#", role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', style='color:#000')
+						i.fas.fa-tags
+					.dropdown-menu
+						h6.dropdown-header Change Status to…
+						a.dropdown-item(href='#') Published
+						a.dropdown-item(href='#') Unpublished
+				.ml-auto
+					button.btn.btn-black(type='button', data-toggle='modal', data-target='#pdModal')
+						| ADD NEW PRODUCT
+						i.fas.fa-plus.fa-sm.ml-2
+			table.table.table-striped.mt-3.bg-light
+				thead
+					tr
+						th(scope='col') Product
+						th(scope='col') Original
+						th(scope='col') Discount
+						th(scope='col') Size
+						th(scope='col') Color
+						th(scope='col') Inventory
+						th(scope='col') Status
+				tbody
+					- for(var i=0; i<5; i++)
+						tr
+							td
+								input.order_check.mr-2(type="checkbox", name="")
+								img.mr-2(src="https://scene7.zumiez.com/is/image/zumiez/pdp_hero/adidas-Trefoil-White-T-Shirt-_289236-front-US.jpg", width="30")
+								| Mauris non tem
+							td $3,200
+							td $2,800
+							td.pr-5(colspan="3")
+								.pd.d-flex.justify-content-between
+									h6 L
+									h6 Gray <br> Black
+									h6 15 <br> 20
+								.pd.d-flex.justify-content-between
+									h6 M
+									h6 Gray <br> Black
+									h6 15 <br> 20
+								.pd.d-flex.justify-content-between
+									h6 S
+									h6 Gray <br> Black
+									h6 15 <br> 20
+							td
+								.dropdown
+									button.btn.btn-gogreen.text-white.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+										| PUBLISHED
+									.dropdown-menu
+										a.dropdown-item(href='#') Published
+										a.dropdown-item(href='#') Unpublished
+			nav
+				ul.pagination.justify-content-end
+					li.page-item
+						a.page-link(href='#', aria-label='Previous')
+							span(aria-hidden='true') «
+					li.page-item.active
+						a.page-link(href='#') 1
+					li.page-item
+						a.page-link(href='#') 2
+					li.page-item
+						a.page-link(href='#') 3
+					li.page-item
+						a.page-link(href='#') 4
+					li.page-item
+						a.page-link(href='#') 5
+					li.page-item
+						a.page-link(href='#', aria-label='Next')
+							span(aria-hidden='true') »
+			#pdModal.modal.fade(tabindex='-1', role='dialog')
+				.modal-dialog.modal-lg(role='document')
+					.modal-content
+						.modal-header.bg-black
+							h5.modal-title.text-white ADD NEW PRODUCT
+							button.close(type='button', data-dismiss='modal', aria-label='Close')
+								span(aria-hidden='true') ×
+						.modal-body.row
+							.col-lg-6
+								button.btn.btn-light.btn-block
+									i.fas.fa-cloud-upload-alt.fa-3x
+									h6 Drag an image or click here to upload...
+								.d-flex.flex-wrap.align-items-start
+									-for(var i=0; i<5; i++)
+										img.p-2(src="https://scene7.zumiez.com/is/image/zumiez/pdp_hero/adidas-Trefoil-White-T-Shirt-_289236-front-US.jpg", width="100")
+							.col-lg-6.mt-3.mt-lg-0
+								form
+									h5 Product Discription
+									.form-group
+										input.form-control(type='email', value='Vestibulum nec')
+									.form-group
+										textarea.form-control(name="", cols="49", rows="5")
+											| Curabitur lobortis id lorem id bibendum. Ut id consectetur magna. Quisque volutpat augue enim, pulvinar lobortis nibh lacinia at. Vestibulum nec erat ut mi sollicitudin porttitor id sit amet risus.
+									h5.font-weight-bold Price
+									.d-flex
+										.input-group.input-group-sm.mb-3.mr-2
+											.input-group-prepend
+												span.input-group-text Original
+											input.form-control(type='text', value='$3,200')
+										.input-group.input-group-sm.mb-3
+											.input-group-prepend
+												span.input-group-text Discount
+											input.form-control(type='text', value='$2,800')
+									h5.font-weight-bold Specification
+									- for(var i=0; i<2;i++)
+										.d-flex
+											.input-group.input-group-sm.mb-2.mr-2
+												.input-group-prepend
+													label.input-group-text Size
+												select.custom-select
+													option(value='L') L
+													option(value='M') M
+													option(value='S') S
+											.input-group.input-group-sm.mb-2.mr-2
+												.input-group-prepend
+													span.input-group-text Color
+												input.form-control(type='text', value='Gray')
+											.input-group.input-group-sm.mb-2
+												.input-group-prepend
+													span.input-group-text Inventory
+												input.form-control(type='text', value='15')
+									button.btn.btn-black.btn-block
+										| ADD NEW SPECIFICATION
+										i.fas.fa-plus.fa-sm.ml-2
+						.modal-footer
+							button.btn.btn-light.font-weight-bold(type='button') SAVE DRAFT
+							button.btn.btn-black.font-weight-bold(type='button') PUBLISH
+	footer
+		i.fas.fa-pen-square
+		span  code writting by Chelsea Chang
+block script
+	script(src="./js/vendors.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.2/c3.min.js")
+	script(src="./js/admin-order.js")

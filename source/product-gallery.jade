@@ -1,0 +1,75 @@
+extends ./partials/layout.jade
+
+block pageTitle
+	title Week 4 - Product Gallery
+
+block css
+	link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	link(rel="stylesheet", href="./css/product-gallery.css")
+
+block content
+	.container.index.active
+		header
+			.logo CCCLOTHES
+			h1 MEN’S TOPS
+		section.products
+			article.product.product1
+				img(src='https://images.unsplash.com/photo-1513827379601-9dba5099a3f9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1acdd78f34ee75aade9e313251bb1695&auto=format&fit=crop&w=634&q=80')
+				h2 LINEN BLAZER
+				.product_desc Men’s outfit
+				.product_num 01
+			article.product.product2
+				img(src='https://images.unsplash.com/photo-1514632542677-48fae74a01b2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cf412aceb1d689765e387d30fca7210a&auto=format&fit=crop&w=634&q=80')
+				h2 FREELIFT
+				.product_desc Men’s basics
+				.product_num 02
+			article.product.product3
+				img(src='https://images.unsplash.com/photo-1496345875659-11f7dd282d1d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0f994eef47e5fb1a67849703cc961b3&auto=format&fit=crop&w=1350&q=80')
+				h2 SUPER SKINNY
+				.product_desc Men’s pattern shirts
+				.product_num 03
+			article.product.product4
+				img(src='https://images.unsplash.com/photo-1484516758160-69878111a911?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=39466d66952b133d5a5cff642b970d05&auto=format&fit=crop&w=687&q=80')
+				h2 DENIM
+				.product_desc Men’s cadual
+				.product_num 04
+			article.product.product5
+				img(src='https://images.unsplash.com/photo-1525448198276-222de3961638?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=43fb25556cdbd191e520c7f28739e40d&auto=format&fit=crop&w=1350&q=80')
+				h2 SWEATSHIRTS
+				.product_desc Men’s jacket
+				.product_num 05
+			article.product.product6
+				img(src='https://images.unsplash.com/photo-1519406709381-c1f293304b28?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=98c497a29f229085d9574ee8b6eeef8c&auto=format&fit=crop&w=634&q=80')
+				h2 VINTAGE DENIM
+				.product_desc Men’s classic
+				.product_num 06
+			article.product.product7
+				img(src='https://images.unsplash.com/photo-1516914943479-89db7d9ae7f2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=63ff45d79414b3166b08b800a32018be&auto=format&fit=crop&w=634&q=80')
+				h2 EDITION
+				.product_desc Men’s shirts
+				.product_num 07
+	.container.pd_page
+		header
+			a.back(href="#")
+				i.fas.fa-arrow-left.fa-lg
+				.logo CCCLOTHES
+		section.pd_hero
+			img(src="https://images.unsplash.com/photo-1519406709381-c1f293304b28?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=98c497a29f229085d9574ee8b6eeef8c&auto=format&fit=crop&w=634&q=80", alt="")
+			h2.text_1 VINTAGE
+			h2.text_2 DENIM
+			h2.text_3 TOP
+			h2.text_4 90
+		section.pd_detail
+			h3.title PRODUCT DETAILS
+			.content
+				h2 VINTAGE DENIM
+				h3 Kogi Cosby sweater ethical squid irony
+				p In the tumultuous business of cutting-in and attending to a whale, there is much running backwards and forwards among the crew. Now hands are wanted here, and then again hands are wanted there. There is no staying in any one place; for at one and the same time everything has to be done everywhere. It is much the same with him who endeavors the description of the scene. 
+				p We must now retrace our way a little. It was mentioned that upon first breaking ground in the whale's back, the blubber-hook was inserted into the original hole there cut by the spades of the mates. But how did so clumsy and weighty a mass as that same hook get fixed in that hole? It was inserted there by my particular friend Queequeg, whose duty it was, as harpooneer.
+		section.pd_imgs
+			.img_1
+				img(src="https://images.unsplash.com/photo-1519406686401-e9ef2420c15b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f48976340279ffce098f21bb046acc87&auto=format&fit=crop&w=1950&q=80", alt="")
+			.img_2
+				img(src="https://images.unsplash.com/photo-1519406728390-b536d7be138f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=787976dcde91781727f476692b203ee9&auto=format&fit=crop&w=2134&q=80", alt="")
+block script
+	script(src="./js/product-gallery.js")

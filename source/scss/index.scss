@@ -37,10 +37,12 @@ body{
   margin: 0 auto;
   width: 95%;
   .card{
+    margin-top: 30px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 15px 20px -10px rgba(#000,.2);
     transition: box-shadow .5s;
+    flex: 0 0 28%;
     &:hover{
       box-shadow: 0 20px 20px -10px rgba(#000,.2);
       .card_cover{

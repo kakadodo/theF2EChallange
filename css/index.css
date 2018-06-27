@@ -7633,6 +7633,7 @@ body {
   margin: 0 auto;
   width: 95%; }
   .card_wrapper .card {
+    margin-top: 30px;
     position: relative;
     overflow: hidden;
     -webkit-box-shadow: 0 15px 20px -10px rgba(0, 0, 0, 0.2);
@@ -7641,7 +7642,10 @@ body {
     transition: -webkit-box-shadow .5s;
     -o-transition: box-shadow .5s;
     transition: box-shadow .5s;
-    transition: box-shadow .5s, -webkit-box-shadow .5s; }
+    transition: box-shadow .5s, -webkit-box-shadow .5s;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 28%;
+            flex: 0 0 28%; }
     .card_wrapper .card:hover {
       -webkit-box-shadow: 0 20px 20px -10px rgba(0, 0, 0, 0.2);
               box-shadow: 0 20px 20px -10px rgba(0, 0, 0, 0.2); }

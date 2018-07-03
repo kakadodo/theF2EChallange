@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Week 5 - Comic Viewer</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" href="./css/comic-viewer.css">
+  </head>
+  <body>
+    <div id="app">
+      <header>Comiccomic</header>
+      <div class="container comic_index">
+        <div class="ad text-center pt-3"><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-1.png" alt="" class="img-fluid"></div>
+        <div class="comic_intro row pt-3">
+          <div class="col-sm-6 p-sm-0"><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/comic%20cover.png" alt="" class="img-fluid"></div>
+          <div class="col-sm-6 p-sm-0">
+            <h1 class="bg-black text-white text-center">MY HEXSCHOOL</h1>
+            <dl class="row p-3">
+              <dt class="col-2">Genres</dt>
+              <dd class="col-10">Fusce/vehicula/dolor</dd>
+              <dt class="col-2">Author</dt>
+              <dd class="col-10">Namae Shiranai</dd>
+              <dt class="col-2">Status</dt>
+              <dd class="col-10">Ongoing</dd>
+              <dt class="col-2">Rate</dt>
+              <dd class="col-10 stars"><i class="fas fa-star pr-2"></i><i class="fas fa-star pr-2"></i><i class="fas fa-star pr-2"></i><i class="fas fa-star pr-2"></i><i class="far fa-star"></i></dd>
+            </dl>
+            <div class="summary p-3">
+              <h6 class="font-weight-bold">Summary</h6>
+              <p>If your banker breaks, you snap; if your apothecary by mistake sends you poison in your pills, you die. </p>
+              <p>Therefore, I say, I saw that this situation of mine was the precise situation of every mortal that has this Siamese connexion with a plurality of other mortals. </p>
+            </div>
+          </div>
+        </div>
+        <div class="ad text-center pt-3"><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-2.png" alt="" class="img-fluid"></div>
+        <div class="comic_chapters pt-3">
+          <h3 class="comic_chapters_title">All Chapters</h3>
+          <ul class="comic_chapters_lists list-unstyled">
+            <li><a href="#" class="d-block">Chapter 1: The F2E Challenge Start!</a></li>
+            <li><a href="#" class="d-block">Chapter 2: Todo List is Going Crazy!<span class="badge badge-comic-green rounded-0 px-2 ml-2">New</span></a></li>
+          </ul>
+        </div>
+        <div class="ad text-center pt-3"><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-3.png" alt="" class="img-fluid"></div>
+      </div>
+      <div class="container comic_page d-none">
+        <div class="ad text-center pt-3"><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-1.png" alt="" class="img-fluid"></div>
+        <div class="row comic_page_toolbar pt-3">
+          <div class="col-sm-8"><a href="#" class="comic_page_title">My Hexschool</a>
+            <select class="custom-select w-25 select_chapter">
+              <option value="c-1" selected class="test">Chapter 1</option>
+              <option value="c-2">Chapter 2</option>
+            </select>
+            <select class="custom-select w-25 select_page">
+              <option value="p-1" selected>Page 1</option>
+              <option value="p-2">Page 2</option>
+              <option value="p-3">Page 3</option>
+              <option value="p-4">Page 4</option>
+              <option value="p-5">Page 5</option>
+              <option value="p-6">Page 6</option>
+              <option value="p-7">Page 7</option>
+              <option value="p-8">Page 8</option>
+              <option value="p-9">Page 9</option>
+              <option value="p-10">Page 10</option>
+              <option value="p-11">Page 11</option>
+              <option value="p-12">Page 12</option>
+            </select>
+          </div>
+          <div class="col-sm-4 pt-2 pt-sm-0">
+            <div class="comic_page_view_mode"><i class="fas fa-sun pr-2"></i>
+              <input id="view_mode" type="checkbox" name="view_mode">
+              <label for="view_mode"></label><i class="fas fa-moon pl-2"></i>
+            </div>
+          </div>
+        </div>
+        <div class="ad text-center pt-3"><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-2.png" alt="" class="img-fluid"></div>
+        <div class="comic_page_viewer pt-3">
+          <button disabled class="viewer_btn left"><i class="fas fa-chevron-left fa-2x"></i></button><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-1.png" alt="">
+          <button class="viewer_btn right"><i class="fas fa-chevron-right fa-2x"></i></button>
+          <button class="close_btn"><i class="far fa-times-circle"></i></button>
+        </div>
+        <div class="comic_page_nav_wrapper pt-3">
+          <div class="comic_page_viewer_nav">
+            <ul class="viewer_nav_pages list-unstyled">
+              <li data-page="1" class="page text-center active"><small class="page_num">1</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-1.png" alt="" class="img-fluid"></li>
+              <li data-page="2" class="page text-center"><small class="page_num">2</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-2.png" alt="" class="img-fluid"></li>
+              <li data-page="3" class="page text-center"><small class="page_num">3</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-3.png" alt="" class="img-fluid"></li>
+              <li data-page="4" class="page text-center"><small class="page_num">4</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-4.png" alt="" class="img-fluid"></li>
+              <li data-page="5" class="page text-center"><small class="page_num">5</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-5.png" alt="" class="img-fluid"></li>
+              <li data-page="6" class="page text-center"><small class="page_num">6</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-6.png" alt="" class="img-fluid"></li>
+              <li data-page="7" class="page text-center"><small class="page_num">7</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-7.png" alt="" class="img-fluid"></li>
+              <li data-page="8" class="page text-center"><small class="page_num">8</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-8.png" alt="" class="img-fluid"></li>
+              <li data-page="9" class="page text-center"><small class="page_num">9</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-9.png" alt="" class="img-fluid"></li>
+              <li data-page="10" class="page text-center"><small class="page_num">10</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-10.png" alt="" class="img-fluid"></li>
+              <li data-page="11" class="page text-center"><small class="page_num">11</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-11.png" alt="" class="img-fluid"></li>
+              <li data-page="12" class="page text-center"><small class="page_num">12</small><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-12.png" alt="" class="img-fluid"></li>
+            </ul>
+          </div>
+          <button class="viewer_nav_btn left"><i class="fas fa-angle-double-left fa-lg"></i></button>
+          <button class="viewer_nav_btn right"><i class="fas fa-angle-double-right fa-lg"></i></button>
+        </div>
+        <div class="ad text-center pt-3"><img src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-3.png" alt="" class="img-fluid"></div>
+      </div>
+    </div>
+    <script src="./js/vendors.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.min.js"></script>
+    <script src="./js/comic-viewer.js"></script>
+  </body>
+</html>

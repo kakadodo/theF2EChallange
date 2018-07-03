@@ -1,0 +1,100 @@
+extends ./partials/layout.jade
+
+block pageTitle
+	title Week 5 - Comic Viewer
+
+block css
+	link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.min.css")
+	link(rel="stylesheet", href="./css/comic-viewer.css")
+
+block content
+	#app
+		header Comiccomic
+		.container.comic_index
+			.ad.text-center.pt-3
+				img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-1.png", alt="")
+			.comic_intro.row.pt-3
+				.col-sm-6.p-sm-0
+					img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/comic%20cover.png", alt="")
+				.col-sm-6.p-sm-0
+					h1.bg-black.text-white.text-center MY HEXSCHOOL
+					dl.row.p-3
+						dt.col-2 Genres
+						dd.col-10 Fusce/vehicula/dolor
+						dt.col-2 Author
+						dd.col-10 Namae Shiranai
+						dt.col-2 Status
+						dd.col-10 Ongoing
+						dt.col-2 Rate
+						dd.col-10.stars
+							i.fas.fa-star.pr-2
+							i.fas.fa-star.pr-2
+							i.fas.fa-star.pr-2
+							i.fas.fa-star.pr-2
+							i.far.fa-star
+					.summary.p-3
+						h6.font-weight-bold Summary
+						p If your banker breaks, you snap; if your apothecary by mistake sends you poison in your pills, you die. 
+						p Therefore, I say, I saw that this situation of mine was the precise situation of every mortal that has this Siamese connexion with a plurality of other mortals. 
+			.ad.text-center.pt-3
+				img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-2.png", alt="")
+			.comic_chapters.pt-3
+				h3.comic_chapters_title All Chapters
+				ul.comic_chapters_lists.list-unstyled
+					li
+						a.d-block(href="#") Chapter 1: The F2E Challenge Start!
+					li
+						a.d-block(href="#") Chapter 2: Todo List is Going Crazy!
+							span.badge.badge-comic-green.rounded-0.px-2.ml-2 New
+			.ad.text-center.pt-3
+				img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-3.png", alt="")
+		.container.comic_page.d-none
+			.ad.text-center.pt-3
+				img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-1.png", alt="")
+			.row.comic_page_toolbar.pt-3
+				.col-sm-8
+					a.comic_page_title(href="#") My Hexschool
+					select.custom-select.w-25.select_chapter
+						option.test(value="c-1", selected) Chapter 1
+						option(value="c-2") Chapter 2
+					select.custom-select.w-25.select_page
+						option(value="p-1", selected) Page 1
+						-for(var i=1;i<12;i++)
+							option(value="p-#{i+1}") Page #{i+1}
+				.col-sm-4.pt-2.pt-sm-0
+					.comic_page_view_mode
+						i.fas.fa-sun.pr-2
+						input#view_mode(type="checkbox", name="view_mode")
+						label(for="view_mode")
+						i.fas.fa-moon.pl-2
+			.ad.text-center.pt-3
+				img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-2.png", alt="")
+			.comic_page_viewer.pt-3
+				button.viewer_btn.left(disabled)
+					i.fas.fa-chevron-left.fa-2x
+				img(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-1.png", alt="")
+				button.viewer_btn.right
+					i.fas.fa-chevron-right.fa-2x
+				button.close_btn
+					i.far.fa-times-circle
+			.comic_page_nav_wrapper.pt-3
+				.comic_page_viewer_nav
+					ul.viewer_nav_pages.list-unstyled
+						li.page.text-center.active(data-page="1")
+								small.page_num 1
+								img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-1.png", alt="")
+						-for(var i=1; i<12; i++)
+							li.page.text-center(data-page="#{i+1}")
+								small.page_num #{i+1}
+								img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/storyboard-#{i+1}.png", alt="")
+				button.viewer_nav_btn.left
+					i.fas.fa-angle-double-left.fa-lg
+				button.viewer_nav_btn.right
+					i.fas.fa-angle-double-right.fa-lg
+			.ad.text-center.pt-3
+				img.img-fluid(src="https://hexschool.github.io/THE_F2E_Design/week5-comic%20viewer/assets/ad-3.png", alt="")
+block script
+	script(src="./js/vendors.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.min.js")
+	script(src="./js/comic-viewer.js")

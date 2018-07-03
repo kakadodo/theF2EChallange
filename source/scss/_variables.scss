@@ -72,6 +72,7 @@ $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 $gogreen:       #A8E96B !default;
 $goblue:        #66DCF9 !default;
+$comic_green:   #50FF44 !default;
 
 $theme-colors: () !default;
 $theme-colors: map-merge((
@@ -85,7 +86,8 @@ $theme-colors: map-merge((
   "dark":       $dark,
   "gogreen":    $gogreen,
   "goblue":     $goblue,
-  "black":      $black
+  "black":      $black,
+  "comic-green":$comic_green
 ), $theme-colors);
 // stylelint-enable
 

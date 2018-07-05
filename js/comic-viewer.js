@@ -49,12 +49,8 @@ $(function () {
     $('.page').removeClass('active');
     $(this).addClass('active');
     pages.currentPage = $(this).data('page');
-    var navWidth = $('.comic_page_viewer_nav')[0].offsetWidth;
-    if ($(this)[0].offsetLeft >= navWidth) {
-      $('.comic_page_viewer_nav')[0].scrollLeft = $(this)[0].offsetLeft - navWidth + 80;
-    } else {
-      $('.comic_page_viewer_nav')[0].scrollLeft = 0;
-    }
+    var viewerNav = $('.comic_page_viewer_nav')[0];
+    viewerNav.scrollLeft = $(this)[0].offsetLeft - viewerNav.offsetLeft - viewerNav.offsetWidth / 2 + $(this)[0].offsetWidth / 2;
     viewerImg.src = pages.currentPageUrl();
     pages.checkViewerBtn();
     pages.updateSelectChapter();

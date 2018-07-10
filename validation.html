@@ -95,7 +95,7 @@
                 <form novalidate v-on:submit="submitCheck" class="needs-validation mt-3">
                   <div class="form-group card_number">
                     <label for="">Card Number</label>
-                    <input type="text" placeholder="1234 5678 9012 3456" required="" pattern="[0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}" v-model="paymentMethod.cardNumber" class="form-control">
+                    <input type="text" placeholder="1234 5678 9012 3456" required="" pattern="[0-9]{16}" v-model="paymentMethod.cardNumber" class="form-control">
                     <div class="invalid-tooltip">INVALID NUMBERS</div><i class="fab fa-cc-visa fa-lg"></i>
                   </div>
                   <div class="form-row">
@@ -127,7 +127,7 @@
                       <div class="invalid-tooltip">REQUIRED FILED</div>
                     </div>
                   </div>
-                  <button type="submit" :disabled="!paymentMethod.cardNumber || !paymentMethod.cardHolder || !paymentMethod.bankName || !paymentMethod.cvv || !paymentMethod.expireDate" class="btn btn-primary btn-lg btn-block mt-5">DONE</button>
+                  <button type="submit" :disabled="!paymentMethod.cardNumber || !paymentMethod.cardHolder || !paymentMethod.bankName || !paymentMethod.cvv || !paymentMethod.expireMonth || !paymentMethod.expireYear" class="btn btn-primary btn-lg btn-block mt-5">DONE</button>
                 </form>
               </div>
               <div v-if="step==5" key="5" class="step step_fin text-center">

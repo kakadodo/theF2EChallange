@@ -90,7 +90,7 @@ block content
 							form.needs-validation.mt-3(novalidate, v-on:submit='submitCheck')
 								.form-group.card_number
 									label(for='') Card Number
-									input.form-control(type='text', placeholder='1234 5678 9012 3456', required='', pattern='[0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}', v-model='paymentMethod.cardNumber')
+									input.form-control(type='text', placeholder='1234 5678 9012 3456', required='', pattern='[0-9]{16}', v-model='paymentMethod.cardNumber')
 									.invalid-tooltip
 										| INVALID NUMBERS
 									i.fab.fa-cc-visa.fa-lg
@@ -119,7 +119,7 @@ block content
 												input.form-control(type='number', placeholder='Year', required='', min='2018', max='2028',v-model='paymentMethod.expireYear')
 										.invalid-tooltip
 											| REQUIRED FILED
-								button.btn.btn-primary.btn-lg.btn-block.mt-5(type='submit', :disabled='!paymentMethod.cardNumber || !paymentMethod.cardHolder || !paymentMethod.bankName || !paymentMethod.cvv || !paymentMethod.expireDate') DONE
+								button.btn.btn-primary.btn-lg.btn-block.mt-5(type='submit', :disabled='!paymentMethod.cardNumber || !paymentMethod.cardHolder || !paymentMethod.bankName || !paymentMethod.cvv || !paymentMethod.expireMonth || !paymentMethod.expireYear') DONE
 						.step.step_fin.text-center(v-if='step==5', key='5')
 							h1 Congratulations
 							h4 Now you’re one of us!

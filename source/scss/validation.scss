@@ -1,0 +1,145 @@
+@import 'functions';
+@import 'mixins';
+@import 'variables';
+@import 'bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+
+$color_primary:#0275D8;
+
+@mixin fontSize($px, $weight:300){
+  font-size: $px;
+  font-weight: $weight;
+}
+
+// bootstrap style cover
+.form-group{
+  position: relative;
+}
+
+.form-control{
+  border: 2px solid #000;
+}
+
+.invalid-tooltip{
+  top: 50%;
+  right: 5px;
+  transform: translateY(5%);
+}
+
+body{
+  font-family: 'Roboto', 'Microsoft JhengHei', sans-serif;
+}
+
+form label{
+  @include fontSize(20px, 400);
+}
+
+.step_progress{
+  margin: 40px 0;
+  padding: 8px 0;
+  background-image: url('https://raw.githubusercontent.com/kakadodo/theF2EChallange/gh-pages/img/week6/progressbar.png');
+  background-repeat: no-repeat;
+  background-position: center 0;
+}
+
+.step{
+  h1{
+    @include fontSize(48px);
+  }
+  h4{
+    @include fontSize(24px);
+  }
+}
+
+.input_file{
+  position: relative;
+  input[type="file"]{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0;
+    cursor: pointer;
+  }
+  label{
+    padding: 40px 0;
+    justify-content: center;
+    align-items: center;
+    color: #9b9b9b;
+    border: 2px solid #000;
+    border-radius: 8px;
+  }
+}
+
+.input_file_invalid{
+  padding: 15px;
+  color: #fff;
+  background-color: $danger;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.preview{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview_item{
+  flex-basis:150px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  > a {
+    position: absolute;
+    left: 0;
+    bottom: -51px;
+    width: 100%;
+    height: 50px;
+    background-color: $color_primary;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    transition:.3s;
+  }
+  &:hover > a{
+    bottom: 0;
+  }
+}
+
+.card_number{
+  position: relative;
+  > i{
+    color: #9b9b9b;
+    position: absolute;
+    display: block;
+    right: 15px;
+    bottom: 12px;
+  }
+}
+
+.step_fin{
+  > h2{
+    width: 100%;
+    font-size: 230px;
+    color: #BEE1FF;
+  }
+  > p{
+    color: $color_primary;
+    font-size: 20px;
+    font-style: italic;
+  }
+}
+
+//vue transition
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(-10px);
+  opacity: 0;
+}

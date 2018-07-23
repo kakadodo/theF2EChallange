@@ -7,7 +7,7 @@ body{
   background-color: #e8e8e8;
   font-family: Verdana, 'Microsoft JhengHei';
   color: $gray-800;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .KV_banner{
@@ -42,7 +42,7 @@ body{
     overflow: hidden;
     box-shadow: 0 15px 20px -10px rgba(#000,.2);
     transition: box-shadow .5s;
-    flex: 0 0 28%;
+    flex: 1 0 28%;
     &:hover{
       box-shadow: 0 20px 20px -10px rgba(#000,.2);
       .card_cover{

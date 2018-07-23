@@ -7713,7 +7713,7 @@ body {
   background-color: #e8e8e8;
   font-family: Verdana, 'Microsoft JhengHei';
   color: #343a40;
-  overflow: hidden; }
+  overflow-x: hidden; }
 
 .KV_banner {
   position: relative;
@@ -7750,9 +7750,9 @@ body {
     -o-transition: box-shadow .5s;
     transition: box-shadow .5s;
     transition: box-shadow .5s, -webkit-box-shadow .5s;
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 28%;
-            flex: 0 0 28%; }
+    -webkit-box-flex: 1;
+        -ms-flex: 1 0 28%;
+            flex: 1 0 28%; }
     .card_wrapper .card:hover {
       -webkit-box-shadow: 0 20px 20px -10px rgba(0, 0, 0, 0.2);
               box-shadow: 0 20px 20px -10px rgba(0, 0, 0, 0.2); }

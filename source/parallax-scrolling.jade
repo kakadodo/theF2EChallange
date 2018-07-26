@@ -1,0 +1,147 @@
+extends ./partials/layout.jade
+
+block pageTitle
+	title Week 8 - Parallax Scrolling
+
+block css
+	link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	link(rel="stylesheet", href="./css/parallax-scrolling.css")
+
+block content
+	.ani_opening.bg_primary
+		.rect.bg_black
+		.circle.bg_primarydark
+		.triangle
+		h1 GEOMETRY PERSON
+		p find your core personality type in shapes!
+	.questions
+		.question.q1.bg_primary
+			.question_content
+				h2 Q1
+				h3 If one day you get a gift that can change the rule of the world, which ability will you choose?
+				p Choose the answer appeared in your mind instantly
+				button.answer(data-point='1') Destroy all humans in the world
+				button.answer(data-point='3') Make the war never happened
+				button.answer(data-point='5') You won’t get old and live forever
+			.question_graphic.bg_primarydark
+				.rect.bg_secondary
+				.circle.bg_black
+				.triangle
+		.question.q2.bg_primarydark
+			.question_graphic.bg_secondary
+				.rect.bg_primary
+				.circle.bg_black
+				.triangle
+			.question_content
+				h2 Q2
+				h3 Imagine you’re almost late, but totally lost at a forked road. Which way do you prefer to go?
+				p Choose the answer appeared in your mind instantly
+				button.answer(data-point='1') The left one
+				button.answer(data-point='3') The right one
+				button.answer(data-point='5') Open Google Map
+		.question.q3.bg_secondary
+			.question_content
+				h2 Q3
+				h3 When you’re in a exam which you barely prepared for, which is your priority solution?
+				p Choose the answer appeared in your mind instantly
+				button.answer(data-point='1') Take a nap right away
+				button.answer(data-point='3') Fill the answer randomly
+				button.answer(data-point='5') All fill the answer "C"
+			.question_graphic.bg_primary
+				.rect.bg_primarydark
+				.circle.bg_white
+				.triangle
+	#skrollr-body.hide
+		.step.step_done(
+			data-0='background-position: 100% 0%;',
+			data-2500='background-position: 0% 100%;',
+		)
+			h2 ALL DONE!
+			p Keep scrolling to show the result
+			.triangle(
+				data-2000='left: -100%; top: 100%;',
+				data-2500='left: 30%; top: 0%;'
+			)
+		.step.step_coculate(
+			data-0='display:none;',
+			data-2500='display:block; background-position: 100% 0%;',
+			data-5000='background-position: 0% 100%;'
+		)
+			h2(
+				data-2500='display:block; opacity:0;',
+				data-2800='opacity:1;'
+			) NOW CACULATING
+			p(
+				data-2500='display:block; opacity:0;',
+				data-2800='opacity:1;'
+			) Keep scrolling to show the result
+			.rect.bg_secondary(
+				data-4500='left: -150%; top: 100%;',
+				data-5000='left: 30%; top: 0%;'
+			)
+		.step.step_youare(
+			data-0='display:none;',
+			data-5000='display:block; background-position: 100% 0%;',
+			data-7500='background-position: 0% 100%;'
+		)
+			h2(
+				data-5000='display:block; opacity:0;',
+				data-5300='opacity:1;'
+			) YOU ARE…
+			p(
+				data-5000='display:block; opacity:0;',
+				data-5300='opacity:1;'
+			) Keep scrolling to show the result
+			.circle.bg_white(
+				data-7000='left: -125%; top: 100%;',
+				data-7500='left: 30%; top: 0%;'
+			)
+	.result.result_triangle.bg_primary.hide
+		- for(var i=1; i<7; i++)
+			.trismall(class='small#{i}')
+		.tribig.big_1
+		.tribig.big_2
+		.tribig.big_3
+		h3 Your personality type is
+		h2 TRIANGLE
+		.result_content
+			ul
+				li AGGRESSIVE
+				li INDEPENDENT
+				li SELF-MOTIVATED
+			p The triangle type people are natural-born leaders, full of passion and motivation,  trying to fix their mistakes as they go.
+			button.restart TRY AGAIN
+	.result.result_rect.bg_primarydark.hide
+		- for(var i=1; i<7; i++)
+			.rectsmall(class='small#{i}')
+		.rectbig.big_1
+		.rectbig.big_2
+		.rectbig.big_3
+		h3 Your personality type is
+		h2 RECTANGLE
+		.result_content
+			ul
+				li ENERGETIC
+				li FRIENDLY
+				li INTELLIGENT
+			p The rectangle type people enjoy supporting their friends and doing their best to make sure everyone is happy.
+			button.restart TRY AGAIN
+	.result.result_circle.bg_secondary.hide
+		- for(var i=1; i<7; i++)
+			.circlesmall(class='small#{i}')
+		.circlebig.big_1
+		.circlebig.big_2
+		.circlebig.big_3
+		h3 Your personality type is
+		h2 CIRCULAR
+		.result_content
+			ul
+				li EMOTIONAL
+				li OPTIMISTIC
+				li EMPATHY
+			p The circular type people inspire others to achieve and to do good. Always searching for ways to make things better.
+			button.restart TRY AGAIN
+block script
+	script(src="./js/vendors.js")
+	script(src="./js/skrollr.min.js")
+	script(src="./js/parallax-scrolling.js")

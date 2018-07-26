@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-115362207-1" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-115362207-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Week 8 - Parallax Scrolling</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/parallax-scrolling.css">
+  </head>
+  <body>
+    <div class="ani_opening bg_primary">
+      <div class="rect bg_black"></div>
+      <div class="circle bg_primarydark"></div>
+      <div class="triangle"></div>
+      <h1>GEOMETRY PERSON</h1>
+      <p>find your core personality type in shapes!</p>
+    </div>
+    <div class="questions">
+      <div class="question q1 bg_primary">
+        <div class="question_content">
+          <h2>Q1</h2>
+          <h3>If one day you get a gift that can change the rule of the world, which ability will you choose?</h3>
+          <p>Choose the answer appeared in your mind instantly</p>
+          <button data-point="1" class="answer">Destroy all humans in the world</button>
+          <button data-point="3" class="answer">Make the war never happened</button>
+          <button data-point="5" class="answer">You won’t get old and live forever</button>
+        </div>
+        <div class="question_graphic bg_primarydark">
+          <div class="rect bg_secondary"></div>
+          <div class="circle bg_black"></div>
+          <div class="triangle"></div>
+        </div>
+      </div>
+      <div class="question q2 bg_primarydark">
+        <div class="question_graphic bg_secondary">
+          <div class="rect bg_primary"></div>
+          <div class="circle bg_black"></div>
+          <div class="triangle"></div>
+        </div>
+        <div class="question_content">
+          <h2>Q2</h2>
+          <h3>Imagine you’re almost late, but totally lost at a forked road. Which way do you prefer to go?</h3>
+          <p>Choose the answer appeared in your mind instantly</p>
+          <button data-point="1" class="answer">The left one</button>
+          <button data-point="3" class="answer">The right one</button>
+          <button data-point="5" class="answer">Open Google Map</button>
+        </div>
+      </div>
+      <div class="question q3 bg_secondary">
+        <div class="question_content">
+          <h2>Q3</h2>
+          <h3>When you’re in a exam which you barely prepared for, which is your priority solution?</h3>
+          <p>Choose the answer appeared in your mind instantly</p>
+          <button data-point="1" class="answer">Take a nap right away</button>
+          <button data-point="3" class="answer">Fill the answer randomly</button>
+          <button data-point="5" class="answer">All fill the answer "C"</button>
+        </div>
+        <div class="question_graphic bg_primary">
+          <div class="rect bg_primarydark"></div>
+          <div class="circle bg_white"></div>
+          <div class="triangle"></div>
+        </div>
+      </div>
+    </div>
+    <div id="skrollr-body" class="hide">
+      <div data-0="background-position: 100% 0%;" data-2500="background-position: 0% 100%;" class="step step_done">
+        <h2>ALL DONE!</h2>
+        <p>Keep scrolling to show the result</p>
+        <div data-2000="left: -100%; top: 100%;" data-2500="left: 30%; top: 0%;" class="triangle"></div>
+      </div>
+      <div data-0="display:none;" data-2500="display:block; background-position: 100% 0%;" data-5000="background-position: 0% 100%;" class="step step_coculate">
+        <h2 data-2500="display:block; opacity:0;" data-2800="opacity:1;">NOW CACULATING</h2>
+        <p data-2500="display:block; opacity:0;" data-2800="opacity:1;">Keep scrolling to show the result</p>
+        <div data-4500="left: -150%; top: 100%;" data-5000="left: 30%; top: 0%;" class="rect bg_secondary"></div>
+      </div>
+      <div data-0="display:none;" data-5000="display:block; background-position: 100% 0%;" data-7500="background-position: 0% 100%;" class="step step_youare">
+        <h2 data-5000="display:block; opacity:0;" data-5300="opacity:1;">YOU ARE…</h2>
+        <p data-5000="display:block; opacity:0;" data-5300="opacity:1;">Keep scrolling to show the result</p>
+        <div data-7000="left: -125%; top: 100%;" data-7500="left: 30%; top: 0%;" class="circle bg_white"></div>
+      </div>
+    </div>
+    <div class="result result_triangle bg_primary hide">
+      <div class="trismall small1"></div>
+      <div class="trismall small2"></div>
+      <div class="trismall small3"></div>
+      <div class="trismall small4"></div>
+      <div class="trismall small5"></div>
+      <div class="trismall small6"></div>
+      <div class="tribig big_1"></div>
+      <div class="tribig big_2"></div>
+      <div class="tribig big_3"></div>
+      <h3>Your personality type is</h3>
+      <h2>TRIANGLE</h2>
+      <div class="result_content">
+        <ul>
+          <li>AGGRESSIVE</li>
+          <li>INDEPENDENT</li>
+          <li>SELF-MOTIVATED</li>
+        </ul>
+        <p>The triangle type people are natural-born leaders, full of passion and motivation,  trying to fix their mistakes as they go.</p>
+        <button class="restart">TRY AGAIN</button>
+      </div>
+    </div>
+    <div class="result result_rect bg_primarydark hide">
+      <div class="rectsmall small1"></div>
+      <div class="rectsmall small2"></div>
+      <div class="rectsmall small3"></div>
+      <div class="rectsmall small4"></div>
+      <div class="rectsmall small5"></div>
+      <div class="rectsmall small6"></div>
+      <div class="rectbig big_1"></div>
+      <div class="rectbig big_2"></div>
+      <div class="rectbig big_3"></div>
+      <h3>Your personality type is</h3>
+      <h2>RECTANGLE</h2>
+      <div class="result_content">
+        <ul>
+          <li>ENERGETIC</li>
+          <li>FRIENDLY</li>
+          <li>INTELLIGENT</li>
+        </ul>
+        <p>The rectangle type people enjoy supporting their friends and doing their best to make sure everyone is happy.</p>
+        <button class="restart">TRY AGAIN</button>
+      </div>
+    </div>
+    <div class="result result_circle bg_secondary hide">
+      <div class="circlesmall small1"></div>
+      <div class="circlesmall small2"></div>
+      <div class="circlesmall small3"></div>
+      <div class="circlesmall small4"></div>
+      <div class="circlesmall small5"></div>
+      <div class="circlesmall small6"></div>
+      <div class="circlebig big_1"></div>
+      <div class="circlebig big_2"></div>
+      <div class="circlebig big_3"></div>
+      <h3>Your personality type is</h3>
+      <h2>CIRCULAR</h2>
+      <div class="result_content">
+        <ul>
+          <li>EMOTIONAL</li>
+          <li>OPTIMISTIC</li>
+          <li>EMPATHY</li>
+        </ul>
+        <p>The circular type people inspire others to achieve and to do good. Always searching for ways to make things better.</p>
+        <button class="restart">TRY AGAIN</button>
+      </div>
+    </div>
+    <script src="./js/vendors.js"></script>
+    <script src="./js/skrollr.min.js"></script>
+    <script src="./js/parallax-scrolling.js"></script>
+  </body>
+</html>

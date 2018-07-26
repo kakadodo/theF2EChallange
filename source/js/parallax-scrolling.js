@@ -35,7 +35,7 @@ $(function(){
       });
       $('.q2 .question_content, .q2 .question_graphic').children().css('display','none');
     }else{
-      $('#skrollr-body').removeClass('hide');
+      $('#skrollr').removeClass('hide');
       $('.q3').animate({left: '-100%'}, 1000, function(){
         $(this).addClass('hide');
         $('.questions').remove();
@@ -65,7 +65,28 @@ $(function(){
       skrollrObj.destroy();
       setTimeout(function(){
         $(result).addClass('animate');
+        $(window).off('scroll');
       },0);
     }
   });
+
+  $('.step').on('touchend', function(e){
+    if(skrollrObj.getScrollTop() >= 7450){
+      let result = '';
+      if(score < 6){
+        result = '.result_triangle';
+      }else if(score < 12){
+        result = '.result_rect';    
+      }else{
+        result = '.result_circle';
+      }
+      $('body').css('backgroundColor','#fff');
+      $(result).removeClass('hide');
+      skrollrObj.destroy();
+      setTimeout(function(){
+        $(result).addClass('animate');
+        $('.step').off('touchend');
+      },0);
+    }
+  })
 });

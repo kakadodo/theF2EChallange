@@ -53,8 +53,8 @@ block content
 				.triangle
 	#skrollr-body.hide
 		.step.step_done(
-			data-0='background-position: 100% 0%;',
-			data-2500='background-position: 0% 100%;',
+			data-0='display:block; background-position: 100% 0%;',
+			data-2500='display:none; background-position: 0% 100%;',
 		)
 			h2 ALL DONE!
 			p Keep scrolling to show the result
@@ -65,7 +65,7 @@ block content
 		.step.step_coculate(
 			data-0='display:none;',
 			data-2500='display:block; background-position: 100% 0%;',
-			data-5000='background-position: 0% 100%;'
+			data-5000='display:none; background-position: 0% 100%;'
 		)
 			h2(
 				data-2500='display:block; opacity:0;',

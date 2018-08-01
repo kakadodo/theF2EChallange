@@ -1,0 +1,209 @@
+extends ./partials/layout.jade
+
+block pageTitle
+	title Week 9 - Skill Tree
+
+block css
+	//- link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+	link(rel="stylesheet", href="./css/skill-tree.css")
+block content
+	#app.container
+		section.skill.skill_summary
+			h1.summary_title FRONT-END<br>SKILL TREE
+			h3.summary_level_desc CURRENT RANK
+			h2.summary_level FRONT-END NOOB
+			img.summary_img(src='./img/week9/img-ship-noob@2x.png')
+			.summary_message
+				svg.border(viewBox="0 0 300 180")
+					path(d="M142.8,5.2l-22.5,8.3-4.7,1.7,4.6,2,12.3,5.3-17.1,9.9L109,36.2H297.2V178H2.8V36.2H60.4l.4-.2,33-13.6,3-1.3L94.4,19l-5.9-5.2,54.3-8.6M162.5,0,83.9,12.5l9.1,8L60,34.2H.8V180H299.2V34.2H116.4l20.5-12-16-6.8L162.5,0Z")
+				.text
+					| Welcome aboard. Your mission is: 
+					span.highline Collect the resources and learn the skills to upgrade the ship.
+					| Good luck, captain!
+		section.skill.skill_progress
+			.progress
+				.progress_icon
+					img(src="./img/week9/img-planet-basics@2x.png", alt="")
+				.progress_lists
+					ul.lists_block
+						li.list
+							a(href="#")
+								i.material-icons category
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons build
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+			.progress
+				.progress_icon
+					img(src="./img/week9/img-planet-css@2x.png", alt="")
+				.progress_lists
+					ul.lists_block
+						li.list
+							a(href="#")
+								i.material-icons flip_to_front
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons view_quilt
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons developer_board
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+					ul.lists_block
+						li.list
+							a(href="#")
+								i.material-icons devices
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons widgets
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+			.progress
+				.progress_icon
+					img(src="./img/week9/img-planet-js@2x.png", alt="")
+				.progress_lists
+					ul.lists_block
+						li.list
+							a(href="#")
+								i.material-icons hdr_strong
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons gradient
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+					ul.lists_block
+						li.list
+							a(href="#")
+								i.material-icons format_quote
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons developer_mode
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons nfc
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+			.progress
+				.progress_icon
+					img(src="./img/week9/img-planet-managers@2x.png", alt="")
+				.progress_lists
+					ul.lists_block
+						li.list
+							a(href="#")
+								i.material-icons device_hub
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons import_contacts
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+						li.list
+							a(href="#")
+								i.material-icons table_chart
+							small.recommend
+								i.material-icons settings
+								span 0/0
+							small.optional
+								i.material-icons filter_tilt_shift
+								span 0/0
+		section.skill.skill_detail
+			.detail_top
+				.logo
+					i.material-icons category
+				.name BASIC<br>SKILLS
+			.detail_bottom
+				.unit.recommend
+					.top
+						.logo
+							i.material-icons settings
+						.name RECOMMENDED
+					.bottom
+						li Learn HTML
+						li Basics of CSS
+						li Basics of JavaScript
+				.unit.optional
+					.top
+						.logo
+							i.material-icons filter_tilt_shift
+						.name OPTIONAL
+					.bottom
+						li Learn HTML
+						li Basics of CSS
+						li Basics of JavaScript
+	
+block script
+	script(src="./js/vendors.js")
+	script(src="./js/skill-tree.js")

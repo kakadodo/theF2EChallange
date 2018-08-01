@@ -1,0 +1,95 @@
+[{
+  "name": "BASICS",
+  "branch":[{
+    "name": "BASIC SKILLS",
+    "recommend": ["Learn HTML", "Basics of CSS", "Basics of JavaScript"],
+    "optional": null,
+    "recommendPoint":0
+  },{
+    "name": "BASIC TOOLS",
+    "recommend": ["Git - Version Control", "Basic Terminal Usage", "Text Editor", "A Heart of Reserching"],
+    "optional": null,
+    "recommendPoint":0
+  }],
+  "levelComplete": false
+},
+{
+  "name": "CSS",
+  "branch":[{
+    "name": "CSS FRAMEWORK",
+    "recommend": ["Bootstrap"],
+    "optional": ["UIKit", "Foundation", "Semantic UI"],
+    "recommendPoint":0
+  },{
+    "name": "CSS PREPROCESSORS",
+    "recommend": ["Sass", "PostCSS"],
+    "optional": ["Less", "Stylus"],
+    "recommendPoint":0
+  },{
+    "name": "CSS ARCHITECHTURE",
+    "recommend": ["OOCSS"],
+    "optional": ["SMACSS", "BEM"],
+    "recommendPoint":0
+  },{
+    "name": "CSS SKILLS",
+    "recommend": ["Responsive Web", "Flexbox"],
+    "optional": null,
+    "recommendPoint":0
+  },{
+    "name": "CSS MASTERY",
+    "recommend": null,
+    "optional": ["Grid Layout", "Animation", "Transform 2D, 3D"],
+    "recommendPoint":null
+  }],
+  "levelComplete": false
+},
+{
+  "name": "JAVASCRIPT",
+  "branch":[{
+    "name": "BASIC DOM",
+    "recommend": null,
+    "optional": ["jQuery"],
+    "recommendPoint":null
+  },{
+    "name": "WEB DRAWING",
+    "recommend": null,
+    "optional": ["SVG", "Canvas", "D3.js"],
+    "recommendPoint":null
+  },{
+    "name": "JAVASCRIPT SKILLS",
+    "recommend": ["ES6"],
+    "optional": null,
+    "recommendPoint":0
+  },{
+    "name": "JAVASCRIPT FRAMEWORK",
+    "recommend": ["Vue.js", "Angular", "React.js"],
+    "optional": null,
+    "recommendPoint":0
+  },{
+    "name": "JAVASCRIPT PREPROCESSORS",
+    "recommend": null,
+    "optional": ["TypeScript", "Babel", "CoffeeScript"],
+    "recommendPoint":null
+  }],
+  "levelComplete": false
+},
+{
+  "name": "MANAGERS",
+  "branch":[{
+    "name": "PACKAGE MANAGERS",
+    "recommend": ["NPM", "YARN"],
+    "optional": ["Bower"],
+    "recommendPoint":0
+  },{
+    "name": "TASK RUNNERS",
+    "recommend": ["npm scripts", "gulp"],
+    "optional": ["grunt"],
+    "recommendPoint":0
+  },{
+    "name": "BUILD TOOLS",
+    "recommend": ["Webpack"],
+    "optional": ["Parcel"],
+    "recommendPoint":0
+  }],
+  "levelComplete": false
+}]

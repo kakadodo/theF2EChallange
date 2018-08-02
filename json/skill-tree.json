@@ -1,0 +1,248 @@
+[{
+    "name": "BASICS",
+    "branch": [{
+      "name": "BASIC SKILLS",
+      "iconName": "category",
+      "recommend": [{
+        "name": "Learn HTML",
+        "complete": false
+      }, {
+        "name": "Basics of CSS",
+        "complete": false
+      }, {
+        "name": "Basics of JavaScript",
+        "complete": false
+      }],
+      "optional": null,
+      "active": true,
+      "recommendComplete": false
+    }, {
+      "name": "BASIC TOOLS",
+      "iconName": "build",
+      "recommend": [{
+        "name": "Git - Version Control",
+        "complete": false
+      }, {
+        "name": "Basic Terminal Usage",
+        "complete": false
+      }, {
+        "name": "Text Editor",
+        "complete": false
+      }, {
+        "name": "A Heart of Reserching",
+        "complete": false
+      }],
+      "optional": null,
+      "active": false,
+      "recommendComplete": false
+    }],
+    "levelComplete": false
+  },
+  {
+    "name": "CSS",
+    "branch": [{
+      "name": "CSS FRAMEWORK",
+      "iconName": "flip_to_front",
+      "recommend": [{
+        "name": "Bootstrap",
+        "complete": false
+      }],
+      "optional": [{
+        "name": "UIKit",
+        "complete": false
+      }, {
+        "name": "Foundation",
+        "complete": false
+      }, {
+        "name": "Semantic UI",
+        "complete": false
+      }],
+      "active": false,
+      "recommendComplete": false
+    }, {
+      "name": "CSS PREPROCESSORS",
+      "iconName": "view_quilt",
+      "recommend": [{
+        "name": "Sass",
+        "complete": false
+      }, {
+        "name": "PostCSS",
+        "complete": false
+      }],
+      "optional": [{
+        "name": "Less",
+        "complete": false
+      }, {
+        "name": "Stylus",
+        "complete": false
+      }],
+      "active": false,
+      "recommendComplete": false
+    }, {
+      "name": "CSS ARCHITECHTURE",
+      "iconName": "developer_board",
+      "recommend": [{
+        "name": "OOCSS",
+        "complete": false
+      }],
+      "optional": [{
+        "name": "SMACSS",
+        "complete": false
+      }, {
+        "name": "BEM",
+        "complete": false
+      }],
+      "active": false,
+      "recommendComplete": false
+    }, {
+      "name": "CSS SKILLS",
+      "iconName": "devices",
+      "recommend": [{
+        "name": "Responsive Web",
+        "complete": false
+      }, {
+        "name": "Flexbox",
+        "complete": false
+      }],
+      "optional": null,
+      "active": false,
+      "recommendComplete": false
+    }, {
+      "name": "CSS MASTERY",
+      "iconName": "widgets",
+      "recommend": null,
+      "optional": [{
+        "name": "Grid Layout",
+        "complete": false
+      }, {
+        "name": "Animation",
+        "complete": false
+      }, {
+        "name": "Transform 2D, 3D",
+        "complete": false
+      }],
+      "recommendComplete": true
+    }],
+    "levelComplete": false
+  },
+  {
+    "name": "JAVASCRIPT",
+    "branch": [{
+      "name": "BASIC DOM",
+      "iconName": "hdr_strong",
+      "recommend": null,
+      "optional": [{
+        "name": "jQuery",
+        "complete": false
+      }],
+      "recommendComplete": true
+    }, {
+      "name": "WEB DRAWING",
+      "iconName": "gradient",
+      "recommend": null,
+      "optional": [{
+        "name": "SVG",
+        "complete": false
+      }, {
+        "name": "Canvas",
+        "complete": false
+      }, {
+        "name": "D3.js",
+        "complete": false
+      }],
+      "recommendComplete": true
+    }, {
+      "name": "JAVASCRIPT SKILLS",
+      "iconName": "format_quote",
+      "recommend": [{
+        "name": "ES6",
+        "complete": false
+      }],
+      "optional": null,
+      "active": false,
+      "recommendComplete": false
+    }, {
+      "name": "JAVASCRIPT FRAMEWORK",
+      "iconName": "developer_mode",
+      "recommend": [{
+        "name": "Vue.js",
+        "complete": false
+      }, {
+        "name": "Angular",
+        "complete": false
+      }, {
+        "name": "React.js",
+        "complete": false
+      }],
+      "optional": null,
+      "active": false,
+      "recommendComplete": false
+    }, {
+      "name": "JAVASCRIPT PREPROCESSORS",
+      "iconName": "nfc",
+      "recommend": null,
+      "optional": [{
+        "name": "TypeScript",
+        "complete": false
+      }, {
+        "name": "Babel",
+        "complete": false
+      }, {
+        "name": "CoffeeScript",
+        "complete": false
+      }],
+      "recommendComplete": true
+    }],
+    "levelComplete": false
+  },
+  {
+    "name": "MANAGERS",
+    "branch": [{
+      "name": "PACKAGE MANAGERS",
+      "iconName": "device_hub",
+      "recommend": [{
+        "name": "NPM",
+        "complete": false
+      }, {
+        "name": "YARN",
+        "complete": false
+      }],
+      "optional": [{
+        "name": "Bower",
+        "complete": false
+      }],
+      "active": false,
+      "recommendComplete": false
+    }, {
+      "name": "TASK RUNNERS",
+      "iconName": "import_contacts",
+      "recommend": [{
+        "name": "npm scripts",
+        "complete": false
+      }, {
+        "name": "gulp",
+        "complete": false
+      }],
+      "optional": [{
+        "name": "grunt",
+        "complete": false
+      }],
+      "active": false,
+      "recommendComplete": false
+    }, {
+      "name": "BUILD TOOLS",
+      "iconName": "table_chart",
+      "recommend": [{
+        "name": "Webpack",
+        "complete": false
+      }],
+      "optional": [{
+        "name": "Parcel",
+        "complete": false
+      }],
+      "active": false,
+      "recommendComplete": false
+    }],
+    "levelComplete": false
+  }
+]

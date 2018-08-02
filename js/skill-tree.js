@@ -1,7 +1,7 @@
 'use strict';
 
 $(function () {
-  var data = '../json/skill-tree.json';
+  var data = 'https://raw.githubusercontent.com/kakadodo/theF2EChallange/gh-pages/json/skill-tree.json';
   var vm = new Vue({
     el: '#app',
     data: {

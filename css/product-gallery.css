@@ -329,7 +329,8 @@ header {
     z-index: 1; }
 
 .pd_page header {
-  text-align-last: left;
+  -moz-text-align-last: left;
+       text-align-last: left;
   margin-bottom: 20px; }
 
 .pd_page .back {

@@ -20,11 +20,10 @@ function clean() {
 //     .pipe(browserSync.stream());
 // })
 
-//編譯jade格式
-function jade() {
-  return src(['./source/**/*.jade', '!./source/partials/*.jade'])
+function pug() {
+  return src(['./source/**/*.pug', '!./source/partials/*.pug'])
     .pipe($.plumber())
-    .pipe($.jade({
+    .pipe($.pug({
       pretty: true //未壓縮
     }))
     .pipe(dest('./public/'))
@@ -91,6 +90,13 @@ function imageMin() {
     .pipe(dest('./public/img'))
 };
 
+// 搬移 json 檔到 public
+function copyFiles() {
+  return src('./source/json/**/*.json')
+    .pipe(dest('./public/json'))
+    .pipe(browserSync.stream());
+};
+
 // 網頁伺服器
 function runBrowserSync() {
   browserSync.init({
@@ -103,10 +109,10 @@ function runBrowserSync() {
 
 // 自動監聽檔案的變更(監聽來源,任務名稱)
 function watchFiles() {
-  // watch('./source/**/*.html', ['copyHTML']);
-  watch('./source/**/*.jade', ['jade']);
-  watch('./source/scss/**/*.scss', ['sass']);
-  watch('./source/js/**/*.js', ['babel']);
+  watch('./source/json/**/*.json', copyFiles);
+  watch('./source/**/*.pug', pug);
+  watch('./source/scss/**/*.scss', sass);
+  watch('./source/js/**/*.js', babel);
 };
 
 // 自動發布public到github page
@@ -116,9 +122,9 @@ function deploy() {
 };
 
 // 專案完成時的導出任務
-exports.build = series(clean, jade, sass, babel, vendorJS, imageMin);
+exports.build = series(clean, pug, sass, babel, vendorJS, imageMin, copyFiles);
 
 exports.deploy = deploy;
 
 // 預設輸入gulp，一次啟動所有gulp任務
-exports.default = parallel(jade, sass, babel, vendorJS, imageMin, runBrowserSync, watch);
+exports.default = parallel(pug, sass, babel, vendorJS, imageMin, copyFiles, runBrowserSync, watchFiles);

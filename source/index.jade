@@ -10,119 +10,29 @@ block content
 	.jumbotron.jumbotron-fluid.KV_banner
 		.container
 			img.img-fluid(src="./img/the_F2E_KV.jpg")
-		.KV_decoration
-	.card-deck.card_wrapper
-		.card
-			img.card-img-top(src='./img/week9.jpg', alt='Week 9 - Skill Tree')
-			.card-body
-				h5.card-title Week 9 - Skill Tree
-				p.card-text
-					| Skill Point:   
-					span.badge.badge-warning.mr-1 #Pug
-					span.badge.badge-warning.mr-1 #Flexbox
-					span.badge.badge-warning.mr-1 #Vue
-			.card-footer
-				small.text-muted 2018/8/2
-			.card_cover
-				a(href="./skill-tree.html")
-					button.btn.btn-outline-light.btn-lg Checkout
-		.card
-			img.card-img-top(src='./img/week8.jpg', alt='Week 8 - Parallax Scrolling')
-			.card-body
-				h5.card-title Week 8 - Parallax Scrolling
-				p.card-text
-					| Skill Point:   
-					span.badge.badge-warning.mr-1 #Pug
-					span.badge.badge-warning.mr-1 #CSS animation
-					span.badge.badge-warning.mr-1 #parallax-scrolling plugin
-			.card-footer
-				small.text-muted 2018/7/26
-			.card_cover
-				a(href="./parallax-scrolling.html")
-					button.btn.btn-outline-light.btn-lg Checkout
-		.card
-			img.card-img-top(src='./img/week6.jpg', alt='Week 6 - Validation')
-			.card-body
-				h5.card-title Week 6 - Validation
-				p.card-text
-					| Skill Point:   
-					span.badge.badge-warning.mr-1 #Pug
-					span.badge.badge-warning.mr-1 #HTML5 validation
-					span.badge.badge-warning.mr-1 #Vue
-			.card-footer
-				small.text-muted 2018/7/10
-			.card_cover
-				a(href="./validation.html")
-					button.btn.btn-outline-light.btn-lg Checkout
-		.card
-			img.card-img-top(src='./img/week5.jpg', alt='Week 5 - Comic Viewer')
-			.card-body
-				h5.card-title Week 5 - Comic Viewer
-				p.card-text
-					| Skill Point:   
-					span.badge.badge-warning.mr-1 #Pug
-					span.badge.badge-warning.mr-1 #SCSS
-					span.badge.badge-warning.mr-1 #jQuery
-			.card-footer
-				small.text-muted 2018/7/3
-			.card_cover
-				a(href="./comic-viewer.html")
-					button.btn.btn-outline-light.btn-lg Checkout
-		.card
-			img.card-img-top(src='./img/week4.jpg', alt='Week 4 - Product Gallery')
-			.card-body
-				h5.card-title Week 4 - Product Gallery
-				p.card-text
-					| Skill Point:   
-					span.badge.badge-warning.mr-1 #Pug
-					span.badge.badge-warning.mr-1 #CSS Grid
-					span.badge.badge-warning.mr-1 #SCSS
-			.card-footer
-				small.text-muted 2018/6/27
-			.card_cover
-				a(href="./product-gallery.html")
-					button.btn.btn-outline-light.btn-lg Checkout
-		.card
-			img.card-img-top(src='./img/week3.jpg', alt='Week 3 - Admin Order')
-			.card-body
-				h5.card-title Week 3 - Admin Order
-				p.card-text
-					| Skill Point:   
-					span.badge.badge-warning.mr-1 #Pug
-					span.badge.badge-warning.mr-1 #Bootstrap 4
-					span.badge.badge-warning.mr-1 #C3.js
-			.card-footer
-				small.text-muted 2018/6/20
-			.card_cover
-				a(href="./admin-order.html")
-					button.btn.btn-outline-light.btn-lg Checkout
-		.card
-			img.card-img-top(src='./img/week2.jpg', alt='Week 2 - filter image')
-			.card-body
-				h5.card-title Week 2 - filter
-				p.card-text
-					| Skill Point:   
-					span.badge.badge-warning.mr-1 #Vue
-					span.badge.badge-warning.mr-1 #Bootstrap 4
-					span.badge.badge-warning.mr-1 #Google Map API
-			.card-footer
-				small.text-muted 2018/6/13
-			.card_cover
-				a(href="./filter.html")
-					button.btn.btn-outline-light.btn-lg Checkout
-		.card
-			img.card-img-top(src='./img/week1.jpg', alt='Week 1 - todolist image')
-			.card-body
-				h5.card-title Week 1 - Todolist
-				p.card-text
-					| Skill Point:   
-					span.badge.badge-warning.mr-1 #Pug
-					span.badge.badge-warning.mr-1 #jQuery
-					span.badge.badge-warning.mr-1 #localStorage
-			.card-footer
-				small.text-muted 2018/6/8
-			.card_cover
-				a(href="./todolist.html")
-					button.btn.btn-outline-light.btn-lg Checkout
+	.js_itemList.card-deck.card_wrapper
+		.js_loading.d-flex.justify-content-center.w-100
+			.spinner-grow.text-warning(role="status")
+				span.sr-only Loading...
+		//- .card
+		//- 	.card-img
+		//- 		img.card-img-top(src='./img/week9.jpg', alt='Week 9 - Skill Tree')
+		//- 	.card-body
+		//- 		h5.card-title Week 9 - Skill Tree
+		//- 		p.card-text
+		//- 			| Skill Point:   
+		//- 			span.badge.badge-warning.mr-1 #Pug
+		//- 			span.badge.badge-warning.mr-1 #Flexbox
+		//- 			span.badge.badge-warning.mr-1 #Vue
+		//- 	.card-footer.d-flex.justify-content-between
+		//- 		small.text-muted 2018/8/2
+		//- 		span.badge.badge-pill.badge-dark 1st
+		//- 	.card_cover
+		//- 		a(href="./skill-tree.html")
+		//- 			button.btn.btn-outline-warning.btn-lg Checkout
 	footer
-		| Created by Chelsea Chang
+		| Created by Chelsea Chang 2019
+
+	block script
+	script(src="./js/vendors.js")
+	script(src="./js/index.js")

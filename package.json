@@ -1,6 +1,6 @@
 {
   "name": "The_F2E_Challenge",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "minimist": "^1.2.0"
   },
   "dependencies": {
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.3.1",
     "jquery": "^3.3.1"
   }
 }

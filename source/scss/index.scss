@@ -3,35 +3,17 @@
 @import 'variables';
 @import 'bootstrap';
 
+$kvColor: #ffff00;
+
 body{
-  background-color: #e8e8e8;
+  background-color: black;
   font-family: Verdana, 'Microsoft JhengHei';
   color: $gray-800;
   overflow-x: hidden;
 }
 
 .KV_banner{
-  position: relative;
-  padding: 0;
-  padding-bottom: 50px;
-  background-color: #09043E;
-  background-image: radial-gradient(circle at center, #09043E 60%, darken(#09043E,10%));
-  //讓banner貼齊螢幕
-  .container{
-    margin: 0;
-    padding: 0;
-  }
-  .KV_decoration{
-    position: absolute;
-    left: 0;
-    bottom: -255px;
-    width: 101%;
-    padding: 250px 0;
-    margin-left: -2px;
-    background-image: url('../img/KV_deco.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
+  background-color: $kvColor;
 }
 .card_wrapper{
   margin: 0 auto;
@@ -40,13 +22,19 @@ body{
     margin-top: 30px;
     position: relative;
     overflow: hidden;
+    border: 3px solid $kvColor;
+    border-bottom: 15px solid darken($kvColor, 10%);
     box-shadow: 0 15px 20px -10px rgba(#000,.2);
     transition: box-shadow .5s;
     flex: 1 0 28%;
+    .card-img {
+      overflow: hidden;
+    }
     &:hover{
       box-shadow: 0 20px 20px -10px rgba(#000,.2);
       .card_cover{
         opacity: 1;
+        background-color: rgba(#ff00ff, 0.7);
       }
       .card-img-top{
         transform: translateY(20%) scale(1.5);

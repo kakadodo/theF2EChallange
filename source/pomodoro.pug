@@ -1,0 +1,216 @@
+extends ./partials/layout.jade
+
+block socialMeta
+	<!-- Search Engine -->
+	<meta name="description" content="the F2E - 番茄鐘">
+	<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week1.jpg">
+	<!-- Schema.org for Google -->
+	<meta itemprop="name" content="2nd Week 1 - Pomodoro">
+	<meta itemprop="description" content="the F2E - 番茄鐘">
+	<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week1.jpg">
+	<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+	<meta property="og:title" content="2nd Week 1 - Pomodoro">
+	<meta property="og:description" content="the F2E - 番茄鐘">
+	<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week1.jpg">
+	<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/pomodoro.html">
+	<meta property="og:site_name" content="2nd Week 1 - Pomodoro">
+	<meta property="og:locale" content="zh_TW">
+	<meta property="fb:admins" content="1420062581">
+	<meta property="fb:app_id" content="333459487173924">
+	<meta property="og:type" content="website">
+
+block pageTitle
+	title 2nd Week 1 - Pomodoro
+
+block css
+	//- link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+	link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css")
+	link(rel="stylesheet", href="./css/pomodoro.css")
+block content
+	#app.container-fluid(:class="mode" v-cloak)
+		.audios
+			audio#js_ring_clown_horn(src="https://firebasestorage.googleapis.com/v0/b/todolists-9487.appspot.com/o/clown_horn.mp3?alt=media&token=cd113b84-bf9a-44a6-865f-f7e0f09915c4" type="audio/mpeg")
+			audio#js_ring_pastoral(src="https://firebasestorage.googleapis.com/v0/b/todolists-9487.appspot.com/o/pastoral.mp3?alt=media&token=c6744ef2-ec53-4bd4-b51f-49e2a5cca6ce" type="audio/mpeg")
+		.row
+			.col-8.d-flex.align-items-center(v-if="undoLists.length==0")
+				.input_wrapper.w-100(:class="{break: mode === 'break'}")
+					input(type="text" placeholder="add a new mission…" v-model="todoInput"
+						@keyup.enter="addTodo")
+					button.btn_basic(@click="addTodo")
+						i.material-icons add
+			.col-8(v-else, :class="modeBgClass", style="position:relative;")
+				.playlist_wrapper.d-flex.flex-column.justify-content-between.p-5
+					.input_wrapper(:class="{break: mode === 'break'}")
+						input(type="text" placeholder="add a new mission…" v-model="todoInput"
+							@keyup.enter="addTodo")
+						button.btn_basic(@click="addTodo")
+							i.material-icons add
+					.playing
+						transition(enter-active-class="animated zoomInLeft faster"
+							leave-active-class="animated zoomOutLeft faster" mode="out-in")
+							.custom_control(:key="playingList.id")
+								input.custom_control_input(type="checkbox" v-model="playingList.finished")
+								label.custom_control_label(@click="playingList.finished = true;")
+									span {{ playingList.title }}
+									.playing_pies
+										span.playing_pie_done(v-if="playingList.pomororoCount > 0" v-for="num in playingList.pomororoCount")
+										.playing_pie(style="width:25px; height:25px;")
+											canvas.js_playing_pie(width="12" height="12")
+						.playing_timer {{ displayDueTime }}
+					transition-group.list_group(v-if="queueLists.length>0" tag="ul"
+						enter-active-class="animated zoomInLeft faster"
+						leave-active-class="animated zoomOutLeft faster" mode="out-in")
+						li.list_group_item(v-for="list in queueLists",:key="list.id")
+							.custom_control
+								input.custom_control_input(type="checkbox" v-model="list.finished")
+								label.custom_control_label
+									span(@click="list.finished = !list.finished") {{ list.title }}
+									button.btn_basic(@click="switchPlayingTodo(list)")
+										i.material-icons play_circle_outline
+						li.list_group_addon(key="more")
+							button.btn_basic(@click="showModal(1)") MORE
+					ul.list_group(v-else)
+						li.list_group_item NO MORE TO-DO
+				.displayPieWrapper
+					canvas.js_display_pie(width="540" height="540")
+					.displayPieCover(:class="modeDisplayPieClass")
+						.timerControl
+							button.timerControl_play(:class="modePlayBtnClass", @click="switchCountdown")
+							button.timerControl_stop(:class="modePlayBtnClass", @click="clearCountdown")
+			.col-4.bg_primary
+				.menu_wrapper.p-5
+					ul.icon_group
+						li.icon_group_item.mb-5
+							button.btn_basic(@click="showModal(1)")
+								i.material-icons list
+						li.icon_group_item.mb-5
+							button.btn_basic(@click="showModal(2)")
+								i.material-icons insert_chart
+						li.icon_group_item.mb-5
+							button.btn_basic(@click="showModal(3)")
+								i.material-icons library_music
+						li.icon_group_item
+							button.btn_basic(@click="switchMode")
+								i.material-icons cached
+						li.icon_group_logo.mt-auto
+							| POMODORO
+		transition(enter-active-class="animated fadeInRight faster"
+			leave-active-class="animated fadeOutRight faster")
+			.modal_detail(v-if="isModalShow")
+				.row.h-100
+					.col-5
+						.p-5.h-100(style="position:relative;")
+							.menu_group
+								a.menu_group_item.mb-4(href="#", :class="{active: currentDetailModal==1}",
+									@click="currentDetailModal=1")
+									i.material-icons list
+									span.ml-1 TO-DO LIST
+								a.menu_group_item.mb-4(href="#", :class="{active: currentDetailModal==2}",
+									@click="currentDetailModal=2")
+									i.material-icons insert_chart
+									span.ml-1 ANALYTICS
+								a.menu_group_item.mb-4(href="#", :class="{active: currentDetailModal==3}",
+									@click="currentDetailModal=3")
+									i.material-icons library_music
+									span.ml-1 RINGTONES
+							.playing_panel
+								button.playing_panel_btn(@click="backToPlaying")
+								.d-flex.flex-column.justify-content-center
+									.playing_panel_timer.mt-5 25:00
+									span.playing_panel_title(v-if="playingList") {{ playingList.title  }}
+					.col-5
+						.p-5
+							transition(enter-active-class="animated flipInX fast"
+								leave-active-class="animated flipOutX fast" mode="out-in")
+								section(v-if="currentDetailModal==1", key="1")
+									.input_wrapper
+										input(type="text" placeholder="add a new mission…" v-model="todoInput"
+											@keyup.enter="addTodo")
+										button.btn_basic(@click="addTodo")
+											i.material-icons add
+									.collapse_group.mt-5
+										a.collapse_group_title(data-toggle="collapse", href="#collapseTodo")
+											span TO-DO
+											i.material-icons arrow_drop_up
+										.collapse_group_item.collapse.show(id="collapseTodo")
+											transition-group.list_group(tag="ul" mode="out-in"
+												enter-active-class="animated flipInY faster"
+												leave-active-class="animated flipOutY faster")
+												li.list_group_item(v-for="list in undoLists", :key="list.id")
+													.custom_control
+														input.custom_control_input(type="checkbox" v-model="list.finished")
+														label.custom_control_label
+															span(@click="list.finished = !list.finished") {{ list.title }}
+															button.btn_basic(@click="switchPlayingTodo(list)")
+																i.material-icons play_circle_outline
+									.collapse_group.mt-5
+										a.collapse_group_title(data-toggle="collapse", href="#collapseDoneTodo")
+											span DONE
+											i.material-icons arrow_drop_down
+										.collapse_group_item.collapse(id="collapseDoneTodo")
+											ul.list_group
+												li.list_group_item(v-for="list in doneLists")
+													.custom_control
+														input.custom_control_input(type="checkbox" v-model="list.finished")
+														label.custom_control_label
+															span {{ list.title }}
+															.playing_pies
+																span.playing_pie_done(v-if="list.pomororoCount > 0" v-for="num in list.pomororoCount")
+								section(v-else-if="currentDetailModal==2", key="2")
+									.collapse_group
+										a.collapse_group_title
+											span FOCUS TIME
+										.collapse_group_item
+											.row
+												.col-6.anaylytic_panel
+													span.anaylytic_panel_title TODAY
+													strong.anaylytic_panel_count 20
+													span.anaylytic_panel_unit /TOMATO
+												.col-6.anaylytic_panel
+													span.anaylytic_panel_title WEEK
+													strong.anaylytic_panel_count 100
+													span.anaylytic_panel_unit /TOMATO
+									.collapse_group
+										a.collapse_group_title
+											span CHART
+											.d-flex.align-items-center(style="font-size: initial;")
+												i.material-icons keyboard_arrow_left
+												span 2019.7.1 - 2019.7.7
+												i.material-icons keyboard_arrow_right
+										.collapse_group_item
+											canvas.js_chart_bar
+								section(v-else, key="3")
+									.collapse_group
+										a.collapse_group_title
+											span WORK
+										.collapse_group_item
+											.custom-control.custom-radio.custom-control-inline
+												input.custom-control-input(type="radio" v-model="ringTone.work" value="none")
+												label.custom-control-label(@click="ringTone.work='none'") NONE
+											.custom-control.custom-radio.custom-control-inline
+												input.custom-control-input(type="radio" v-model="ringTone.work" value="clown_horn")
+												label.custom-control-label(@click="ringTone.work='clown_horn'") CLOWN HORN
+									.collapse_group
+										a.collapse_group_title
+											span BREAK
+										.collapse_group_item
+											.custom-control.custom-radio.custom-control-inline
+												input.custom-control-input(type="radio" v-model="ringTone.break" value="none")
+												label.custom-control-label(@click="ringTone.break='none'") NONE
+											.custom-control.custom-radio.custom-control-inline
+												input.custom-control-input(type="radio" v-model="ringTone.break" value="pastoral")
+												label.custom-control-label(@click="ringTone.break='pastoral'") PASTORAL
+					.col-2
+						.menu_wrapper.p-5
+							ul.icon_group
+								li.icon_group_item
+									button.btn_basic(@click="isModalShow=false")
+										i.material-icons clear
+								li.icon_group_logo.mt-auto
+									| POMODORO
+block script
+	script(src="./js/vendors.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js")
+	script(src="./js/pomodoro.js")

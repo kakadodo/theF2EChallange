@@ -10,24 +10,23 @@
     </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <!-- Search Engine -->
-    <meta name="description" content="the F2E - 代辦清單">
-    <meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/week1.jpg">
-    <!-- Schema.org for Google -->
-    <meta itemprop="name" content="Week 1 - Todolist">
-    <meta itemprop="description" content="the F2E - 代辦清單">
-    <meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/week1.jpg">
-    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-    <meta property="og:title" content="Week 1 - Todolist">
-    <meta property="og:description" content="the F2E - 代辦清單">
-    <meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/week1.jpg">
-    <meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/todolist.html">
-    <meta property="og:site_name" content="Week 1 - Todolist">
-    <meta property="og:locale" content="zh_TW">
-    <meta property="fb:admins" content="1420062581">
-    <meta property="fb:app_id" content="333459487173924">
-    <meta property="og:type" content="website">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 代辦清單">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/week1.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="Week 1 - Todolist">
+<meta itemprop="description" content="the F2E - 代辦清單">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/week1.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="Week 1 - Todolist">
+<meta property="og:description" content="the F2E - 代辦清單">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/week1.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/todolist.html">
+<meta property="og:site_name" content="Week 1 - Todolist">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
     <title>Week 1 - Todolist</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/todolist.css">
@@ -35,26 +34,26 @@
   <body>
     <header>
       <ul class="container nav">
-        <li data-mode="all" class="nav_list active">My Tasks</li>
-        <li data-mode="progress" class="nav_list">In Progress</li>
-        <li data-mode="completed" class="nav_list">Completed</li>
+        <li class="nav_list active" data-mode="all">My Tasks</li>
+        <li class="nav_list" data-mode="progress">In Progress</li>
+        <li class="nav_list" data-mode="completed">Completed</li>
       </ul>
     </header>
     <div class="container">
       <div class="addTask_area">
-        <input type="text" placeholder="+ Add Task" class="addTask_input">
+        <input class="addTask_input" type="text" placeholder="+ Add Task">
         <div class="task_panel d_none">
           <div class="task_panel_top">
             <div class="d_flex">
-              <input type="checkbox" name="completed_check" disabled class="completed_check">
-              <input type="text" placeholder="Type Something Here..." name="title_input" class="title_input">
-              <input type="checkbox" name="star_check" disabled class="star_check"><a href="#" class="edit_btn active"><i class="fas fa-pencil-alt"></i></a>
+              <input class="completed_check" type="checkbox" name="completed_check" disabled>
+              <input class="title_input" type="text" placeholder="Type Something Here..." name="title_input">
+              <input class="star_check" type="checkbox" name="star_check" disabled><a class="edit_btn active" href="#"><i class="fas fa-pencil-alt"></i></a>
             </div>
           </div>
           <div class="task_panel_bottom">
             <div class="form_group">
               <h4><i class="far fa-calendar-alt"></i>Deadline</h4>
-              <input type="date" placeholder="yyyy/mm/dd" name="task_date" class="ml-1">
+              <input class="ml-1" type="date" placeholder="yyyy/mm/dd" name="task_date">
               <input type="time" placeholder="hh:mm" style="margin-left:5px" name="task_time">
             </div>
             <div class="form_group">
@@ -64,18 +63,18 @@
                   <p class="name"></p>
                   <p class="upload"></p>
                 </div>
-                <label for="task_file" class="file_btn ml-1">
+                <label class="file_btn ml-1" for="task_file">
                   <input id="task_file" type="file" name="task_file" hidden>
                 </label>
               </div>
             </div>
             <div class="form_group">
               <h4><i class="far fa-comment-dots"></i>Comment</h4>
-              <textarea name="task_comment" rows="6" placeholder="Type Your Memo Here..." class="ml-1"></textarea>
+              <textarea class="ml-1" name="task_comment" rows="6" placeholder="Type Your Memo Here..."></textarea>
             </div>
             <div class="button_group">
-              <button id="js_cancelAddTask" class="btn_cancel">X Cancel</button>
-              <button id="js_addTask" class="btn_primary">+ Add Task</button>
+              <button class="btn_cancel" id="js_cancelAddTask">X Cancel</button>
+              <button class="btn_primary" id="js_addTask">+ Add Task</button>
             </div>
           </div>
         </div>

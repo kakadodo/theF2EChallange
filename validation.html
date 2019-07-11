@@ -10,24 +10,23 @@
     </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <!-- Search Engine -->
-    <meta name="description" content="the F2E - 表單驗證">
-    <meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/week6.jpg">
-    <!-- Schema.org for Google -->
-    <meta itemprop="name" content="Week 6 - Validation">
-    <meta itemprop="description" content="the F2E - 表單驗證">
-    <meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/week6.jpg">
-    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-    <meta property="og:title" content="Week 6 - Validation">
-    <meta property="og:description" content="the F2E - 表單驗證">
-    <meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/week6.jpg">
-    <meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/validation.html">
-    <meta property="og:site_name" content="Week 6 - Validation">
-    <meta property="og:locale" content="zh_TW">
-    <meta property="fb:admins" content="1420062581">
-    <meta property="fb:app_id" content="333459487173924">
-    <meta property="og:type" content="website">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 表單驗證">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/week6.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="Week 6 - Validation">
+<meta itemprop="description" content="the F2E - 表單驗證">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/week6.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="Week 6 - Validation">
+<meta property="og:description" content="the F2E - 表單驗證">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/week6.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/validation.html">
+<meta property="og:site_name" content="Week 6 - Validation">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
     <title>Week 6 - Validation</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/validation.css">
@@ -36,125 +35,125 @@
     <div id="app">
       <div class="container">
         <div class="row justify-content-center">
-          <div style="border-top:8px solid #0275D8" class="col-md-8">
-            <div :style="&quot;background-position:center &quot;+(-18)*progressTop+&quot;px;&quot;" class="step_progress"></div>
+          <div class="col-md-8" style="border-top:8px solid #0275D8">
+            <div class="step_progress" :style="&quot;background-position:center &quot;+(-18)*progressTop+&quot;px;&quot;"></div>
             <transition name="slide-fade" appear mode="out-in">
-              <div v-if="step==1" key="1" class="step step_create_account">
+              <div class="step step_create_account" v-if="step==1" key="1">
                 <h1 class="text-center">Create Account</h1>
                 <h4 class="text-center">Glad to see you here!</h4>
-                <form novalidate v-on:submit="submitCheck" class="needs-validation mt-3">
+                <form class="needs-validation mt-3" novalidate v-on:submit="submitCheck">
                   <div class="form-group">
                     <label for="">Account</label>
-                    <input type="email" placeholder="example@email.com" required="" v-model="createAccount.mail" class="form-control">
+                    <input class="form-control" type="email" placeholder="example@email.com" required="" v-model="createAccount.mail">
                     <div class="invalid-tooltip">INVALID EMAIL</div>
                   </div>
                   <div class="form-group">
                     <label for="">Password</label>
-                    <input id="input_password" type="password" minLength="8" placeholder="●●●●●●●●" required="" v-model="createAccount.password" class="form-control">
+                    <input class="form-control" id="input_password" type="password" minLength="8" placeholder="●●●●●●●●" required="" v-model="createAccount.password">
                     <div class="invalid-tooltip">MINIMUM 8 CHARACTERS</div>
                   </div>
                   <div class="form-group">
                     <label for="">Comfirm Password</label>
-                    <input id="input_confirmPassword" type="password" minLength="8" placeholder="●●●●●●●●" required="" v-model="createAccount.confirmPassword" class="form-control">
+                    <input class="form-control" id="input_confirmPassword" type="password" minLength="8" placeholder="●●●●●●●●" required="" v-model="createAccount.confirmPassword">
                     <div class="invalid-tooltip">NOT MATCH</div>
                   </div>
-                  <button type="submit" :disabled="!createAccount.mail || !createAccount.password || !createAccount.confirmPassword" class="btn btn-primary btn-lg btn-block mt-5">SUBMIT & NEXT</button>
+                  <button class="btn btn-primary btn-lg btn-block mt-5" type="submit" :disabled="!createAccount.mail || !createAccount.password || !createAccount.confirmPassword">SUBMIT & NEXT</button>
                 </form>
               </div>
-              <div v-if="step==2" key="2" class="step step_general_Info">
+              <div class="step step_general_Info" v-if="step==2" key="2">
                 <h1 class="text-center">General Infomation</h1>
                 <h4 class="text-center">Tell us who you are!</h4>
-                <form novalidate v-on:submit="submitCheck" class="needs-validation mt-3">
+                <form class="needs-validation mt-3" novalidate v-on:submit="submitCheck">
                   <div class="form-row">
                     <div class="col-md-6 mb-3">
                       <label for="">Name<small>(optional)</small></label>
-                      <input type="text" placeholder="Example Name" class="form-control">
+                      <input class="form-control" type="text" placeholder="Example Name">
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="">Phone*</label>
-                      <input type="text" placeholder="0912345678" minlength="10" pattern="[0-9]*" required="" v-model="generalInfo.phone" class="form-control">
+                      <input class="form-control" type="text" placeholder="0912345678" minlength="10" pattern="[0-9]*" required="" v-model="generalInfo.phone">
                       <div class="invalid-tooltip">NUMBERS ONLY</div>
                     </div>
                     <div class="col-12 mb-3">
                       <label for="">Birth Date<small>(optional)</small></label>
-                      <input type="date" min="1900-01-01" max="2000-12-31" class="form-control">
+                      <input class="form-control" type="date" min="1900-01-01" max="2000-12-31">
                     </div>
                     <div class="col-12 mb-3">
                       <label for="">Address*</label>
                       <div class="form-row">
                         <div class="col-6 mb-3">
-                          <input type="text" placeholder="City" required="" v-model="generalInfo.city" class="form-control">
+                          <input class="form-control" type="text" placeholder="City" required="" v-model="generalInfo.city">
                         </div>
                         <div class="col-6 mb-3">
-                          <input type="text" placeholder="Dist" required="" v-model="generalInfo.dist" class="form-control">
+                          <input class="form-control" type="text" placeholder="Dist" required="" v-model="generalInfo.dist">
                         </div>
                       </div>
-                      <input type="text" placeholder="Address Detail" required="" v-model="generalInfo.address" class="form-control">
+                      <input class="form-control" type="text" placeholder="Address Detail" required="" v-model="generalInfo.address">
                       <div class="invalid-tooltip">REQUIRED FILED</div>
                     </div>
                   </div>
-                  <button type="submit" :disabled="!generalInfo.phone || !generalInfo.city || !generalInfo.dist || !generalInfo.address" class="btn btn-primary btn-lg btn-block mt-5">SUBMIT & NEXT</button>
+                  <button class="btn btn-primary btn-lg btn-block mt-5" type="submit" :disabled="!generalInfo.phone || !generalInfo.city || !generalInfo.dist || !generalInfo.address">SUBMIT & NEXT</button>
                 </form>
               </div>
-              <div v-if="step==3" key="3" class="step step_update_pic">
+              <div class="step step_update_pic" v-if="step==3" key="3">
                 <h1 class="text-center">Update Profile Picture</h1>
                 <h4 class="text-center">We wanna know you more!</h4>
-                <form v-on:submit="submitCheck" class="mt-4">
+                <form class="mt-4" v-on:submit="submitCheck">
                   <div class="input_file">
                     <input type="file" accept="image/*" multiple v-on:change="checkFile">
-                    <label for="" class="d-flex"><i class="fas fa-images fa-3x"></i>
+                    <label class="d-flex" for=""><i class="fas fa-images fa-3x"></i>
                       <p class="ml-3">UPLOAD UP TO 3 PHOTOS<br><small>MAX SIZE: 150*150px</small></p>
                     </label>
                   </div>
-                  <div v-if="fileErrName.length&gt;0" class="input_file_invalid my-3"><i class="fas fa-exclamation-triangle fa-lg mr-2"></i>{{fileErrName.length}} FILE IS OVER THE MAXIMUM SIZE - {{fileErrName.join()}}</div>
+                  <div class="input_file_invalid my-3" v-if="fileErrName.length&gt;0"><i class="fas fa-exclamation-triangle fa-lg mr-2"></i>{{fileErrName.length}} FILE IS OVER THE MAXIMUM SIZE - {{fileErrName.join()}}</div>
                   <div class="preview">
-                    <div v-for="(file, index) in files" class="preview_item mr-3"><img :src="file" class="img-fluid"><a href="" v-on:click.prevent="files.splice(index,1)"><i class="fas fa-trash-alt fa-lg"></i></a></div>
+                    <div class="preview_item mr-3" v-for="(file, index) in files"><img class="img-fluid" :src="file"><a href="" v-on:click.prevent="files.splice(index,1)"><i class="fas fa-trash-alt fa-lg"></i></a></div>
                   </div>
-                  <button type="submit" class="btn btn-primary btn-lg btn-block mt-5">SUBMIT & NEXT</button>
+                  <button class="btn btn-primary btn-lg btn-block mt-5" type="submit">SUBMIT & NEXT</button>
                 </form>
               </div>
-              <div v-if="step==4" key="4" class="step step_payment">
+              <div class="step step_payment" v-if="step==4" key="4">
                 <h1 class="text-center">Payment Method</h1>
                 <h4 class="text-center">Add your credit card infomation! </h4>
-                <form novalidate v-on:submit="submitCheck" class="needs-validation mt-3">
+                <form class="needs-validation mt-3" novalidate v-on:submit="submitCheck">
                   <div class="form-group card_number">
                     <label for="">Card Number</label>
-                    <input type="text" placeholder="1234 5678 9012 3456" required="" pattern="[0-9]{16}" v-model="paymentMethod.cardNumber" class="form-control">
+                    <input class="form-control" type="text" placeholder="1234 5678 9012 3456" required="" pattern="[0-9]{16}" v-model="paymentMethod.cardNumber">
                     <div class="invalid-tooltip">INVALID NUMBERS</div><i class="fab fa-cc-visa fa-lg"></i>
                   </div>
                   <div class="form-row">
                     <div class="col-md-6 mb-3">
                       <label for="">Cardholder Name</label>
-                      <input type="text" placeholder="EXAMPLE NAME" required="" v-model="paymentMethod.cardHolder" class="form-control">
+                      <input class="form-control" type="text" placeholder="EXAMPLE NAME" required="" v-model="paymentMethod.cardHolder">
                       <div class="invalid-tooltip">REQUIRED FILED</div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="">Bank Name</label>
-                      <input type="text" placeholder="EXAMPLE BANK" required="" v-model="paymentMethod.bankName" class="form-control">
+                      <input class="form-control" type="text" placeholder="EXAMPLE BANK" required="" v-model="paymentMethod.bankName">
                       <div class="invalid-tooltip">REQUIRED FILED</div>
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="">CVV</label>
-                      <input type="text" placeholder="123" required="" pattern="[0-9]{3}" v-model="paymentMethod.cvv" class="form-control">
+                      <input class="form-control" type="text" placeholder="123" required="" pattern="[0-9]{3}" v-model="paymentMethod.cvv">
                       <div class="invalid-tooltip">REQUIRED FILED</div>
                     </div>
                     <div class="col-md-8 mb-3">
                       <label for="">Expire Date</label>
                       <div class="form-row">
                         <div class="col-6 mb-3">
-                          <input type="number" placeholder="Month" required="" min="1" max="12" v-model="paymentMethod.expireMonth" class="form-control">
+                          <input class="form-control" type="number" placeholder="Month" required="" min="1" max="12" v-model="paymentMethod.expireMonth">
                         </div>
                         <div class="col-6 mb-3">
-                          <input type="number" placeholder="Year" required="" min="2018" max="2028" v-model="paymentMethod.expireYear" class="form-control">
+                          <input class="form-control" type="number" placeholder="Year" required="" min="2018" max="2028" v-model="paymentMethod.expireYear">
                         </div>
                       </div>
                       <div class="invalid-tooltip">REQUIRED FILED</div>
                     </div>
                   </div>
-                  <button type="submit" :disabled="!paymentMethod.cardNumber || !paymentMethod.cardHolder || !paymentMethod.bankName || !paymentMethod.cvv || !paymentMethod.expireMonth || !paymentMethod.expireYear" class="btn btn-primary btn-lg btn-block mt-5">DONE</button>
+                  <button class="btn btn-primary btn-lg btn-block mt-5" type="submit" :disabled="!paymentMethod.cardNumber || !paymentMethod.cardHolder || !paymentMethod.bankName || !paymentMethod.cvv || !paymentMethod.expireMonth || !paymentMethod.expireYear">DONE</button>
                 </form>
               </div>
-              <div v-if="step==5" key="5" class="step step_fin text-center">
+              <div class="step step_fin text-center" v-if="step==5" key="5">
                 <h1>Congratulations</h1>
                 <h4>Now you’re one of us!</h4>
                 <h2 class="fas fa-smile mt-2"></h2>

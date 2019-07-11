@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-115362207-1" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-115362207-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 番茄鐘">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week1.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="2nd Week 1 - Pomodoro">
+<meta itemprop="description" content="the F2E - 番茄鐘">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week1.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="2nd Week 1 - Pomodoro">
+<meta property="og:description" content="the F2E - 番茄鐘">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week1.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/pomodoro.html">
+<meta property="og:site_name" content="2nd Week 1 - Pomodoro">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
+    <title>2nd Week 1 - Pomodoro</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="./css/pomodoro.css">
+  </head>
+  <body>
+    <div class="container-fluid" id="app" :class="mode" v-cloak>
+      <div class="audios">
+        <audio id="js_ring_clown_horn" src="https://firebasestorage.googleapis.com/v0/b/todolists-9487.appspot.com/o/clown_horn.mp3?alt=media&amp;token=cd113b84-bf9a-44a6-865f-f7e0f09915c4" type="audio/mpeg"></audio>
+        <audio id="js_ring_pastoral" src="https://firebasestorage.googleapis.com/v0/b/todolists-9487.appspot.com/o/pastoral.mp3?alt=media&amp;token=c6744ef2-ec53-4bd4-b51f-49e2a5cca6ce" type="audio/mpeg"></audio>
+      </div>
+      <div class="row">
+        <div class="col-8 d-flex align-items-center" v-if="undoLists.length==0">
+          <div class="input_wrapper w-100" :class="{break: mode === 'break'}">
+            <input type="text" placeholder="add a new mission…" v-model="todoInput" @keyup.enter="addTodo">
+            <button class="btn_basic" @click="addTodo"><i class="material-icons">add</i></button>
+          </div>
+        </div>
+        <div class="col-8" v-else :class="modeBgClass" style="position:relative;">
+          <div class="playlist_wrapper d-flex flex-column justify-content-between p-5">
+            <div class="input_wrapper" :class="{break: mode === 'break'}">
+              <input type="text" placeholder="add a new mission…" v-model="todoInput" @keyup.enter="addTodo">
+              <button class="btn_basic" @click="addTodo"><i class="material-icons">add</i></button>
+            </div>
+            <div class="playing">
+              <transition enter-active-class="animated zoomInLeft faster" leave-active-class="animated zoomOutLeft faster" mode="out-in">
+                <div class="custom_control" :key="playingList.id">
+                  <input class="custom_control_input" type="checkbox" v-model="playingList.finished">
+                  <label class="custom_control_label" @click="playingList.finished = true;"><span>{{ playingList.title }}</span>
+                    <div class="playing_pies"><span class="playing_pie_done" v-if="playingList.pomororoCount &gt; 0" v-for="num in playingList.pomororoCount"></span>
+                      <div class="playing_pie" style="width:25px; height:25px;">
+                        <canvas class="js_playing_pie" width="12" height="12"></canvas>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </transition>
+              <div class="playing_timer">{{ displayDueTime }}</div>
+            </div>
+            <transition-group class="list_group" v-if="queueLists.length&gt;0" tag="ul" enter-active-class="animated zoomInLeft faster" leave-active-class="animated zoomOutLeft faster" mode="out-in">
+              <li class="list_group_item" v-for="list in queueLists" :key="list.id">
+                <div class="custom_control">
+                  <input class="custom_control_input" type="checkbox" v-model="list.finished">
+                  <label class="custom_control_label"><span @click="list.finished = !list.finished">{{ list.title }}</span>
+                    <button class="btn_basic" @click="switchPlayingTodo(list)"><i class="material-icons">play_circle_outline</i></button>
+                  </label>
+                </div>
+              </li>
+              <li class="list_group_addon" key="more">
+                <button class="btn_basic" @click="showModal(1)">MORE</button>
+              </li>
+            </transition-group>
+            <ul class="list_group" v-else>
+              <li class="list_group_item">NO MORE TO-DO</li>
+            </ul>
+          </div>
+          <div class="displayPieWrapper">
+            <canvas class="js_display_pie" width="540" height="540"></canvas>
+            <div class="displayPieCover" :class="modeDisplayPieClass">
+              <div class="timerControl">
+                <button class="timerControl_play" :class="modePlayBtnClass" @click="switchCountdown"></button>
+                <button class="timerControl_stop" :class="modePlayBtnClass" @click="clearCountdown"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 bg_primary">
+          <div class="menu_wrapper p-5">
+            <ul class="icon_group">
+              <li class="icon_group_item mb-5">
+                <button class="btn_basic" @click="showModal(1)"><i class="material-icons">list</i></button>
+              </li>
+              <li class="icon_group_item mb-5">
+                <button class="btn_basic" @click="showModal(2)"><i class="material-icons">insert_chart</i></button>
+              </li>
+              <li class="icon_group_item mb-5">
+                <button class="btn_basic" @click="showModal(3)"><i class="material-icons">library_music</i></button>
+              </li>
+              <li class="icon_group_item">
+                <button class="btn_basic" @click="switchMode"><i class="material-icons">cached</i></button>
+              </li>
+              <li class="icon_group_logo mt-auto">POMODORO</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <transition enter-active-class="animated fadeInRight faster" leave-active-class="animated fadeOutRight faster">
+        <div class="modal_detail" v-if="isModalShow">
+          <div class="row h-100">
+            <div class="col-5">
+              <div class="p-5 h-100" style="position:relative;">
+                <div class="menu_group"><a class="menu_group_item mb-4" href="#" :class="{active: currentDetailModal==1}" @click="currentDetailModal=1"><i class="material-icons">list</i><span class="ml-1">TO-DO LIST</span></a><a class="menu_group_item mb-4" href="#" :class="{active: currentDetailModal==2}" @click="currentDetailModal=2"><i class="material-icons">insert_chart</i><span class="ml-1">ANALYTICS</span></a><a class="menu_group_item mb-4" href="#" :class="{active: currentDetailModal==3}" @click="currentDetailModal=3"><i class="material-icons">library_music</i><span class="ml-1">RINGTONES</span></a></div>
+                <div class="playing_panel">
+                  <button class="playing_panel_btn" @click="backToPlaying"></button>
+                  <div class="d-flex flex-column justify-content-center">
+                    <div class="playing_panel_timer mt-5">25:00</div><span class="playing_panel_title" v-if="playingList">{{ playingList.title  }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="p-5">
+                <transition enter-active-class="animated flipInX fast" leave-active-class="animated flipOutX fast" mode="out-in">
+                  <section v-if="currentDetailModal==1" key="1">
+                    <div class="input_wrapper">
+                      <input type="text" placeholder="add a new mission…" v-model="todoInput" @keyup.enter="addTodo">
+                      <button class="btn_basic" @click="addTodo"><i class="material-icons">add</i></button>
+                    </div>
+                    <div class="collapse_group mt-5"><a class="collapse_group_title" data-toggle="collapse" href="#collapseTodo"><span>TO-DO</span><i class="material-icons">arrow_drop_up</i></a>
+                      <div class="collapse_group_item collapse show" id="collapseTodo">
+                        <transition-group class="list_group" tag="ul" mode="out-in" enter-active-class="animated flipInY faster" leave-active-class="animated flipOutY faster">
+                          <li class="list_group_item" v-for="list in undoLists" :key="list.id">
+                            <div class="custom_control">
+                              <input class="custom_control_input" type="checkbox" v-model="list.finished">
+                              <label class="custom_control_label"><span @click="list.finished = !list.finished">{{ list.title }}</span>
+                                <button class="btn_basic" @click="switchPlayingTodo(list)"><i class="material-icons">play_circle_outline</i></button>
+                              </label>
+                            </div>
+                          </li>
+                        </transition-group>
+                      </div>
+                    </div>
+                    <div class="collapse_group mt-5"><a class="collapse_group_title" data-toggle="collapse" href="#collapseDoneTodo"><span>DONE</span><i class="material-icons">arrow_drop_down</i></a>
+                      <div class="collapse_group_item collapse" id="collapseDoneTodo">
+                        <ul class="list_group">
+                          <li class="list_group_item" v-for="list in doneLists">
+                            <div class="custom_control">
+                              <input class="custom_control_input" type="checkbox" v-model="list.finished">
+                              <label class="custom_control_label"><span>{{ list.title }}</span>
+                                <div class="playing_pies"><span class="playing_pie_done" v-if="list.pomororoCount &gt; 0" v-for="num in list.pomororoCount"></span></div>
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+                  <section v-else-if="currentDetailModal==2" key="2">
+                    <div class="collapse_group"><a class="collapse_group_title"><span>FOCUS TIME</span></a>
+                      <div class="collapse_group_item">
+                        <div class="row">
+                          <div class="col-6 anaylytic_panel"><span class="anaylytic_panel_title">TODAY</span><strong class="anaylytic_panel_count">20</strong><span class="anaylytic_panel_unit">/TOMATO</span></div>
+                          <div class="col-6 anaylytic_panel"><span class="anaylytic_panel_title">WEEK</span><strong class="anaylytic_panel_count">100</strong><span class="anaylytic_panel_unit">/TOMATO</span></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="collapse_group"><a class="collapse_group_title"><span>CHART</span>
+                        <div class="d-flex align-items-center" style="font-size: initial;"><i class="material-icons">keyboard_arrow_left</i><span>2019.7.1 - 2019.7.7</span><i class="material-icons">keyboard_arrow_right</i></div></a>
+                      <div class="collapse_group_item">
+                        <canvas class="js_chart_bar"></canvas>
+                      </div>
+                    </div>
+                  </section>
+                  <section v-else key="3">
+                    <div class="collapse_group"><a class="collapse_group_title"><span>WORK</span></a>
+                      <div class="collapse_group_item">
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input class="custom-control-input" type="radio" v-model="ringTone.work" value="none">
+                          <label class="custom-control-label" @click="ringTone.work='none'">NONE</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input class="custom-control-input" type="radio" v-model="ringTone.work" value="clown_horn">
+                          <label class="custom-control-label" @click="ringTone.work='clown_horn'">CLOWN HORN</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="collapse_group"><a class="collapse_group_title"><span>BREAK</span></a>
+                      <div class="collapse_group_item">
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input class="custom-control-input" type="radio" v-model="ringTone.break" value="none">
+                          <label class="custom-control-label" @click="ringTone.break='none'">NONE</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input class="custom-control-input" type="radio" v-model="ringTone.break" value="pastoral">
+                          <label class="custom-control-label" @click="ringTone.break='pastoral'">PASTORAL</label>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </transition>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="menu_wrapper p-5">
+                <ul class="icon_group">
+                  <li class="icon_group_item">
+                    <button class="btn_basic" @click="isModalShow=false"><i class="material-icons">clear</i></button>
+                  </li>
+                  <li class="icon_group_logo mt-auto">POMODORO</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+    <script src="./js/vendors.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+    <script src="./js/pomodoro.js"></script>
+  </body>
+</html>

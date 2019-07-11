@@ -10,24 +10,23 @@
     </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <!-- Search Engine -->
-    <meta name="description" content="the F2E - 滾動視差">
-    <meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/week8.jpg">
-    <!-- Schema.org for Google -->
-    <meta itemprop="name" content="Week 8 - Parallax Scrolling">
-    <meta itemprop="description" content="the F2E - 滾動視差">
-    <meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/week8.jpg">
-    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-    <meta property="og:title" content="Week 8 - Parallax Scrolling">
-    <meta property="og:description" content="the F2E - 滾動視差">
-    <meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/week8.jpg">
-    <meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/parallax-scrolling.html">
-    <meta property="og:site_name" content="Week 8 - Parallax Scrolling">
-    <meta property="og:locale" content="zh_TW">
-    <meta property="fb:admins" content="1420062581">
-    <meta property="fb:app_id" content="333459487173924">
-    <meta property="og:type" content="website">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 滾動視差">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/week8.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="Week 8 - Parallax Scrolling">
+<meta itemprop="description" content="the F2E - 滾動視差">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/week8.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="Week 8 - Parallax Scrolling">
+<meta property="og:description" content="the F2E - 滾動視差">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/week8.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/parallax-scrolling.html">
+<meta property="og:site_name" content="Week 8 - Parallax Scrolling">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
     <title>Week 8 - Parallax Scrolling</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/parallax-scrolling.css">
@@ -46,9 +45,9 @@
           <h2>Q1</h2>
           <h3>If one day you get a gift that can change the rule of the world, which ability will you choose?</h3>
           <p>Choose the answer appeared in your mind instantly</p>
-          <button data-point="1" class="answer">Destroy all humans in the world</button>
-          <button data-point="3" class="answer">Make the war never happened</button>
-          <button data-point="5" class="answer">You won’t get old and live forever</button>
+          <button class="answer" data-point="1">Destroy all humans in the world</button>
+          <button class="answer" data-point="3">Make the war never happened</button>
+          <button class="answer" data-point="5">You won’t get old and live forever</button>
         </div>
         <div class="question_graphic bg_primarydark">
           <div class="rect bg_secondary"></div>
@@ -66,9 +65,9 @@
           <h2>Q2</h2>
           <h3>Imagine you’re almost late, but totally lost at a forked road. Which way do you prefer to go?</h3>
           <p>Choose the answer appeared in your mind instantly</p>
-          <button data-point="1" class="answer">The left one</button>
-          <button data-point="3" class="answer">The right one</button>
-          <button data-point="5" class="answer">Open Google Map</button>
+          <button class="answer" data-point="1">The left one</button>
+          <button class="answer" data-point="3">The right one</button>
+          <button class="answer" data-point="5">Open Google Map</button>
         </div>
       </div>
       <div class="question q3 bg_secondary">
@@ -76,9 +75,9 @@
           <h2>Q3</h2>
           <h3>When you’re in a exam which you barely prepared for, which is your priority solution?</h3>
           <p>Choose the answer appeared in your mind instantly</p>
-          <button data-point="1" class="answer">Take a nap right away</button>
-          <button data-point="3" class="answer">Fill the answer randomly</button>
-          <button data-point="5" class="answer">All fill the answer "C"</button>
+          <button class="answer" data-point="1">Take a nap right away</button>
+          <button class="answer" data-point="3">Fill the answer randomly</button>
+          <button class="answer" data-point="5">All fill the answer "C"</button>
         </div>
         <div class="question_graphic bg_primary">
           <div class="rect bg_primarydark"></div>
@@ -87,30 +86,30 @@
         </div>
       </div>
     </div>
-    <div id="skrollr" class="hide">
-      <div data-0="display:block; background-position: 100% 0%;" data-2500="display:none; background-position: 0% 100%;" class="step step_done">
+    <div class="hide" id="skrollr">
+      <div class="step step_done" data-0="display:block; background-position: 100% 0%;" data-2500="display:none; background-position: 0% 100%;">
         <h2>ALL DONE!</h2>
         <p>Keep scrolling to show the result</p>
-        <div data-2000="left: -100%; top: 100%;" data-2500="left: 30%; top: 0%;" class="triangle"></div>
+        <div class="triangle" data-2000="left: -100%; top: 100%;" data-2500="left: 30%; top: 0%;"></div>
       </div>
-      <div data-0="display:none;" data-2500="display:block; background-position: 100% 0%;" data-5000="display:none; background-position: 0% 100%;" class="step step_coculate">
+      <div class="step step_coculate" data-0="display:none;" data-2500="display:block; background-position: 100% 0%;" data-5000="display:none; background-position: 0% 100%;">
         <h2 data-2500="display:block; opacity:0;" data-2800="opacity:1;">NOW CACULATING</h2>
         <p data-2500="display:block; opacity:0;" data-2800="opacity:1;">Keep scrolling to show the result</p>
-        <div data-4500="left: -150%; top: 100%;" data-5000="left: 30%; top: 0%;" class="rect bg_secondary"></div>
+        <div class="rect bg_secondary" data-4500="left: -150%; top: 100%;" data-5000="left: 30%; top: 0%;"></div>
       </div>
-      <div data-0="display:none;" data-5000="display:block; background-position: 100% 0%;" data-7500="background-position: 0% 100%;" class="step step_youare">
+      <div class="step step_youare" data-0="display:none;" data-5000="display:block; background-position: 100% 0%;" data-7500="background-position: 0% 100%;">
         <h2 data-5000="display:block; opacity:0;" data-5300="opacity:1;">YOU ARE…</h2>
         <p data-5000="display:block; opacity:0;" data-5300="opacity:1;">Keep scrolling to show the result</p>
-        <div data-7000="left: -125%; top: 100%;" data-7500="left: 30%; top: 0%;" class="circle bg_white"></div>
+        <div class="circle bg_white" data-7000="left: -125%; top: 100%;" data-7500="left: 30%; top: 0%;"></div>
       </div>
     </div>
     <div class="result result_triangle bg_primary hide">
-      <div class="trismall small1"></div>
-      <div class="trismall small2"></div>
-      <div class="trismall small3"></div>
-      <div class="trismall small4"></div>
-      <div class="trismall small5"></div>
-      <div class="trismall small6"></div>
+      <div class="trismall small#{i}"></div>
+      <div class="trismall small#{i}"></div>
+      <div class="trismall small#{i}"></div>
+      <div class="trismall small#{i}"></div>
+      <div class="trismall small#{i}"></div>
+      <div class="trismall small#{i}"></div>
       <div class="tribig big_1"></div>
       <div class="tribig big_2"></div>
       <div class="tribig big_3"></div>
@@ -127,12 +126,12 @@
       </div>
     </div>
     <div class="result result_rect bg_primarydark hide">
-      <div class="rectsmall small1"></div>
-      <div class="rectsmall small2"></div>
-      <div class="rectsmall small3"></div>
-      <div class="rectsmall small4"></div>
-      <div class="rectsmall small5"></div>
-      <div class="rectsmall small6"></div>
+      <div class="rectsmall small#{i}"></div>
+      <div class="rectsmall small#{i}"></div>
+      <div class="rectsmall small#{i}"></div>
+      <div class="rectsmall small#{i}"></div>
+      <div class="rectsmall small#{i}"></div>
+      <div class="rectsmall small#{i}"></div>
       <div class="rectbig big_1"></div>
       <div class="rectbig big_2"></div>
       <div class="rectbig big_3"></div>
@@ -149,12 +148,12 @@
       </div>
     </div>
     <div class="result result_circle bg_secondary hide">
-      <div class="circlesmall small1"></div>
-      <div class="circlesmall small2"></div>
-      <div class="circlesmall small3"></div>
-      <div class="circlesmall small4"></div>
-      <div class="circlesmall small5"></div>
-      <div class="circlesmall small6"></div>
+      <div class="circlesmall small#{i}"></div>
+      <div class="circlesmall small#{i}"></div>
+      <div class="circlesmall small#{i}"></div>
+      <div class="circlesmall small#{i}"></div>
+      <div class="circlesmall small#{i}"></div>
+      <div class="circlesmall small#{i}"></div>
       <div class="circlebig big_1"></div>
       <div class="circlebig big_2"></div>
       <div class="circlebig big_3"></div>

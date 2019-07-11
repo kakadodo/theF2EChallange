@@ -8942,6 +8942,8 @@ body {
   .timerControl_play.break:before {
     color: #00A7FF; }
   .timerControl_play.break.playing {
+    -webkit-animation-play-state: paused;
+            animation-play-state: paused;
     background-color: #00A7FF; }
     .timerControl_play.break.playing:before {
       content: "pause";

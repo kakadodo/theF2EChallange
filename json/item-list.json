@@ -1,4 +1,11 @@
 [{
+  "title": "2nd Week 1 - Pomodoro",
+  "imgSrc": "./img/2nd-week1.jpg",
+  "skills": ["Pug", "Vue", "Chart.js", "Animate.css"],
+  "date": "2019/7/11",
+  "edition": "2nd",
+  "href": "./pomodoro.html"
+},{
   "title": "Week 9 - Skill Tree",
   "imgSrc": "./img/week9.jpg",
   "skills": ["Pug", "Flexbox", "Vue"],

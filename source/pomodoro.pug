@@ -54,7 +54,7 @@ block content
 								label.custom_control_label(@click="playingList.finished = true;")
 									span {{ playingList.title }}
 									.playing_pies
-										span.playing_pie_done(v-if="playingList.pomororoCount > 0" v-for="num in playingList.pomororoCount")
+										span.playing_pie_done(v-if="playingList.pomodoroCount > 0" v-for="num in playingList.pomodoroCount")
 										.playing_pie(style="width:25px; height:25px;")
 											canvas.js_playing_pie(width="12" height="12")
 						.playing_timer {{ displayDueTime }}
@@ -156,7 +156,7 @@ block content
 														label.custom_control_label
 															span {{ list.title }}
 															.playing_pies
-																span.playing_pie_done(v-if="list.pomororoCount > 0" v-for="num in list.pomororoCount")
+																span.playing_pie_done(v-if="list.pomodoroCount > 0" v-for="num in list.pomodoroCount")
 								section(v-else-if="currentDetailModal==2", key="2")
 									.collapse_group
 										a.collapse_group_title

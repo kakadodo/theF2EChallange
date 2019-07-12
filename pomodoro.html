@@ -56,7 +56,7 @@
                 <div class="custom_control" :key="playingList.id">
                   <input class="custom_control_input" type="checkbox" v-model="playingList.finished">
                   <label class="custom_control_label" @click="playingList.finished = true;"><span>{{ playingList.title }}</span>
-                    <div class="playing_pies"><span class="playing_pie_done" v-if="playingList.pomororoCount &gt; 0" v-for="num in playingList.pomororoCount"></span>
+                    <div class="playing_pies"><span class="playing_pie_done" v-if="playingList.pomodoroCount &gt; 0" v-for="num in playingList.pomodoroCount"></span>
                       <div class="playing_pie" style="width:25px; height:25px;">
                         <canvas class="js_playing_pie" width="12" height="12"></canvas>
                       </div>
@@ -156,7 +156,7 @@
                             <div class="custom_control">
                               <input class="custom_control_input" type="checkbox" v-model="list.finished">
                               <label class="custom_control_label"><span>{{ list.title }}</span>
-                                <div class="playing_pies"><span class="playing_pie_done" v-if="list.pomororoCount &gt; 0" v-for="num in list.pomororoCount"></span></div>
+                                <div class="playing_pies"><span class="playing_pie_done" v-if="list.pomodoroCount &gt; 0" v-for="num in list.pomodoroCount"></span></div>
                               </label>
                             </div>
                           </li>

@@ -26,32 +26,32 @@ $(function () {
         id: 1,
         title: '完成第一關番茄鐘',
         finished: false,
-        pomororoCount: 2
+        pomodoroCount: 2
       }, {
         id: 2,
         title: '日用品採買',
         finished: false,
-        pomororoCount: 0
+        pomodoroCount: 0
       }, {
         id: 3,
         title: '整理房間',
         finished: false,
-        pomororoCount: 0
+        pomodoroCount: 0
       }, {
         id: 4,
         title: '修理椅子',
         finished: true,
-        pomororoCount: 4
+        pomodoroCount: 4
       }, {
         id: 5,
         title: '洗衣服',
         finished: true,
-        pomororoCount: 3
+        pomodoroCount: 3
       }, {
         id: 6,
         title: '曬衣服',
         finished: false,
-        pomororoCount: 0
+        pomodoroCount: 0
       }],
       playingPieChart: null,
       playingPieConfig: {},
@@ -122,7 +122,7 @@ $(function () {
           id: Date.now(),
           title: str,
           finished: false,
-          pomororoCount: 0
+          pomodoroCount: 0
         });
         this.todoInput = '';
       },
@@ -222,7 +222,7 @@ $(function () {
               }
               _this2.clearCountdown();
               if (_this2.mode === playMode.work.name) {
-                _this2.todoLists[0]['pomororoCount']++;
+                _this2.todoLists[0]['pomodoroCount']++;
               }
             }
             if (_this2.isPlaying) {
@@ -232,7 +232,7 @@ $(function () {
               if (Math.floor(tempCount / 60) !== data[0]) {
                 data[0] = Math.floor(tempCount / 60);
                 data[1] = _this2.totalTime - data[0];
-                _this2.playingPieChart.update();
+                if (_this2.mode === playMode.work.name) _this2.playingPieChart.update();
                 _this2.displayPieChart.update();
               }
             }

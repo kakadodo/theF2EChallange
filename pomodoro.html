@@ -66,13 +66,12 @@
               </transition>
               <div class="playing_timer">{{ displayDueTime }}</div>
             </div>
-            <transition-group class="list_group" v-if="queueLists.length&gt;0" tag="ul" enter-active-class="animated zoomInLeft faster" leave-active-class="animated zoomOutLeft faster" mode="out-in">
+            <transition-group class="list_group" v-if="queueLists.length&gt;0" tag="ul" enter-active-class="animated zoomInLeft faster" leave-active-class="animated zoomOutLeft faster" mode="out-in" style="z-index:2;">
               <li class="list_group_item" v-for="list in queueLists" :key="list.id">
                 <div class="custom_control">
                   <input class="custom_control_input" type="checkbox" v-model="list.finished">
-                  <label class="custom_control_label"><span @click="list.finished = !list.finished">{{ list.title }}</span>
-                    <button class="btn_basic" @click="switchPlayingTodo(list)"><i class="material-icons">play_circle_outline</i></button>
-                  </label>
+                  <label class="custom_control_label" @click="list.finished = !list.finished"><span>{{ list.title }}</span></label>
+                  <button class="btn_basic custom_control_btn" @click="switchPlayingTodo(list)"><i class="material-icons">play_circle_outline</i></button>
                 </div>
               </li>
               <li class="list_group_addon" key="more">
@@ -135,21 +134,20 @@
                       <input type="text" placeholder="add a new mission…" v-model="todoInput" @keyup.enter="addTodo">
                       <button class="btn_basic" @click="addTodo"><i class="material-icons">add</i></button>
                     </div>
-                    <div class="collapse_group mt-5"><a class="collapse_group_title" data-toggle="collapse" href="#collapseTodo"><span>TO-DO</span><i class="material-icons">arrow_drop_up</i></a>
+                    <div class="collapse_group mt-5"><a class="collapse_group_title" data-toggle="collapse" href="#collapseTodo" role="button"><span>TO-DO</span><i class="material-icons">arrow_drop_up</i></a>
                       <div class="collapse_group_item collapse show" id="collapseTodo">
                         <transition-group class="list_group" tag="ul" mode="out-in" enter-active-class="animated flipInY faster" leave-active-class="animated flipOutY faster">
                           <li class="list_group_item" v-for="list in undoLists" :key="list.id">
                             <div class="custom_control">
                               <input class="custom_control_input" type="checkbox" v-model="list.finished">
-                              <label class="custom_control_label"><span @click="list.finished = !list.finished">{{ list.title }}</span>
-                                <button class="btn_basic" @click="switchPlayingTodo(list)"><i class="material-icons">play_circle_outline</i></button>
-                              </label>
+                              <label class="custom_control_label" @click="list.finished = !list.finished"><span>{{ list.title }}</span></label>
+                              <button class="btn_basic custom_control_btn" @click="switchPlayingTodo(list)"><i class="material-icons">play_circle_outline</i></button>
                             </div>
                           </li>
                         </transition-group>
                       </div>
                     </div>
-                    <div class="collapse_group mt-5"><a class="collapse_group_title" data-toggle="collapse" href="#collapseDoneTodo"><span>DONE</span><i class="material-icons">arrow_drop_down</i></a>
+                    <div class="collapse_group mt-5"><a class="collapse_group_title collapsed" data-toggle="collapse" href="#collapseDoneTodo" role="button"><span>DONE</span><i class="material-icons">arrow_drop_up</i></a>
                       <div class="collapse_group_item collapse" id="collapseDoneTodo">
                         <ul class="list_group">
                           <li class="list_group_item" v-for="list in doneLists">

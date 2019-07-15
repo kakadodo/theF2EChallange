@@ -8735,6 +8735,12 @@ body {
     color: #00A7FF; }
 
 .custom_control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding-left: 1.5rem;
   position: relative; }
   .custom_control .custom_control_input:checked ~ .custom_control_label > span {
@@ -8764,14 +8770,20 @@ body {
     font-size: 1rem;
     font-weight: bold; }
 
+.custom_control_btn {
+  color: #003164;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  -o-transition: transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s; }
+  .custom_control_btn:hover {
+    -webkit-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+            transform: scale(1.2); }
+
 .custom_control_label {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   margin-bottom: 0; }
   .custom_control_label:before, .custom_control_label:after {
     content: "";
@@ -8786,20 +8798,6 @@ body {
     background-color: transparent;
     border-radius: 50%;
     border: #003164 solid 2px; }
-  .custom_control_label > span {
-    display: block;
-    width: 75%; }
-  .custom_control_label > button {
-    color: #003164;
-    -webkit-transition: -webkit-transform 0.3s;
-    transition: -webkit-transform 0.3s;
-    -o-transition: transform 0.3s;
-    transition: transform 0.3s;
-    transition: transform 0.3s, -webkit-transform 0.3s; }
-  .custom_control_label:hover > button {
-    -webkit-transform: scale(1.2);
-        -ms-transform: scale(1.2);
-            transform: scale(1.2); }
 
 .playing_timer {
   position: relative;
@@ -8996,7 +8994,7 @@ body {
 .collapse_group .custom_control_label:before {
   border-color: #fff; }
 
-.collapse_group .custom_control_label > button {
+.collapse_group .custom_control_btn {
   color: #fff; }
 
 .collapse_group .list_group_item {

@@ -61,7 +61,7 @@ $(function () {
       playingPieChart: null,
       playingPieConfig: {},
       displayPieChart: null,
-      isModalShow: true,
+      isModalShow: false,
       currentDetailModal: 1,
       ringTone: {
         work: 'clown_horn',

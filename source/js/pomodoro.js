@@ -61,7 +61,7 @@ $(function () {
       playingPieChart: null,
       playingPieConfig: {},
       displayPieChart: null,
-      isModalShow: false,
+      isModalShow: true,
       currentDetailModal: 1,
       ringTone: {
         work: 'clown_horn',
@@ -160,9 +160,7 @@ $(function () {
           },
           options: {
             legend: {
-              labels: {
-                fontColor: '#fff',
-              }
+              display: false,
             },
             scales: {
               yAxes: [{
@@ -172,6 +170,7 @@ $(function () {
                 },
                 ticks: {
                   fontColor: '#fff',
+                  min: 0,
                 },
               }],
               xAxes: [{

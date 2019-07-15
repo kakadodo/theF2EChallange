@@ -155,6 +155,8 @@ body{
 }
 
 .custom_control {
+  display: flex;
+  justify-content: space-between;
   padding-left: 1.5rem;
   position: relative;
   .custom_control_input:checked~.custom_control_label{
@@ -195,10 +197,16 @@ body{
   }
 }
 
+.custom_control_btn {
+  color: $color_darkblue;
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
 .custom_control_label {
   position: relative;
-  display: flex;
-  justify-content: space-between;
   margin-bottom: 0;
   &:before, &:after {
     content: "";
@@ -214,19 +222,6 @@ body{
     background-color: transparent;
     border-radius: 50%;
     border: $color_darkblue solid 2px;
-  }
-  > span {
-    display: block;
-    width: 75%;
-  }
-  > button {
-    color: $color_darkblue;
-    transition: transform 0.3s;
-  }
-  &:hover {
-    > button {
-      transform: scale(1.2);
-    }
   }
 }
 
@@ -437,7 +432,7 @@ body{
   .custom_control_label:before {
     border-color: #fff;
   }
-  .custom_control_label>button {
+  .custom_control_btn {
     color: #fff;
   }
   .list_group_item {

@@ -85,7 +85,7 @@ function vendorJS() {
 
 // 圖片壓縮
 function imageMin() {
-  return src('./source/img/*')
+  return src('./source/img/**/*')
     .pipe($.if(process.env.NODE_ENV === 'production', $.imagemin()))
     .pipe(dest('./public/img'))
 };

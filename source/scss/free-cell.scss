@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+
+$basic_size: 16;
+$color_primary: #453122;
+$color_dark_primary: #2F2417;
+$color_light_primary: #69533A;
+
+%text_shadow_like_border {
+  text-shadow: -4px 0 black, 0 4px black, 4px 0 black, 0 -4px black;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+[draggable="true"] {
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color_dark_primary; 
+  border: 3px solid black;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: lighten($color_dark_primary, 10%); 
+}
+
+.ani_card-leave-active {
+  opacity: 0;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Press Start 2P', cursive, serif;
+  color: white;
+  background-image: url('../img/2nd-week2/bg.svg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.game_header {
+  padding-top: $basic_size * 3px;
+  padding-bottom: $basic_size * 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  > .col {
+    font-size: $basic_size * 1.25px;
+  }
+}
+
+.logo {
+  margin: 0;
+  height: 65px;
+  background-image: url('../img/2nd-week2/logo-bk.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  color: transparent;
+}
+
+.toolBox {
+  display: flex;
+  align-items: center;
+  &_gameTime {
+    padding: 0 14px;
+  }
+  &_options, &_return {
+    &:hover {
+      transform: translateY(5px) scale(0.98);
+    }
+  }
+}
+
+.score {
+  position: relative;
+  padding-right: 80px;
+  &:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 52px;
+    height: 52px;
+    transform: translate(-60px, -20px);
+    background-image: url('../img/2nd-week2/boneIcon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}
+
+.game_container {
+  padding: 0 80px;
+  .row {
+    display: flex;
+  }
+  .col {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    &:nth-child(even) {
+      margin-left: 6vw;
+    }
+  }
+}
+
+.deck {
+  width: 8.5vw;
+  height: 18vh;
+  border: 2px solid rgba(#EDEDED, 0.3);
+  border-radius: 15px;
+  user-select: none;
+  &_card {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+  }
+  &_card_img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.deck_doneContainer { 
+  > .deck {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: block;
+      width: 50px;
+      height: 50px;
+      background-image: url('../img/2nd-week2/card-icons.png');
+      background-repeat: no-repeat;
+      background-size: 100% 400%;
+      user-select: none;
+      z-index: -1;
+    }
+  }
+  .deck_card {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.deck_unorderContainer {
+  .deck_card {
+    position: relative;
+  }
+}
+
+$card_list: (0: 'heart', 1: 'club', 2: 'spade', 3: 'diamond');
+
+@each $i, $name in $card_list {
+  .deck_#{$name}:before {
+    background-position: 0 $i*-50px;
+  }
+}
+
+.game_footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  > .col {
+    flex-grow: 1;
+  }
+  img {
+    width: 100%;
+  }
+}
+
+.bg_center {
+  width: 30%;
+  position: absolute;
+  bottom: -50px;
+  left: 35%;
+}
+
+.bg_left__ani {
+  animation: shake 1s infinite;
+}
+
+.bg_right__ani {
+  animation: shake 1s -0.3s infinite;
+}
+
+.bg_center__ani {
+  animation: pulse 1s infinite alternate;
+}
+
+.modal {
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(black, 0.5);
+}
+
+.modal_container {
+  width: 50vw;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: $color_primary;
+  border: 4px solid white;
+  box-shadow: 0 0 0 4px black, 0 0 15px black, 0 0 0 4px rgba(black, 0.3) inset;
+}
+
+.card {
+  position: relative;
+  &_dismiss {
+    position: absolute;
+    right: 0;
+    top: -15px;
+  }
+  &_title {
+    display: block;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    font-size: $basic_size * 1.25px;
+    text-align: center;
+    @extend %text_shadow_like_border;
+    &:before, &:after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 40px;
+      top: -15px;
+      position: absolute;
+      background-image: url('../img/2nd-week2/boneIcon.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+    &:before {
+      left: -20px;
+    }
+    &:after {
+      right: -20px;
+    }
+  }
+  &_title__sp {
+    text-align: center;
+    @extend %text_shadow_like_border;
+  }
+  &_body {
+    padding-right: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 1.6;
+  }
+  &_footer {
+    margin-top: -50px;
+    position: relative;
+    > img {
+      margin: 0 auto;
+      position: relative;
+      bottom: -65px;
+      display: block;
+      width: 70%;
+      &.fail {
+        filter: grayscale(1);
+      }
+    }
+  }
+}
+
+.list_group {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &_item {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+  &_item_btn {
+    display: block;
+    width: 100%;
+    padding: 25px 65px;
+    border-radius: 100px;
+    background-color: $color_dark_primary;
+    color: white;
+    font-size: 12px;
+    font-family: 'Press Start 2P', cursive, serif;
+    line-height: 1.6;
+    border: 3px solid #000;
+    cursor: pointer;
+    &:hover {
+      background-color: $color_light_primary;
+    }
+    &__sm {
+      margin: 0 auto;
+      width: 50%;
+      padding: 10px 20px;
+    }
+  }
+}

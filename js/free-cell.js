@@ -193,12 +193,12 @@ var vm = new Vue({
       } else {
         var lastStep = this.returnSteps.pop();
         if (lastStep.ondragDeckName === 'deckHolder') {
-          this[lastStep.ondragDeckName].splice(this[lastStep.ondragDeckIndex], 1, lastStep[ondragCardId]);
+          this[lastStep.ondragDeckName].splice(lastStep.ondragDeckIndex, 1, lastStep[ondragCardId]);
         } else {
           this[lastStep.ondragDeckName][lastStep.ondragDeckIndex].push(lastStep.ondragCardId);
         }
         if (lastStep.ondropDeckName === 'deckHolder') {
-          this[lastStep.ondropDeckName].splice(this[lastStep.ondropDeckIndex], 1, 0);
+          this[lastStep.ondropDeckName].splice(lastStep.ondropDeckIndex, 1, 0);
         } else {
           this[lastStep.ondropDeckName][lastStep.ondropDeckIndex].pop();
         }

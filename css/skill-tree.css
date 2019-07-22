@@ -16,7 +16,6 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-image: -webkit-gradient(linear, left top, right top, from(#250060), color-stop(50%, #000), to(#250060));
   background-image: -o-linear-gradient(left, #250060 0%, #000 50%, #250060 100%);
   background-image: linear-gradient(90deg, #250060 0%, #000 50%, #250060 100%);

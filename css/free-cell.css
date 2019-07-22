@@ -1,0 +1,323 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
+.card_title, .card_title__sp {
+  text-shadow: -4px 0 black, 0 4px black, 4px 0 black, 0 -4px black; }
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+[v-cloak] {
+  display: none; }
+
+[draggable="true"] {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+::-webkit-scrollbar {
+  width: 10px; }
+
+::-webkit-scrollbar-track {
+  background: black; }
+
+::-webkit-scrollbar-thumb {
+  background: #2F2417;
+  border: 3px solid black;
+  border-radius: 100px; }
+
+::-webkit-scrollbar-thumb:hover {
+  background: #513e28; }
+
+.ani_card-leave-active {
+  opacity: 0; }
+
+body {
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Press Start 2P', cursive, serif;
+  color: white;
+  background-image: url("../img/2nd-week2/bg.svg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat; }
+
+.game_header {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  .game_header > .col {
+    font-size: 20px; }
+
+.logo {
+  margin: 0;
+  height: 65px;
+  background-image: url("../img/2nd-week2/logo-bk.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  color: transparent; }
+
+.toolBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  .toolBox_gameTime {
+    padding: 0 14px; }
+  .toolBox_options:hover, .toolBox_return:hover {
+    -webkit-transform: translateY(5px) scale(0.98);
+        -ms-transform: translateY(5px) scale(0.98);
+            transform: translateY(5px) scale(0.98); }
+
+.score {
+  position: relative;
+  padding-right: 80px; }
+  .score:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 52px;
+    height: 52px;
+    -webkit-transform: translate(-60px, -20px);
+        -ms-transform: translate(-60px, -20px);
+            transform: translate(-60px, -20px);
+    background-image: url("../img/2nd-week2/boneIcon.svg");
+    background-size: contain;
+    background-repeat: no-repeat; }
+
+.game_container {
+  padding: 0 80px; }
+  .game_container .row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+  .game_container .col {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
+    .game_container .col:nth-child(even) {
+      margin-left: 6vw; }
+
+.deck {
+  width: 8.5vw;
+  height: 18vh;
+  border: 2px solid rgba(237, 237, 237, 0.3);
+  border-radius: 15px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+  .deck_card {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px; }
+  .deck_card_img {
+    width: 100%;
+    height: 100%; }
+
+.deck_doneContainer > .deck {
+  position: relative; }
+  .deck_doneContainer > .deck:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-image: url("../img/2nd-week2/card-icons.png");
+    background-repeat: no-repeat;
+    background-size: 100% 400%;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    z-index: -1; }
+
+.deck_doneContainer .deck_card {
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.deck_unorderContainer .deck_card {
+  position: relative; }
+
+.deck_heart:before {
+  background-position: 0 0px; }
+
+.deck_club:before {
+  background-position: 0 -50px; }
+
+.deck_spade:before {
+  background-position: 0 -100px; }
+
+.deck_diamond:before {
+  background-position: 0 -150px; }
+
+.game_footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+  .game_footer > .col {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1; }
+  .game_footer img {
+    width: 100%; }
+
+.bg_center {
+  width: 30%;
+  position: absolute;
+  bottom: -50px;
+  left: 35%; }
+
+.bg_left__ani {
+  -webkit-animation: shake 1s infinite;
+          animation: shake 1s infinite; }
+
+.bg_right__ani {
+  -webkit-animation: shake 1s -0.3s infinite;
+          animation: shake 1s -0.3s infinite; }
+
+.bg_center__ani {
+  -webkit-animation: pulse 1s infinite alternate;
+          animation: pulse 1s infinite alternate; }
+
+.modal {
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.modal_container {
+  width: 50vw;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #453122;
+  border: 4px solid white;
+  -webkit-box-shadow: 0 0 0 4px black, 0 0 15px black, 0 0 0 4px rgba(0, 0, 0, 0.3) inset;
+          box-shadow: 0 0 0 4px black, 0 0 15px black, 0 0 0 4px rgba(0, 0, 0, 0.3) inset; }
+
+.card {
+  position: relative; }
+  .card_dismiss {
+    position: absolute;
+    right: 0;
+    top: -15px; }
+  .card_title {
+    display: block;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    font-size: 20px;
+    text-align: center; }
+    .card_title:before, .card_title:after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 40px;
+      top: -15px;
+      position: absolute;
+      background-image: url("../img/2nd-week2/boneIcon.svg");
+      background-repeat: no-repeat;
+      background-position: center center; }
+    .card_title:before {
+      left: -20px; }
+    .card_title:after {
+      right: -20px; }
+  .card_title__sp {
+    text-align: center; }
+  .card_body {
+    padding-right: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 1.6; }
+  .card_footer {
+    margin-top: -50px;
+    position: relative; }
+    .card_footer > img {
+      margin: 0 auto;
+      position: relative;
+      bottom: -65px;
+      display: block;
+      width: 70%; }
+      .card_footer > img.fail {
+        -webkit-filter: grayscale(1);
+                filter: grayscale(1); }
+
+.list_group {
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  .list_group_item {
+    width: 80%;
+    margin-bottom: 20px; }
+  .list_group_item_btn {
+    display: block;
+    width: 100%;
+    padding: 25px 65px;
+    border-radius: 100px;
+    background-color: #2F2417;
+    color: white;
+    font-size: 12px;
+    font-family: 'Press Start 2P', cursive, serif;
+    line-height: 1.6;
+    border: 3px solid #000;
+    cursor: pointer; }
+    .list_group_item_btn:hover {
+      background-color: #69533A; }
+    .list_group_item_btn__sm {
+      margin: 0 auto;
+      width: 50%;
+      padding: 10px 20px; }
+
+/*# sourceMappingURL=free-cell.css.map */

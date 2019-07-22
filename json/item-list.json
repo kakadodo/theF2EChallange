@@ -1,4 +1,11 @@
 [{
+  "title": "2nd Week 2 - Free Cell",
+  "imgSrc": "./img/2nd-week2.jpg",
+  "skills": ["Pug", "Vue", "Animate.css"],
+  "date": "2019/7/22",
+  "edition": "2nd",
+  "href": "./free-cell.html"
+},{
   "title": "2nd Week 1 - Pomodoro",
   "imgSrc": "./img/2nd-week1.jpg",
   "skills": ["Pug", "Vue", "Chart.js", "Animate.css"],

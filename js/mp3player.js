@@ -38,14 +38,7 @@ $(function () {
       songTimer: null,
       isRandom: false,
       isPlay: false,
-      volumn: 0.5,
-      isSlide: false,
-      pos: {
-        originX: 0,
-        moveX: 0,
-        innerWidth: 0,
-        outerWidth: 0
-      }
+      volumn: 0.5
     },
     computed: {
       currentSong: function currentSong() {
@@ -54,21 +47,11 @@ $(function () {
         }
         return '';
       },
-      displayTimeBar: function displayTimeBar() {
+      currentSongTotalTime: function currentSongTotalTime() {
         if (this.currentPlaylist.list) {
-          var currentSongTotalTime = this.currentPlaylist.list[this.currentSongIndex].list_duration;
-          var percent = this.currentSongTime / currentSongTotalTime * 100;
-          return {
-            width: percent + '%'
-          };
+          return this.currentPlaylist.list[this.currentSongIndex].list_duration;
         }
         return '';
-      },
-      displayVolBar: function displayVolBar() {
-        var percent = this.volumn / 1 * 100;
-        return {
-          width: percent + '%'
-        };
       }
     },
     methods: {
@@ -165,7 +148,7 @@ $(function () {
       },
       changeSongState: function changeSongState(boolean) {
         this.isPlay = boolean;
-        player.setVolume(this.volumn * 100);
+        this.setVolumn();
         if (this.isPlay) {
           player.playVideo();
           this.setSongTimer();
@@ -203,36 +186,11 @@ $(function () {
           _this2.switchAds();
         }, 5000);
       },
-      onmouseDown: function onmouseDown(e) {
-        this.isSlide = true;
-        this.pos.originX = e.x;
-        this.pos.innerWidth = $(e.target).parent().width();
-        this.pos.outerWidth = $(e.target).parent().parent().width();
+      setVolumn: function setVolumn() {
+        player.setVolume(this.volumn * 100);
       },
-      onmouseMove: function onmouseMove(e) {
-        if (this.isSlide) {
-          this.pos.moveX = e.x;
-          var distance = this.pos.moveX - this.pos.originX;
-          var totalWidth = this.pos.innerWidth + distance;
-          if (totalWidth >= this.pos.outerWidth) {
-            totalWidth = this.pos.outerWidth;
-          } else if (totalWidth < 0) {
-            totalWidth = 0;
-          }
-          $(e.target).parent().width(totalWidth);
-        }
-      },
-      onmouseUp: function onmouseUp(e, type) {
-        this.isSlide = false;
-        this.pos.innerWidth = $(e.target).parent().width();
-        var percent = (this.pos.innerWidth / this.pos.outerWidth).toFixed(1);
-        if (type === 'vol') {
-          this.volumn = +percent;
-          player.setVolume(this.volumn * 100);
-        } else if (type === 'time') {
-          this.currentSongTime = Math.floor(this.currentPlaylist.list[this.currentSongIndex].list_duration * percent);
-          player.seekTo(this.currentSongTime, true);
-        }
+      setCurrentSongTime: function setCurrentSongTime() {
+        player.seekTo(this.currentSongTime, true);
       }
     },
     filters: {

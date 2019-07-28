@@ -104,23 +104,17 @@ block content
 						button(v-else @click="changeSongState(false)")
 							img(src="./img/2nd-week3/icon_pause.svg")
 					.player_controls_volumn
-						.progressBar_outter
-							.progressBar_inner(:style="displayVolBar")
-								button.progressBar_inner_btn(
-									@mousedown="onmouseDown($event)"
-									@mousemove="onmouseMove($event)"
-									@mouseup="onmouseUp($event, 'vol')"
-								)
+						.slidecontainer
+							input.slider(type="range" min="0" max="1" step="0.1"
+								v-model.number="volumn"
+								@change="setVolumn")
 						img(src="./img/2nd-week3/icon_sound.svg")
 					.player_controls_timeline
 						.timeline_current {{ currentSongTime | formatTime }}
-						.progressBar_outter
-							.progressBar_inner(:style="displayTimeBar")
-								button.progressBar_inner_btn(
-									@mousedown="onmouseDown($event)"
-									@mousemove="onmouseMove($event)"
-									@mouseup="onmouseUp($event, 'time')"
-								)
+						.slidecontainer
+							input.slider(type="range" min="0" :max="currentSongTotalTime"
+								step="1" v-model.number="currentSongTime"
+								@change="setCurrentSongTime")
 						.timeline_total {{ currentSong.list_duration | formatTime }}
 		
 

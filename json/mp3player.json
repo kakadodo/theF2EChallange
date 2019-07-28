@@ -1,0 +1,115 @@
+{
+  "playlist": [{
+      "title": "工作歌單",
+      "list": [{
+          "id": "lzkKzZmRZk8",
+          "song_name": "Takeaway (with ILLENIUM & Lennon Stella)",
+          "artist_name": "The Chainsmokers",
+          "album_name": "World War Joy...Takeaway",
+          "list_duration": "229",
+          "cover": "https://i.scdn.co/image/25caf2051c0e7156c6a9b102a7d2f4841194ac48",
+          "favorite": false
+        },
+        {
+          "id": "mj0XInqZMHY",
+          "song_name": "Beautiful People (feat. Khalid)",
+          "artist_name": "Ed Sheeran",
+          "album_name": "Beautiful People (feat. Khalid)",
+          "list_duration": "228",
+          "cover": "https://i.scdn.co/image/43d7a1109bb5812882dc327252eba95c5b8950f2",
+          "favorite": false
+        },
+        {
+          "id": "PmYypVozQb4",
+          "song_name": "How Do You Sleep?",
+          "artist_name": "Sam Smith",
+          "album_name": "How Do You Sleep?",
+          "list_duration": "229",
+          "cover": "https://i.scdn.co/image/fda61c404f630478426acfd6d0337834df521ebd",
+          "favorite": true
+        },
+        {
+          "id": "y83x7MgzWOA",
+          "song_name": "I Don't Care (with Justin Bieber)",
+          "artist_name": "Ed Sheeran",
+          "album_name": "I Don't Care (with Justin Bieber)",
+          "list_duration": "222",
+          "cover": "https://i.scdn.co/image/e6a08e84fa0838f58b340e0d0e7e27213459d661",
+          "favorite": false
+        },
+        {
+          "id": "Xhh3_-JRnDc",
+          "song_name": "I.F.L.Y.",
+          "artist_name": "Bazzi",
+          "album_name": "I.F.L.Y.",
+          "list_duration": "226",
+          "cover": "https://i.scdn.co/image/f9b2b93e15682749723ebc7885050a2fa8ba3558",
+          "favorite": false
+        }
+      ]
+    },
+    {
+      "title": "K-POP",
+      "list": [{
+          "id": "_-QY40Reub8",
+          "song_name": "What are you up to",
+          "artist_name": "Kang Daniel",
+          "album_name": "color on me",
+          "list_duration": "184",
+          "cover": "https://i.scdn.co/image/4edb131887394076c91827df7ea6cdd7549abb87",
+          "favorite": true
+        },
+        {
+          "id": "5FV74Nbu0i0",
+          "song_name": "Movie Star",
+          "artist_name": "CIX",
+          "album_name": "HELLO Chapter 1: Hello, Stranger",
+          "list_duration": "220",
+          "cover": "https://i.scdn.co/image/0a0bf0f2d80bb475c99ecc1123633c2a6b9701ce",
+          "favorite": false
+        },
+        {
+          "id": "LPUy1TAF400",
+          "song_name": "Breathe For You",
+          "artist_name": "Monsta X",
+          "album_name": "Breathe For You",
+          "list_duration": "215",
+          "cover": "https://i.scdn.co/image/8e293d21da44d0b2f4387a1d18c280f2687d342b",
+          "favorite": false
+        },
+        {
+          "id": "deV_DmHKwjc",
+          "song_name": "Snapping",
+          "artist_name": "CHUNG HA",
+          "album_name": "Flourishing",
+          "list_duration": "214",
+          "cover": "https://i.scdn.co/image/a32e2794fb76ff28859a5700ca993c0727ae3ef9",
+          "favorite": false
+        },
+        {
+          "id": "XsX3ATc3FbA",
+          "song_name": "Boy With Luv (feat. Halsey)",
+          "artist_name": "BTS",
+          "album_name": "MAP OF THE SOUL : PERSONA",
+          "list_duration": "252",
+          "cover": "https://i.scdn.co/image/7a5055664f8306a2c87b918b14ba4c5c62301605",
+          "favorite": true
+        }
+      ]
+    }
+  ],
+  "ads": [
+    {
+      "src": "https://is1-ssl.mzstatic.com/image/thumb/Features113/v4/31/db/27/31db2771-580a-dd25-59b6-543cd969322a/source/900x600sr.jpg",
+      "url": "https://music.apple.com/tw/album/what-a-life-ep/1473003002?app=music&at=1000l4QJ&ct=330&itscg=10000&itsct=330"
+    },
+    {
+      "src": "https://is1-ssl.mzstatic.com/image/thumb/Features113/v4/3c/45/be/3c45beb0-9283-a0bb-a2d1-9ba9cd6940e0/source/900x600sr.jpg",
+      "url": "https://music.apple.com/tw/album/%E5%AE%88%E8%AD%B7%E6%B0%B8%E6%81%86%E7%9A%84%E6%84%9B-single/1473403168?app=music&at=1000l4QJ&ct=330&itscg=10000&itsct=330"
+    },
+    {
+      "src": "https://is1-ssl.mzstatic.com/image/thumb/Features113/v4/d7/61/33/d76133c6-8b1e-c854-6c66-c3f9478eba55/source/900x600sr.jpg",
+      "url": "https://music.apple.com/tw/album/lover/1468058165?app=music&at=1000l4QJ&ct=330&itscg=10000&itsct=330"
+    }
+  ]
+}

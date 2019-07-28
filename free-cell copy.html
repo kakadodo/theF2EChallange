@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-115362207-1" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-115362207-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 新接龍">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week2.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="2nd Week 2 - Free Cell">
+<meta itemprop="description" content="the F2E - 新接龍">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week2.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="2nd Week 2 - Free Cell">
+<meta property="og:description" content="the F2E - 新接龍">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week2.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/free-cell.html">
+<meta property="og:site_name" content="2nd Week 2 - Free Cell">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
+    <title>2nd Week 2 - Free Cell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="./css/free-cell.css">
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <header class="game_header">
+        <div class="col">
+          <h1 class="logo">FREECELL</h1>
+        </div>
+        <div class="col">
+          <div class="toolBox"><a class="toolBox_options" href="#" @click.prevent="pauseGame"><img src="./img/2nd-week2/btn-more.svg" alt="options"></a>
+            <div class="toolBox_gameTime">Time:<span>{{displayTime}}</span></div><a class="toolBox_return" href="#" @click.prevent="returnGameSteps"><img src="./img/2nd-week2/btn-return.svg" alt="return"></a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="score">Score:<span>00</span></div>
+        </div>
+      </header>
+      <main class="game_container">
+        <div class="row">
+          <div class="col deck_holderContainer">
+            <div class="deck" v-for="(cardId, deckIndex) in deckHolder" @dragenter="ondragEnter($event, deckIndex, 'deckHolder')">
+              <div class="deck_card" v-if="cardId"><img class="deck_card_img" :src="displayCardParttern(cardId, deckIndex)" :dragabble="true" @dragstart="ondragStart(cardId, deckIndex, 'deckHolder')" @dragend="ondragEnd($event, cardId, deckIndex)"></div>
+            </div>
+          </div>
+          <div class="col deck_doneContainer">
+            <div class="deck deck_heart" @dragenter="ondragEnter($event, 0, 'deckDone')">
+              <div class="deck_card" v-if="deckDone[0].length&gt;0" v-for="cardId in deckDone[0]"><img class="deck_card_img" :src="displayCardParttern(cardId, 0)"></div>
+            </div>
+            <div class="deck deck_club" @dragenter="ondragEnter($event, 1, 'deckDone')">
+              <div class="deck_card" v-if="deckDone[1].length&gt;0" v-for="cardId in deckDone[1]"><img class="deck_card_img" :src="displayCardParttern(cardId, 1)"></div>
+            </div>
+            <div class="deck deck_spade" @dragenter="ondragEnter($event, 2, 'deckDone')">
+              <div class="deck_card" v-if="deckDone[2].length&gt;0" v-for="cardId in deckDone[2]"><img class="deck_card_img" :src="displayCardParttern(cardId, 2)"></div>
+            </div>
+            <div class="deck deck_diamond" @dragenter="ondragEnter($event, 3, 'deckDone')">
+              <div class="deck_card" v-if="deckDone[3].length&gt;0" v-for="cardId in deckDone[3]"><img class="deck_card_img" :src="displayCardParttern(cardId, 3)"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+          <div class="col deck_unorderContainer">
+            <transition-group class="deck" tag="div" appear name="ani_card" @enter="aniCardEnter" v-for="(deck, deckIndex) in deckUnorder" :key="`deck-${deckIndex}`">
+              <div class="deck_card" v-if="deck.length&gt;0" v-for="(cardId, cardIndex) in deck" :key="cardId" :data-index="cardIndex" :style="`top:${cardIndex*-140}px;`" @dragenter="ondragEnter($event, deckIndex, 'deckUnorder')"><img class="deck_card_img" :src="displayCardParttern(cardId, deckIndex)" v-if="cardIndex === deck.length - 1" :dragabble="true" @dragstart="ondragStart(cardId, deckIndex, 'deckUnorder')" @dragend="ondragEnd($event, cardId, deckIndex)"><img class="deck_card_img" :src="displayCardParttern(cardId, deckIndex)" v-else></div>
+            </transition-group>
+          </div>
+        </div>
+      </main>
+      <footer class="game_footer">
+        <div class="col bg_left" :class="{'bg_left__ani': isPlaying}"><img src="./img/2nd-week2/bg-left.svg"></div>
+        <div class="col bg_right" style="order:1;" :class="{'bg_right__ani': isPlaying}"><img src="./img/2nd-week2/bg-right.svg"></div>
+        <div class="col bg_center" :class="{'bg_center__ani': isPlaying}"><img src="./img/2nd-week2/bg-center.svg"></div>
+      </footer>
+      <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" :duration="300" appear>
+        <div class="modal" v-if="showModal">
+          <div class="modal_container">
+            <div class="card" v-if="currentPanel==1">
+              <h2 class="card_title">Game options</h2>
+              <div class="card_body">
+                <ul class="list_group">
+                  <li class="list_group_item">
+                    <button class="list_group_item_btn" @click="restartGame">Quit ans Start a New Game</button>
+                  </li>
+                  <li class="list_group_item">
+                    <button class="list_group_item_btn" @click="continueGame">Keep Playing</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card" v-else-if="currentPanel==2  || currentPanel==3">
+              <h2 class="card_title__sp" v-if="currentPanel==2">Congratulations!</h2>
+              <h2 class="card_title__sp" v-else>Fail!</h2>
+              <div class="card_body">
+                <ul class="list_group">
+                  <li class="list_group_item">
+                    <button class="list_group_item_btn list_group_item_btn__sm" @click="restartGame">New Game</button>
+                  </li>
+                </ul>
+              </div>
+              <div class="card_footer"><img src="./img/2nd-week2/bg-center.svg" :class="{'fail': currentPanel==3}"></div>
+            </div>
+            <div class="card" v-else>
+              <h2 class="card_title">How to play?</h2><a class="card_dismiss" href="#" @click.prevent="startGame"><img src="./img/2nd-week2/btn-cancel.svg" alt="dismiss"></a>
+              <div class="card_body">Freecell is a one-deck solitaire card game. All cards are dealt into 8 tableau piles. Four Cells (in the top left corner of the screen) and four foundation piles (top right hand corner) are placed above the tableau piles. The object of the game is to build up all cards on foundations from Ace to King by following suit. You win when all 52 cards are moved there, 13 to a pile. Top cards of tableau piles and cards from Cells are available to play. You can build tableau piles down by alternating color. Only one card at a time can be moved. The top card of any tableau pile can also be moved to any Cell. Each Cell (or Reserve space) may contain only one card. Cards in the cells can be moved to the foundation piles or back to the tableau piles, if possible. The rules state that you can move only one card at a time, but you can move group of cards in the proper sequence if you have enough free (empty) Cells and/or tableau piles.</div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+    <script src="./js/free-cell.js"></script>
+  </body>
+</html>

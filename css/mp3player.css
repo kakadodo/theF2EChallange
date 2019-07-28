@@ -1,0 +1,524 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,700&display=swap");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+[v-cloak] {
+  display: none; }
+
+::-webkit-scrollbar {
+  width: 10px; }
+
+::-webkit-scrollbar-track {
+  background: white;
+  border: 3px solid #646464;
+  border-radius: 100px; }
+
+::-webkit-scrollbar-thumb {
+  background: #646464;
+  border: 3px solid #646464;
+  border-radius: 100px; }
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b4b4b; }
+
+body {
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: #FF8C6E; }
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  height: calc(100vh - 2vh);
+  max-height: calc(100vh - 2vh);
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: -webkit-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s; }
+  .container.slideMenu {
+    -webkit-transform: translateX(-45%);
+        -ms-transform: translateX(-45%);
+            transform: translateX(-45%); }
+    .container.slideMenu .playList {
+      -webkit-transform: rotate(25deg);
+          -ms-transform: rotate(25deg);
+              transform: rotate(25deg); }
+
+.playList {
+  border: 3px solid #000;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  background-color: #fff;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 40vw;
+          flex: 0 0 40vw;
+  max-width: 40vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: -webkit-transform 0.5s;
+  -o-transition: transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s; }
+  .playList_leftSide {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 30%;
+            flex: 0 0 30%;
+    padding-top: 33px;
+    padding-left: 20px; }
+  .playList_rightSide {
+    border: 3px solid #000;
+    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    background-color: #fff;
+    position: relative;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 0 70%;
+            flex: 1 0 70%;
+    max-width: 70%;
+    top: 15px;
+    right: -15px; }
+  .playList_search {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border: 1px solid #000;
+    background-color: #DFDFDF; }
+    .playList_search > input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer; }
+    .playList_search > button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer; }
+
+.playList_cata_title {
+  font-size: 12px;
+  font-weight: 400;
+  border-bottom: 1px solid #000;
+  cursor: pointer; }
+
+.playList_cata_list {
+  list-style: none;
+  padding-left: 0; }
+
+.playList_cata_list_item > a {
+  position: relative;
+  display: block;
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  line-height: 1.8; }
+  .playList_cata_list_item > a:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: 4px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 7px 0 7px 13px;
+    border-color: transparent transparent transparent #000;
+    opacity: 0;
+    -webkit-transition: .3s;
+    -o-transition: .3s;
+    transition: .3s; }
+
+.playList_cata_list_item:hover > a:before, .playList_cata_list_item.active > a:before {
+  content: '';
+  opacity: 1; }
+
+.playList_rightSide {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  .playList_rightSide_top, .playList_rightSide_middle {
+    padding: 15px; }
+  .playList_rightSide_top {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
+    .playList_rightSide_top > h2 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 400; }
+  .playList_rightSide_middle {
+    margin: 15px 0;
+    height: 60vh;
+    max-height: 60vh;
+    overflow-y: auto; }
+  .playList_rightSide_bottom {
+    position: relative;
+    padding: 10px 0;
+    background-color: #000; }
+
+.playList_switchBtn {
+  color: #000;
+  text-decoration: none; }
+  .playList_switchBtn > span {
+    display: block;
+    font-weight: bold; }
+  .playList_switchBtn > i {
+    font-size: 32px; }
+
+.playList_currentList {
+  list-style: none;
+  padding-left: 0; }
+  .playList_currentList_item {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 5px;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+    -webkit-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+    cursor: pointer; }
+    .playList_currentList_item ~ .playList_currentList_item {
+      margin-top: -3px; }
+    .playList_currentList_item_left {
+      -webkit-box-flex: 0;
+          -ms-flex: 0 0 50%;
+              flex: 0 0 50%;
+      max-width: 50%; }
+    .playList_currentList_item_right {
+      -webkit-box-flex: 0;
+          -ms-flex: 0 0 30%;
+              flex: 0 0 30%;
+      max-width: 40%;
+      margin-left: 10px;
+      text-align: right; }
+    .playList_currentList_item:hover {
+      background-color: #C5C5C5; }
+
+.list_songName {
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold; }
+
+.list_artistName, .list_albumName {
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  font-size: 14px; }
+
+.list_favorite {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer; }
+
+.ads {
+  display: none; }
+  .ads:first-child {
+    display: block; }
+  .ads_img {
+    display: block;
+    max-width: 100%; }
+
+.fade {
+  -webkit-animation-name: fade;
+          animation-name: fade;
+  -webkit-animation-duration: 0.5s;
+          animation-duration: 0.5s; }
+
+@-webkit-keyframes fade {
+  from {
+    opacity: .4; }
+  to {
+    opacity: 1; } }
+
+@keyframes fade {
+  from {
+    opacity: .4; }
+  to {
+    opacity: 1; } }
+
+.player {
+  border: 3px solid #000;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  background-color: #fff;
+  position: relative;
+  margin-top: 30px;
+  margin-left: 25vw;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 60vw;
+          flex: 0 0 60vw; }
+  .player:before, .player:after {
+    border: 3px solid #000;
+    content: '';
+    position: absolute;
+    display: block;
+    background-color: #C5C5C5;
+    border-radius: 4px; }
+  .player:before {
+    right: -26px;
+    top: -4px;
+    width: 20px;
+    height: 100%;
+    -webkit-transform: skewY(45deg);
+        -ms-transform: skewY(45deg);
+            transform: skewY(45deg);
+    -webkit-transform-origin: top left;
+        -ms-transform-origin: top left;
+            transform-origin: top left; }
+  .player:after {
+    left: -4px;
+    bottom: -26px;
+    width: 100%;
+    height: 20px;
+    -webkit-transform: skewX(45deg);
+        -ms-transform: skewX(45deg);
+            transform: skewX(45deg);
+    -webkit-transform-origin: top left;
+        -ms-transform-origin: top left;
+            transform-origin: top left; }
+
+.player_cd {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  border: 3px solid #000;
+  position: relative;
+  margin: 0 auto;
+  width: 500px;
+  height: 500px;
+  border-radius: 100%;
+  overflow: hidden;
+  -webkit-animation: aniPlay 5s infinite linear;
+          animation: aniPlay 5s infinite linear;
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused; }
+  .player_cd_cover {
+    width: 100%; }
+  .player_cd_circle {
+    border: 3px solid #000;
+    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    background-color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    width: 20%;
+    height: 20%;
+    border-radius: 100%; }
+  .player_cd.aniPlay {
+    -webkit-animation-play-state: running;
+            animation-play-state: running; }
+
+@-webkit-keyframes aniPlay {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes aniPlay {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+.btn {
+  border: 3px solid #000;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background-color: #fff;
+  -webkit-box-shadow: 3px 3px 0 0 #C5C5C5, 6px 6px 0 0 #000;
+          box-shadow: 3px 3px 0 0 #C5C5C5, 6px 6px 0 0 #000; }
+  .btn:hover, .btn.active {
+    background-color: #C5C5C5;
+    -webkit-transform: translate(3px, 3px);
+        -ms-transform: translate(3px, 3px);
+            transform: translate(3px, 3px);
+    -webkit-box-shadow: 3px 3px 0 0 #000 inset;
+            box-shadow: 3px 3px 0 0 #000 inset; }
+
+.player_btn_preAndNext {
+  position: absolute;
+  top: 30px;
+  right: 40px; }
+  .player_btn_preAndNext .btn:first-child {
+    margin-bottom: 15px; }
+
+.player_btn_random {
+  position: absolute;
+  top: 45%;
+  right: 40px; }
+  .player_btn_random_dot {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background-color: #000; }
+
+.player_controls {
+  padding: 15px;
+  position: relative; }
+  .player_controls_displayList > h1 {
+    width: 40%;
+    margin: 0;
+    font-size: 24px; }
+  .player_controls_controller {
+    position: absolute;
+    width: 340px;
+    height: 100px;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%); }
+    .player_controls_controller > .player_control_tick {
+      position: absolute;
+      display: block;
+      width: 100%;
+      bottom: -40px;
+      left: 30%;
+      -webkit-transform: translateX(-50%) rotate(-20deg);
+          -ms-transform: translateX(-50%) rotate(-20deg);
+              transform: translateX(-50%) rotate(-20deg);
+      -webkit-transform-origin: 75% 80%;
+          -ms-transform-origin: 75% 80%;
+              transform-origin: 75% 80%;
+      -webkit-transition: -webkit-transform .5s ease-in-out;
+      transition: -webkit-transform .5s ease-in-out;
+      -o-transition: transform .5s ease-in-out;
+      transition: transform .5s ease-in-out;
+      transition: transform .5s ease-in-out, -webkit-transform .5s ease-in-out; }
+      .player_controls_controller > .player_control_tick.active {
+        -webkit-transform: translateX(-50%) rotate(0deg);
+            -ms-transform: translateX(-50%) rotate(0deg);
+                transform: translateX(-50%) rotate(0deg); }
+      .player_controls_controller > .player_control_tick:before {
+        border: 3px solid #000;
+        content: '';
+        position: absolute;
+        display: block;
+        width: 90px;
+        height: 90px;
+        right: 45px;
+        bottom: 35px;
+        border-radius: 100%;
+        background-color: #C5C5C5;
+        z-index: -1; }
+    .player_controls_controller > button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      position: absolute;
+      display: block;
+      padding: 30px;
+      left: 51%;
+      top: 55%;
+      -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
+  .player_controls_volumn {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    width: 150px; }
+    .player_controls_volumn .progressBar_outter {
+      margin-right: 5px; }
+  .player_controls_timeline {
+    margin: 45px 25px 15px 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .player_controls_timeline .progressBar_outter {
+      margin: 0 5px; }
+
+.progressBar_outter {
+  border: 3px solid #000;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  background-color: #fff;
+  width: 100%;
+  height: 10px;
+  border-radius: 100px; }
+
+.progressBar_inner {
+  position: relative;
+  width: 0;
+  height: 100%;
+  background-color: #C5C5C5;
+  border-radius: 100px; }
+  .progressBar_inner_btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border: 3px solid #000;
+    position: absolute;
+    width: 16px;
+    height: 25px;
+    top: 50%;
+    right: 0;
+    -webkit-transform: translate(8px, -50%);
+        -ms-transform: translate(8px, -50%);
+            transform: translate(8px, -50%);
+    background-color: #fff; }
+
+/*# sourceMappingURL=mp3player.css.map */

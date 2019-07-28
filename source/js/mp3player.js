@@ -192,7 +192,7 @@ $(function() {
       },
     },
     created() {
-      $.getJSON('../json/mp3player.json', (res) => {
+      $.getJSON('./json/mp3player.json', (res) => {
         this.playlist = res.playlist;
         this.ads = res.ads;
         this.menuList = this.playlist[this.activePlaylistIndex];

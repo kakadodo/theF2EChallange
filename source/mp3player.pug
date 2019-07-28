@@ -1,0 +1,131 @@
+extends ./partials/layout.jade
+
+block socialMeta
+	<!-- Search Engine -->
+	<meta name="description" content="the F2E - MP3 Player">
+	<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week3.jpg">
+	<!-- Schema.org for Google -->
+	<meta itemprop="name" content="2nd Week 3 - MP3 Player">
+	<meta itemprop="description" content="the F2E - MP3 Player">
+	<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week3.jpg">
+	<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+	<meta property="og:title" content="2nd Week 3 - MP3 Player">
+	<meta property="og:description" content="the F2E - MP3 Player">
+	<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week3.jpg">
+	<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/mp3player.html">
+	<meta property="og:site_name" content="2nd Week 3 - MP3 Player">
+	<meta property="og:locale" content="zh_TW">
+	<meta property="fb:admins" content="1420062581">
+	<meta property="fb:app_id" content="333459487173924">
+	<meta property="og:type" content="website">
+
+block pageTitle
+	title 2nd Week 3 - MP3 Player
+
+block css
+	link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+	//- link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css")
+	link(rel="stylesheet", href="./css/mp3player.css")
+block content
+	#app(v-cloak)
+		.container(:class="{slideMenu: slideMenu}")
+			.playList
+				section.playList_leftSide
+					.playList_search
+						input(type="text")
+						button
+							i.fas.fa-search
+					.playList_cata
+						h4.playList_cata_title(@click="toggleList($event)")
+							| 播放列表
+						ul.playList_cata_list
+							li.playList_cata_list_item(v-for="(list, index) in playlist"
+								:class="{active: index === activePlaylistIndex}")
+								a(href="#" @click.prevent="showMenuList(1, index)")
+									| {{ list.title }}
+					.playList_cata
+						h4.playList_cata_title(@click="showMenuList(2)")
+							| 歌手
+					.playList_cata
+						h4.playList_cata_title(@click="showMenuList(3)")
+							| 我的最愛
+				section.playList_rightSide
+					.playList_rightSide_top
+						h2 {{ menuList.title }}
+						a.playList_switchBtn(href="#"
+							@click.prevent="slideMenu = !slideMenu")
+							span List
+							i.fas.fa-bars
+					.playList_rightSide_middle
+						ul.playList_currentList
+							li.playList_currentList_item(v-for="(list, index) in menuList.list"
+								@click="playSong(index, 'list')")
+								.playList_currentList_item_left
+									.list_songName
+										| {{ list.song_name }}
+									.list_artistName
+										| {{ list.artist_name }}
+										button.list_favorite(v-if="!list.favorite"
+											@click.stop="list.favorite=!list.favorite")
+											i.far.fa-heart
+										button.list_favorite(v-else
+											@click.stop="list.favorite=!list.favorite")
+											i.fas.fa-heart
+								.playList_currentList_item_right
+									.list_albumName {{ list.album_name }}
+									.list_duration {{ list.list_duration | formatTime }}
+					.playList_rightSide_bottom
+						a.ads.fade(:href="ad.url" target="_blank" v-for="(ad, index) in ads")
+							img.ads_img(:src="ad.src")
+			.player
+				#js_player
+				.player_cd(:class="{aniPlay: isPlay}")
+					img.player_cd_cover(:src="currentSong.cover")
+					.player_cd_circle
+				.player_btn_preAndNext
+					a.btn(href="#" @click.prevent="playSong(1)")
+						img(src="./img/2nd-week3/icon_next.svg")
+					a.btn(href="#" @click.prevent="playSong(-1)")
+						img(src="./img/2nd-week3/icon_pre.svg")
+				.player_btn_random
+					a.btn(href="#" @click.prevent="isRandom = !isRandom"
+						:class="{active: isRandom}")
+						img(src="./img/2nd-week3/icon_random.svg")
+					span.player_btn_random_dot(v-if="isRandom")
+				.player_controls
+					.player_controls_displayList
+						h1 {{ currentSong.song_name }}
+						span {{ currentSong.artist_name }}
+					.player_controls_controller
+						.player_control_tick(:class="{active: isPlay}")
+							img(src="./img/2nd-week3/controller.svg")
+						button(v-if="!isPlay" @click="changeSongState(true)")
+							img(src="./img/2nd-week3/icon_play.svg")
+						button(v-else @click="changeSongState(false)")
+							img(src="./img/2nd-week3/icon_pause.svg")
+					.player_controls_volumn
+						.progressBar_outter
+							.progressBar_inner(:style="displayVolBar")
+								button.progressBar_inner_btn(
+									@mousedown="onmouseDown($event)"
+									@mousemove="onmouseMove($event)"
+									@mouseup="onmouseUp($event, 'vol')"
+								)
+						img(src="./img/2nd-week3/icon_sound.svg")
+					.player_controls_timeline
+						.timeline_current {{ currentSongTime | formatTime }}
+						.progressBar_outter
+							.progressBar_inner(:style="displayTimeBar")
+								button.progressBar_inner_btn(
+									@mousedown="onmouseDown($event)"
+									@mousemove="onmouseMove($event)"
+									@mouseup="onmouseUp($event, 'time')"
+								)
+						.timeline_total {{ currentSong.list_duration | formatTime }}
+		
+
+block script
+	//- script(src="./js/vendors.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js")
+	script(src="./js/mp3player.js")

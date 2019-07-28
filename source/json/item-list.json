@@ -1,4 +1,11 @@
 [{
+  "title": "2nd Week 3 - MP3 Player",
+  "imgSrc": "./img/2nd-week3.jpg",
+  "skills": ["Pug", "Vue", "Youtube IFrame Player API"],
+  "date": "2019/7/29",
+  "edition": "2nd",
+  "href": "./mp3player.html"
+},{
   "title": "2nd Week 2 - Free Cell",
   "imgSrc": "./img/2nd-week2.jpg",
   "skills": ["Pug", "Vue", "Animate.css"],

@@ -1,0 +1,482 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,700&display=swap');
+
+$basic_size: 16;
+$color_bg: #FF8C6E;
+$color_primary: #C5C5C5;
+
+@mixin blockStyle {
+  @include border;
+  @include boxShadow;
+  background-color: #fff;
+}
+
+@mixin resetBasicStyle {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+@mixin border {
+  border: 3px solid #000;
+}
+
+@mixin boxShadow {
+  box-shadow: 0 3px 6px rgba(black, 0.16);
+}
+
+@mixin cutText {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+  border: 3px solid #646464;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #646464; 
+  border: 3px solid #646464;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: darken(#646464, 10%); 
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: $color_bg;
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  height: calc(100vh - 2vh);
+  max-height: calc(100vh - 2vh);
+  transition: transform 0.5s;
+  &.slideMenu {
+    transform: translateX(-45%);
+    .playList {
+      transform: rotate(25deg);
+    }
+  }
+}
+
+.playList {
+  @include blockStyle;
+  flex: 0 0 40vw;
+  max-width: 40vw;
+  display: flex;
+  transition: transform 0.5s;
+  &_leftSide {
+    flex: 0 0 30%;
+    padding-top: 33px;
+    padding-left: 20px;
+  }
+  &_rightSide {
+    @include blockStyle;
+    position: relative;
+    flex: 1 0 70%;
+    max-width: 70%;
+    top: 15px;
+    right: -15px;
+  }
+  &_search {
+    display: flex;
+    border: 1px solid #000;
+    background-color: #DFDFDF;
+    > input {
+      @include resetBasicStyle;
+    }
+    > button {
+      @include resetBasicStyle;
+    }
+  }
+}
+
+.playList_cata {
+  &_title {
+    font-size: $basic_size * 0.75px;
+    font-weight: 400;
+    border-bottom: 1px solid #000;
+    cursor: pointer;
+  }
+  &_list {
+    list-style: none;
+    padding-left: 0;
+  }
+  &_list_item {
+    > a {
+      position: relative;
+      display: block;
+      font-size: $basic_size * 0.875px;
+      color: #000;
+      text-decoration: none;
+      line-height: 1.8;
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -20px;
+        top: 4px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 7px 0 7px 13px;
+        border-color: transparent transparent transparent #000;
+        opacity: 0;
+        transition: .3s;
+      }
+    }
+    &:hover, &.active {
+      > a:before {
+        content: '';
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.playList_rightSide {
+  display: flex;
+
+  flex-direction: column;
+  &_top, &_middle {
+    padding: 15px;
+  }
+  &_top {
+    display: flex;
+    justify-content: space-between;
+    > h2 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 400;
+    }
+  }
+  &_middle {
+    margin: 15px 0;
+    height: 60vh;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  &_bottom {
+    position: relative;
+    padding: 10px 0;
+    background-color: #000;
+  }
+}
+
+.playList_switchBtn {
+  color: #000;
+  text-decoration: none;
+  > span {
+    display: block;
+    font-weight: bold;
+  }
+  > i {
+    font-size: $basic_size * 2px;
+  }
+}
+
+.playList_currentList {
+  list-style: none;
+  padding-left: 0;
+  &_item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+    transition: .5s;
+    cursor: pointer;
+    ~ .playList_currentList_item {
+      margin-top: -3px;
+    }
+    &_left {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+    &_right {
+      flex: 0 0 30%;
+      max-width: 40%;
+      margin-left: 10px;
+      text-align: right;
+    }
+    &:hover {
+      background-color: $color_primary;
+    }
+  }
+}
+
+.list_songName {
+  @include cutText;
+  width: 100%;
+  font-size: $basic_size * 1.125px;
+  font-weight: bold;
+}
+
+.list_artistName, .list_albumName {
+  @include cutText;
+  width: 100%;
+  font-size: 14px;
+}
+
+.list_favorite {
+  @include resetBasicStyle;
+}
+
+.ads {
+  display: none;
+  &:first-child {
+    display: block;
+  }
+  &_img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 0.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+.player {
+  @include blockStyle;
+  position: relative;
+  margin-top: 30px;
+  margin-left: 25vw;
+  flex: 0 0 60vw;
+  &:before, &:after {
+    @include border;
+    content: '';
+    position: absolute;
+    display: block;
+    background-color: $color_primary;
+    border-radius: 4px;
+  }
+  &:before {
+    right: -26px;
+    top: -4px;
+    width: 20px;
+    height: 100%;
+    transform: skewY(45deg);
+    transform-origin: top left;
+  }
+  &:after {
+    left: -4px;
+    bottom: -26px;
+    width: 100%;
+    height: 20px;
+    transform: skewX(45deg);
+    transform-origin: top left;
+  }
+}
+
+.player_cd {
+  @include boxShadow;
+  @include border;
+  position: relative;
+  margin: 0 auto;
+  width: 500px;
+  height: 500px;
+  border-radius: 100%;
+  overflow: hidden;
+  animation: aniPlay 5s infinite linear;
+  animation-play-state: paused;
+  &_cover {
+    width: 100%;
+  }
+  &_circle {
+    @include blockStyle;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 20%;
+    border-radius: 100%;
+  }
+  &.aniPlay {
+    animation-play-state: running;
+  }
+}
+
+@keyframes aniPlay {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn {
+  @include border;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background-color: #fff;
+  box-shadow: 3px 3px 0 0 $color_primary,
+              6px 6px 0 0 #000;
+  &:hover, &.active {
+    background-color: $color_primary;
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0 0 #000 inset;
+  }
+}
+
+.player_btn_preAndNext {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  .btn:first-child {
+    margin-bottom: 15px;
+  }
+}
+
+.player_btn_random {
+  position: absolute;
+  top: 45%;
+  right: 40px;
+  &_dot {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background-color: #000;
+  }
+}
+
+.player_controls {
+  padding: 15px;
+  position: relative;
+  &_displayList {
+    > h1 {
+      width: 40%;
+      margin: 0;
+      font-size: 24px;
+    }
+  }
+  &_controller {
+    position: absolute;
+    width: 340px;
+    height: 100px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    > .player_control_tick {
+      position: absolute;
+      display: block;
+      width: 100%;
+      bottom: -40px;
+      left: 30%;
+      transform: translateX(-50%) rotate(-20deg);
+      transform-origin: 75% 80%;
+      transition: transform .5s ease-in-out;
+      &.active {
+        transform: translateX(-50%) rotate(0deg);
+      }
+      &:before {
+        @include border;
+        content: '';
+        position: absolute;
+        display: block;
+        width: 90px;
+        height: 90px;
+        right: 45px;
+        bottom: 35px;
+        border-radius: 100%;
+        background-color: $color_primary;
+        z-index: -1;
+      }
+    }
+    > button {
+      @include resetBasicStyle;
+      position: absolute;
+      display: block;
+      padding: 30px;
+      left: 51%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  &_volumn {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    width: 150px;
+    .progressBar_outter {
+      margin-right: 5px;
+    }
+  }
+  &_timeline {
+    margin: 45px 25px 15px 0;
+    display: flex;
+    align-items: center;
+    .progressBar_outter {
+      margin: 0 5px;
+    }
+  }
+}
+
+.progressBar_outter {
+  @include blockStyle;
+  width: 100%;
+  height: 10px;
+  border-radius: 100px;
+}
+
+.progressBar_inner {
+  position: relative;
+  width: 0;
+  height: 100%;
+  background-color: $color_primary;
+  border-radius: 100px;
+  &_btn {
+    @include resetBasicStyle;
+    @include border;
+    position: absolute;
+    width: 16px;
+    height: 25px;
+    top: 50%;
+    right: 0;
+    transform: translate(8px, -50%);
+    background-color: #fff;
+  }
+}

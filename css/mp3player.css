@@ -337,6 +337,11 @@ body {
           -ms-flex: 0 0 70vw;
               flex: 0 0 70vw; } }
 
+#js_cdCanvas {
+  position: absolute;
+  top: 0;
+  left: 0; }
+
 .player_cd {
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
@@ -347,8 +352,8 @@ body {
   height: 500px;
   border-radius: 100%;
   overflow: hidden;
-  -webkit-animation: aniPlay 5s infinite linear;
-          animation: aniPlay 5s infinite linear;
+  -webkit-animation: aniPlay 5s .5s infinite linear, aniShake .5s .5s infinite ease-in-out;
+          animation: aniPlay 5s .5s infinite linear, aniShake .5s .5s infinite ease-in-out;
   -webkit-animation-play-state: paused;
           animation-play-state: paused; }
   @media (max-width: 900px) {
@@ -390,6 +395,18 @@ body {
   to {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg); } }
+
+@-webkit-keyframes aniShake {
+  0%, 100% {
+    top: 0; }
+  50% {
+    top: -3px; } }
+
+@keyframes aniShake {
+  0%, 100% {
+    top: 0; }
+  50% {
+    top: -3px; } }
 
 .btn {
   border: 3px solid #000;

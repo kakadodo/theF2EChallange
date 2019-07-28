@@ -203,7 +203,7 @@ $(function () {
     created: function created() {
       var _this3 = this;
 
-      $.getJSON('../json/mp3player.json', function (res) {
+      $.getJSON('./json/mp3player.json', function (res) {
         _this3.playlist = res.playlist;
         _this3.ads = res.ads;
         _this3.menuList = _this3.playlist[_this3.activePlaylistIndex];

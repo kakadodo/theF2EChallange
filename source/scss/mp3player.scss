@@ -319,6 +319,12 @@ body {
   }
 }
 
+#js_cdCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .player_cd {
   @include boxShadow;
   @include border;
@@ -328,7 +334,7 @@ body {
   height: 500px;
   border-radius: 100%;
   overflow: hidden;
-  animation: aniPlay 5s infinite linear;
+  animation: aniPlay 5s .5s infinite linear, aniShake .5s .5s infinite ease-in-out;
   animation-play-state: paused;
   @media (max-width: 900px) {
     width: 250px;
@@ -358,6 +364,15 @@ body {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes aniShake {
+  0%, 100% {
+    top: 0;
+  }
+  50% {
+    top: -3px;
   }
 }
 

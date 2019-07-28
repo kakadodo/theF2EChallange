@@ -3,6 +3,8 @@ tag.src = "https://www.youtube.com/iframe_api";
 const firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 let player = null;
+let vm = null;
+let $canvas, ctx, ww, hh;
 
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('js_player', {
@@ -14,8 +16,6 @@ function onYouTubeIframeAPIReady() {
     }
   });
 }
-
-let vm = null;
 
 $(function() {
   vm = new Vue({
@@ -150,6 +150,7 @@ $(function() {
         } else {
           player.pauseVideo();
           clearInterval(this.songTimer);
+          this.clearCdArc();
         }
       },
       getRandomNum(length) {
@@ -182,7 +183,31 @@ $(function() {
       },
       setCurrentSongTime() {
         player.seekTo(this.currentSongTime, true);
-      }
+      },
+      drawCdArc() {
+        const cdRadius = $('.player_cd').width()/2;
+        ctx.fillStyle="#fff";
+        ctx.fillRect(0, 0, ww, hh);
+        ctx.save();
+          ctx.translate(ww/2, hh/2);
+          for(var i=0;i<3;i++){
+            const randomNum = this.getRandomNum(5) + 5;
+            ctx.beginPath();
+            let start_angle = i*randomNum;
+            let end_angle = i/0.5+Math.PI/randomNum;
+            ctx.arc(0, 0, cdRadius + i*8+10, start_angle, end_angle);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle= `rgba(0,0,0,${1 - (i/3)})`;
+            ctx.stroke();
+          }
+        ctx.restore();
+      },
+      clearCdArc() {
+        ctx.save();
+          ctx.fillStyle="#fff";
+          ctx.fillRect(0, 0, ww, hh);
+        ctx.restore();
+      },
     },
     filters: {
       formatTime(val) {
@@ -201,6 +226,19 @@ $(function() {
     },
     mounted() {
       this.switchAds();
+      $canvas = $('#js_cdCanvas');
+      ctx = $canvas[0].getContext('2d');
+      ww = $canvas[0].width = $('.player').width();
+      hh = $canvas[0].height = $('.player_cd').height() + 60;
+      window.addEventListener("resize", function() {
+        ww = $canvas[0].width = $('.player').width();
+        hh = $canvas[0].height = $('.player_cd').height() + 60;
+      });
+      setInterval(() => {
+        if (this.isPlay) {
+          this.drawCdArc();
+        }
+      }, 500);
     },
   });
 });

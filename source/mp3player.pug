@@ -29,6 +29,46 @@ block css
 block content
 	#app(v-cloak)
 		.container(:class="{slideMenu: slideMenu}")
+			.player
+				#js_player
+				canvas#js_cdCanvas
+				.player_cd(:class="{aniPlay: isPlay}")
+					img.player_cd_cover(:src="currentSong.cover")
+					.player_cd_circle
+				.player_btn_preAndNext
+					a.btn(href="#" @click.prevent="playSong(1)")
+						img(src="./img/2nd-week3/icon_next.svg")
+					a.btn(href="#" @click.prevent="playSong(-1)")
+						img(src="./img/2nd-week3/icon_pre.svg")
+				.player_btn_random
+					a.btn(href="#" @click.prevent="isRandom = !isRandom"
+						:class="{active: isRandom}")
+						img(src="./img/2nd-week3/icon_random.svg")
+					span.player_btn_random_dot(v-if="isRandom")
+				.player_controls
+					.player_controls_displayList
+						h1 {{ currentSong.song_name }}
+						span {{ currentSong.artist_name }}
+					.player_controls_controller
+						.player_control_tick(:class="{active: isPlay}")
+							img(src="./img/2nd-week3/controller.svg")
+						button(v-if="!isPlay" @click="changeSongState(true)")
+							img(src="./img/2nd-week3/icon_play.svg")
+						button(v-else @click="changeSongState(false)")
+							img(src="./img/2nd-week3/icon_pause.svg")
+					.player_controls_volumn
+						.slidecontainer
+							input.slider(type="range" min="0" max="1" step="0.1"
+								v-model.number="volumn"
+								@change="setVolumn")
+						img(src="./img/2nd-week3/icon_sound.svg")
+					.player_controls_timeline
+						.timeline_current {{ currentSongTime | formatTime }}
+						.slidecontainer
+							input.slider(type="range" min="0" :max="currentSongTotalTime"
+								step="1" v-model.number="currentSongTime"
+								@change="setCurrentSongTime")
+						.timeline_total {{ currentSong.list_duration | formatTime }}
 			.playList
 				section.playList_leftSide
 					.playList_search
@@ -77,47 +117,6 @@ block content
 					.playList_rightSide_bottom
 						a.ads.fade(:href="ad.url" target="_blank" v-for="(ad, index) in ads")
 							img.ads_img(:src="ad.src")
-			.player
-				#js_player
-				canvas#js_cdCanvas
-				.player_cd(:class="{aniPlay: isPlay}")
-					img.player_cd_cover(:src="currentSong.cover")
-					.player_cd_circle
-				.player_btn_preAndNext
-					a.btn(href="#" @click.prevent="playSong(1)")
-						img(src="./img/2nd-week3/icon_next.svg")
-					a.btn(href="#" @click.prevent="playSong(-1)")
-						img(src="./img/2nd-week3/icon_pre.svg")
-				.player_btn_random
-					a.btn(href="#" @click.prevent="isRandom = !isRandom"
-						:class="{active: isRandom}")
-						img(src="./img/2nd-week3/icon_random.svg")
-					span.player_btn_random_dot(v-if="isRandom")
-				.player_controls
-					.player_controls_displayList
-						h1 {{ currentSong.song_name }}
-						span {{ currentSong.artist_name }}
-					.player_controls_controller
-						.player_control_tick(:class="{active: isPlay}")
-							img(src="./img/2nd-week3/controller.svg")
-						button(v-if="!isPlay" @click="changeSongState(true)")
-							img(src="./img/2nd-week3/icon_play.svg")
-						button(v-else @click="changeSongState(false)")
-							img(src="./img/2nd-week3/icon_pause.svg")
-					.player_controls_volumn
-						.slidecontainer
-							input.slider(type="range" min="0" max="1" step="0.1"
-								v-model.number="volumn"
-								@change="setVolumn")
-						img(src="./img/2nd-week3/icon_sound.svg")
-					.player_controls_timeline
-						.timeline_current {{ currentSongTime | formatTime }}
-						.slidecontainer
-							input.slider(type="range" min="0" :max="currentSongTotalTime"
-								step="1" v-model.number="currentSongTime"
-								@change="setCurrentSongTime")
-						.timeline_total {{ currentSong.list_duration | formatTime }}
-		
 
 block script
 	//- script(src="./js/vendors.js")

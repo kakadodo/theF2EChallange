@@ -34,6 +34,37 @@
   <body>
     <div id="app" v-cloak>
       <div class="container" :class="{slideMenu: slideMenu}">
+        <div class="player">
+          <div id="js_player"></div>
+          <canvas id="js_cdCanvas"></canvas>
+          <div class="player_cd" :class="{aniPlay: isPlay}"><img class="player_cd_cover" :src="currentSong.cover">
+            <div class="player_cd_circle"></div>
+          </div>
+          <div class="player_btn_preAndNext"><a class="btn" href="#" @click.prevent="playSong(1)"><img src="./img/2nd-week3/icon_next.svg"></a><a class="btn" href="#" @click.prevent="playSong(-1)"><img src="./img/2nd-week3/icon_pre.svg"></a></div>
+          <div class="player_btn_random"><a class="btn" href="#" @click.prevent="isRandom = !isRandom" :class="{active: isRandom}"><img src="./img/2nd-week3/icon_random.svg"></a><span class="player_btn_random_dot" v-if="isRandom"></span></div>
+          <div class="player_controls">
+            <div class="player_controls_displayList">
+              <h1>{{ currentSong.song_name }}</h1><span>{{ currentSong.artist_name }}</span>
+            </div>
+            <div class="player_controls_controller">
+              <div class="player_control_tick" :class="{active: isPlay}"><img src="./img/2nd-week3/controller.svg"></div>
+              <button v-if="!isPlay" @click="changeSongState(true)"><img src="./img/2nd-week3/icon_play.svg"></button>
+              <button v-else @click="changeSongState(false)"><img src="./img/2nd-week3/icon_pause.svg"></button>
+            </div>
+            <div class="player_controls_volumn">
+              <div class="slidecontainer">
+                <input class="slider" type="range" min="0" max="1" step="0.1" v-model.number="volumn" @change="setVolumn">
+              </div><img src="./img/2nd-week3/icon_sound.svg">
+            </div>
+            <div class="player_controls_timeline">
+              <div class="timeline_current">{{ currentSongTime | formatTime }}</div>
+              <div class="slidecontainer">
+                <input class="slider" type="range" min="0" :max="currentSongTotalTime" step="1" v-model.number="currentSongTime" @change="setCurrentSongTime">
+              </div>
+              <div class="timeline_total">{{ currentSong.list_duration | formatTime }}</div>
+            </div>
+          </div>
+        </div>
         <div class="playList">
           <section class="playList_leftSide">
             <div class="playList_search">
@@ -76,37 +107,6 @@
             </div>
             <div class="playList_rightSide_bottom"><a class="ads fade" :href="ad.url" target="_blank" v-for="(ad, index) in ads"><img class="ads_img" :src="ad.src"></a></div>
           </section>
-        </div>
-        <div class="player">
-          <div id="js_player"></div>
-          <canvas id="js_cdCanvas"></canvas>
-          <div class="player_cd" :class="{aniPlay: isPlay}"><img class="player_cd_cover" :src="currentSong.cover">
-            <div class="player_cd_circle"></div>
-          </div>
-          <div class="player_btn_preAndNext"><a class="btn" href="#" @click.prevent="playSong(1)"><img src="./img/2nd-week3/icon_next.svg"></a><a class="btn" href="#" @click.prevent="playSong(-1)"><img src="./img/2nd-week3/icon_pre.svg"></a></div>
-          <div class="player_btn_random"><a class="btn" href="#" @click.prevent="isRandom = !isRandom" :class="{active: isRandom}"><img src="./img/2nd-week3/icon_random.svg"></a><span class="player_btn_random_dot" v-if="isRandom"></span></div>
-          <div class="player_controls">
-            <div class="player_controls_displayList">
-              <h1>{{ currentSong.song_name }}</h1><span>{{ currentSong.artist_name }}</span>
-            </div>
-            <div class="player_controls_controller">
-              <div class="player_control_tick" :class="{active: isPlay}"><img src="./img/2nd-week3/controller.svg"></div>
-              <button v-if="!isPlay" @click="changeSongState(true)"><img src="./img/2nd-week3/icon_play.svg"></button>
-              <button v-else @click="changeSongState(false)"><img src="./img/2nd-week3/icon_pause.svg"></button>
-            </div>
-            <div class="player_controls_volumn">
-              <div class="slidecontainer">
-                <input class="slider" type="range" min="0" max="1" step="0.1" v-model.number="volumn" @change="setVolumn">
-              </div><img src="./img/2nd-week3/icon_sound.svg">
-            </div>
-            <div class="player_controls_timeline">
-              <div class="timeline_current">{{ currentSongTime | formatTime }}</div>
-              <div class="slidecontainer">
-                <input class="slider" type="range" min="0" :max="currentSongTotalTime" step="1" v-model.number="currentSongTime" @change="setCurrentSongTime">
-              </div>
-              <div class="timeline_total">{{ currentSong.list_duration | formatTime }}</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

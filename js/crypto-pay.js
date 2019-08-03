@@ -45,7 +45,7 @@ $(function () {
       formProfile: null,
       formPayby: null,
       formPayment: null,
-      hideOrder: false
+      hideOrder: true
     },
     computed: {},
     methods: {

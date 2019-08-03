@@ -17,6 +17,7 @@ var formProfile = {
 var formPayment = {
   name: null,
   cardNumber: ['', '', '', ''],
+  cardNumberInput: null,
   expiredMonth: null,
   expiredYear: null,
   cvv: null
@@ -36,7 +37,7 @@ $(function () {
     data: {
       progress: {
         steps: ['profile', 'payby', 'payment'],
-        currentStep: 0,
+        currentStep: 2,
         profile: false,
         payby: false,
         payment: false
@@ -45,7 +46,8 @@ $(function () {
       formProfile: null,
       formPayby: null,
       formPayment: null,
-      hideOrder: true
+      hideOrder: true,
+      isMobile: false
     },
     computed: {},
     methods: {
@@ -53,6 +55,8 @@ $(function () {
         var _this = this;
 
         this.$validator.validateAll().then(function (result) {
+          console.log('work');
+          console.log(result);
           if (result) {
             _this.progress[stepName] = true;
             _this.progress.currentStep++;
@@ -107,6 +111,18 @@ $(function () {
         this.formProfile = JSON.parse(JSON.stringify(formProfile));
         this.formPayby = null;
         this.formPayment = JSON.parse(JSON.stringify(formPayment));
+      },
+      formatCreditNumber: function formatCreditNumber(e) {
+        var val = e.target.value.replace(/-/g, '');
+        var valArr = val.split('');
+        var temp = [];
+        valArr.map(function (val, i) {
+          temp.push(val);
+          if ((i + 1) % 4 === 0 && temp.length < 19) {
+            temp.push('-');
+          }
+        });
+        this.formPayment.cardNumberInput = temp.join('');
       }
     },
     created: function created() {
@@ -121,6 +137,8 @@ $(function () {
       this.initFormData();
     },
     mounted: function mounted() {
+      var _this3 = this;
+
       var timer = null;
       $(window).on('scroll', function () {
         if ($(window).width() <= 767) {
@@ -133,6 +151,9 @@ $(function () {
         } else {
           $('.popup_wrapper').attr('style', '');
         }
+      });
+      $(window).on('resize', function () {
+        _this3.isMobile = $(window).width() <= 575 ? true : false;
       });
     }
   });

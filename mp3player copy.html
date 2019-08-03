@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-115362207-1" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-115362207-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - MP3 Player">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week3.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="2nd Week 3 - MP3 Player">
+<meta itemprop="description" content="the F2E - MP3 Player">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week3.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="2nd Week 3 - MP3 Player">
+<meta property="og:description" content="the F2E - MP3 Player">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week3.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/mp3player.html">
+<meta property="og:site_name" content="2nd Week 3 - MP3 Player">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
+    <title>2nd Week 3 - MP3 Player</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/mp3player.css">
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <div class="container" :class="{slideMenu: slideMenu}">
+        <div class="player">
+          <div id="js_player"></div>
+          <canvas id="js_cdCanvas"></canvas>
+          <div class="player_cd" :class="{aniPlay: isPlay}"><img class="player_cd_cover" :src="currentSong.cover">
+            <div class="player_cd_circle"></div>
+          </div>
+          <div class="player_btn_preAndNext"><a class="btn" href="#" @click.prevent="playSong(1)"><img src="./img/2nd-week3/icon_next.svg"></a><a class="btn" href="#" @click.prevent="playSong(-1)"><img src="./img/2nd-week3/icon_pre.svg"></a></div>
+          <div class="player_btn_random"><a class="btn" href="#" @click.prevent="isRandom = !isRandom" :class="{active: isRandom}"><img src="./img/2nd-week3/icon_random.svg"></a><span class="player_btn_random_dot" v-if="isRandom"></span></div>
+          <div class="player_controls">
+            <div class="player_controls_displayList">
+              <h1>{{ currentSong.song_name }}</h1><span>{{ currentSong.artist_name }}</span>
+            </div>
+            <div class="player_controls_controller">
+              <div class="player_control_tick" :class="{active: isPlay}"><img src="./img/2nd-week3/controller.svg"></div>
+              <button v-if="!isPlay" @click="changeSongState(true)"><img src="./img/2nd-week3/icon_play.svg"></button>
+              <button v-else @click="changeSongState(false)"><img src="./img/2nd-week3/icon_pause.svg"></button>
+            </div>
+            <div class="player_controls_volumn">
+              <div class="slidecontainer">
+                <input class="slider" type="range" min="0" max="1" step="0.1" v-model.number="volumn" @change="setVolumn">
+              </div><img src="./img/2nd-week3/icon_sound.svg">
+            </div>
+            <div class="player_controls_timeline">
+              <div class="timeline_current">{{ currentSongTime | formatTime }}</div>
+              <div class="slidecontainer">
+                <input class="slider" type="range" min="0" :max="currentSongTotalTime" step="1" v-model.number="currentSongTime" @change="setCurrentSongTime">
+              </div>
+              <div class="timeline_total">{{ currentSong.list_duration | formatTime }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="playList">
+          <section class="playList_leftSide">
+            <div class="playList_search">
+              <input type="text">
+              <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="playList_cata">
+              <h4 class="playList_cata_title" @click="toggleList($event)">播放列表</h4>
+              <ul class="playList_cata_list">
+                <li class="playList_cata_list_item" v-for="(list, index) in playlist" :class="{active: index === activePlaylistIndex}"><a href="#" @click.prevent="showMenuList(1, index)">{{ list.title }}</a></li>
+              </ul>
+            </div>
+            <div class="playList_cata">
+              <h4 class="playList_cata_title" @click="showMenuList(2)">歌手</h4>
+            </div>
+            <div class="playList_cata">
+              <h4 class="playList_cata_title" @click="showMenuList(3)">我的最愛</h4>
+            </div>
+          </section>
+          <section class="playList_rightSide">
+            <div class="playList_rightSide_top">
+              <h2>{{ menuList.title }}</h2><a class="playList_switchBtn" href="#" @click.prevent="slideMenu = !slideMenu"><span>List</span><i class="fas fa-bars"></i></a>
+            </div>
+            <div class="playList_rightSide_middle">
+              <ul class="playList_currentList">
+                <li class="playList_currentList_item" v-for="(list, index) in menuList.list" @click="playSong(index, 'list')">
+                  <div class="playList_currentList_item_left">
+                    <div class="list_songName">{{ list.song_name }}</div>
+                    <div class="list_artistName">{{ list.artist_name }}
+                      <button class="list_favorite" v-if="!list.favorite" @click.stop="list.favorite=!list.favorite"><i class="far fa-heart"></i></button>
+                      <button class="list_favorite" v-else @click.stop="list.favorite=!list.favorite"><i class="fas fa-heart"></i></button>
+                    </div>
+                  </div>
+                  <div class="playList_currentList_item_right">
+                    <div class="list_albumName">{{ list.album_name }}</div>
+                    <div class="list_duration">{{ list.list_duration | formatTime }}</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="playList_rightSide_bottom"><a class="ads fade" :href="ad.url" target="_blank" v-for="(ad, index) in ads"><img class="ads_img" :src="ad.src"></a></div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+    <script src="./js/mp3player.js"></script>
+  </body>
+</html>

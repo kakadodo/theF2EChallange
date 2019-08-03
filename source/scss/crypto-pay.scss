@@ -1,0 +1,378 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,500,700&display=swap');
+@import 'functions';
+@import 'mixins';
+@import 'variables';
+@import 'bootstrap';
+
+$basic_size: 16;
+$color_primary: #FFBC00;
+$color_progress: #EFEFEF;
+$color_secondary: #EBEBEB;
+
+@mixin ulFormat {
+  list-style: none;
+  padding-left: 0;
+}
+
+@mixin btnStyle {
+  width: 50%;
+  border-radius: 100px;
+  color: #fff;
+  transition: transform .3s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+[v-cloak] {
+  display: none;
+}
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: #F8F8F8;
+}
+
+textarea{
+  resize: none;
+}
+
+.btn:focus, .btn.focus, .form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba($color_primary, 0.25);
+}
+
+.btn_primary {
+  background-color: $color_primary;
+}
+
+.btn_normal {
+  background-color: #000;
+}
+
+// 支付進度條-----------------------------------------
+.progress_group_wrapper {
+  margin-top: 75px;
+  @media (max-width: 991px) {
+    margin-top: 25px;
+  }
+}
+
+.progress_group {
+  @include ulFormat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress_group_item {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  border-radius: 50%;
+  background-color: $color_progress;
+  transition: 0.5s 0.3s;
+  &:after {
+    content: attr(data-title);
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  > i {
+    color: #D1D1D1;
+  }
+  &.done {
+    background-color: $color_primary;
+    > i {
+      color: #fff;
+    }
+  }
+}
+
+.progress_group_bar {
+  height: 12px;
+  flex: 1 1 100%;
+  margin: auto -5px;
+  z-index: 0;
+}
+
+.progress-bar {
+  width: 0%;
+  background-color: $color_primary;
+  &.done {
+    width: 100%;
+  }
+}
+
+.step_wrapper {
+  margin-top: 42px;
+}
+
+// 訂單資訊----------------------------------
+.popup_wrapper {
+  @media (max-width: 767px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    transition: transform .5s;
+    &.hideOrder {
+      transform: translateX(-80%);
+    }
+  }
+}
+
+.popup {
+  position: relative;
+  margin-top: 60px;
+  margin-right: -5px;
+  padding: 45px 65px;
+  border-radius: 11px;
+  background-color: $color_secondary;
+  box-shadow: 0 3px 6px rgba(black, 0.16);
+  @media (max-width: 991px) {
+    padding: 45px 15px 45px 50px;
+  }
+  @media (max-width: 767px) {
+    margin: 0;
+    width: 80%;
+    padding: 20px 25px;
+  }
+}
+
+.popup_btn {
+  position: absolute;
+  left: 0;
+  top: 45px;
+  width: 40px;
+  padding: 35px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 5px 5px 0;
+  background-color: #fff;
+  writing-mode: vertical-lr;
+  box-shadow: 2px 2px 4px rgba(black, 0.08);
+  transition: background-color .3s;
+  @media (max-width: 767px) {
+    top: 0;
+    left: 100%;
+    &:hover {
+      background-color: $color_primary;
+    }
+  }
+}
+
+.popup_body_title {
+  padding-top: 8px;
+  padding-bottom: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.9px;
+  line-height: 22px;
+  @media (max-width: 991px) {
+    font-size: 16px;
+  }
+}
+
+.popup_body_descriptionList {
+  @include ulFormat;
+  &_item {
+    font-weight: 300;
+    word-wrap: break-word;
+    letter-spacing: 0.8px;
+    line-height: 22px;
+  }
+  @media (max-width: 991px) {
+    font-size: 14px;
+  }
+}
+
+// 支付表單
+.form_wrapper {
+  padding: 60px;
+  background-color: #fff;
+  border-radius: 11px;
+  box-shadow: 0 4px 6px rgba(black, 0.1);
+  .form_inline {
+    display: flex;
+    align-items: center;
+    > label {
+      flex-shrink: 0;
+      margin-right: 10px;
+      margin-bottom: 0;
+      color: #000;
+      font-size: 14px;
+    }
+  }
+  .form-check-label > strong {
+    color: $color_primary;
+  }
+  label {
+    color: #888888;
+  }
+  .form-control {
+    background-color: $color_secondary;
+    border: none;
+  }
+  .input-group-text {
+    border: 0;
+  }
+}
+
+.step_title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  > strong {
+    margin-right: 10px;
+    font-size: 28px;
+    color: $color_primary;
+  }
+}
+
+.step_required {
+  &:after {
+    content: '*';
+    margin-left: 5px;
+    color: red;
+  }
+}
+
+.form_footer {
+  display: flex;
+  justify-content: flex-end;
+  .btn {
+    @include btnStyle;
+  }
+  .btn:nth-of-type(2) {
+    margin-left: 30px;
+  }
+}
+
+.btn_group {
+  display: flex;
+  width: 50%;
+  .btn {
+    flex: 1 1 50%;
+  }
+  @media (max-width: 991px) {
+    width: 100%;
+  }
+}
+
+.form_payby {
+  position: relative;
+  .alert_payby {
+    position: absolute;
+    top: 102%;
+    width: 100%;
+    background-color: $color_primary;
+    box-shadow: 0 4px 6px rgba(black, 0.1);
+  }
+}
+
+.form_payby_item {
+  margin: 15px;
+  padding: 15px 0;
+  background-color: $color_secondary;
+  border-radius: 20px;
+  flex-basis: 27%;
+  transition: 0.3s;
+  border: 3px solid $color_secondary;
+  &.active {
+    border: 3px solid $color_primary;
+  }
+  &:hover {
+    background-color: $color_primary;
+    span {
+      color: #fff;
+    }
+  }
+  > label {
+    position: relative;
+    display: block;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  input {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+  .form_payby_img {
+    margin-bottom: 20px;
+  }
+  @media (max-width: 991px) {
+    flex-basis: 41%;
+  }
+  @media (max-width: 767px) {
+    margin: 15px 0;
+    flex-basis: 100%;
+  }
+}
+
+.form_payby_img {
+  width: 72px;
+  height: 72px;
+  background-image: url('../img/2nd-week4/icon-payby.png');
+  background-repeat: no-repeat;
+  background-size: 72px 288px;
+  &.useIcon {
+    background-image: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 65px;
+  }
+}
+
+.form_payby_price {
+  font-size: 25px;
+  margin-right: auto;
+  @media (max-width: 991px) {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.form_payby .form_footer {
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+
+// 支付完成畫面---------------------------------------------------
+.step_done {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.step_done_img {
+  max-width: 70%;
+  animation: zoomIn .3s .5s backwards, flash .5s 1s, tada 1s 1.5s, pulse 2s 2.7s infinite;
+}
+
+.step_done_message {
+  letter-spacing: 0.9px;
+}
+
+.step_done_btn {
+  @include btnStyle;
+  margin-top: 75px;
+  align-self: flex-end;
+}

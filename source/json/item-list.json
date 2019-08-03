@@ -1,4 +1,11 @@
 [{
+  "title": "2nd Week 4 - Crypto Pay",
+  "imgSrc": "./img/2nd-week4.jpg",
+  "skills": ["Pug", "Vue", "VeeValidate", "Bootstrap 4", "RWD"],
+  "date": "2019/8/3",
+  "edition": "2nd",
+  "href": "./crypto-pay.html"
+},{
   "title": "2nd Week 3 - MP3 Player",
   "imgSrc": "./img/2nd-week3.jpg",
   "skills": ["Pug", "Vue", "Youtube IFrame Player API"],

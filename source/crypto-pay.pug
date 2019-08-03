@@ -195,35 +195,40 @@ block content
 									.form-group
 										label 卡號
 										.form-row
-											.col(v-for="(number, index) in formPayment.cardNumber")
+											.col(v-if="!isMobile"
+												v-for="(number, index) in formPayment.cardNumber")
 												input.form-control(type='text' :name="`cardNumber${index}`"
 													ref="cardNumber"
 													v-model="formPayment.cardNumber[index]"
 													v-validate="'required|numeric|length:4'"
 													@input="checkCardNumberInput(formPayment.cardNumber[index], index)")
+											.col(v-if="isMobile")
+												input.form-control(type='text' name="cardNumber"
+													:value="formPayment.cardNumberInput"
+													v-validate="{ required: true,	regex: /^([0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4})$/}"
+													@input="formatCreditNumber($event)")
 									.form-group
 										label 到期日期
 										.form-row
-											.col-md-6
-												.form-row
-													.col.input-group
-														input.form-control(type='text', name="expiredMonth"
-															v-model="formPayment.expiredMonth"
-															v-validate="'required|numeric|min_value:1|max_value:12'")
-														.input-group-append
-															span.input-group-text 月
-													.col.input-group
-														input.form-control(type='text', name="expiredYear"
-															v-model="formPayment.expiredYear"
-															v-validate="'required|numeric|min_value:20|max_value:30'")
-														.input-group-append
-															span.input-group-text 年
-									.form-row
-										.form-group.col-md-3
-											label CVV (卡片背面末三碼)
-											input.form-control(type='text' name="cvv"
-												v-model="formPayment.cvv"
-												v-validate="'required|numeric|length:3'")
+											.col-6.col-md-3.input-group
+												input.form-control(type='text', name="expiredMonth"
+													v-model="formPayment.expiredMonth"
+													v-validate="'required|numeric|min_value:1|max_value:12'")
+												.input-group-append
+													span.input-group-text 月
+											.col-6.col-md-3.input-group
+												input.form-control(type='text', name="expiredYear"
+													v-model="formPayment.expiredYear"
+													v-validate="'required|numeric|min_value:20|max_value:30'")
+												.input-group-append
+													span.input-group-text 年
+									.form-group
+										label CVV (卡片背面末三碼)
+										.form-row
+											.col-md-3
+												input.form-control(type='text' name="cvv"
+													v-model="formPayment.cvv"
+													v-validate="'required|numeric|length:3'")
 									.form_footer
 										.btn_group
 											button.btn.btn_normal(@click.prevent="resetForm('formPayment')") 取消

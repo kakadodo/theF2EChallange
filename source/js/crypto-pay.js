@@ -15,6 +15,7 @@ const formProfile = {
 const formPayment = {
   name: null,
   cardNumber: ['', '', '', ''],
+  cardNumberInput: null,
   expiredMonth: null,
   expiredYear: null,
   cvv: null,
@@ -34,7 +35,7 @@ $(function() {
     data: {
       progress: {
         steps: ['profile', 'payby', 'payment'],
-        currentStep: 0,
+        currentStep: 2,
         profile: false,
         payby: false,
         payment: false,
@@ -44,12 +45,15 @@ $(function() {
       formPayby: null,
       formPayment: null,
       hideOrder: true,
+      isMobile: false,
     },
     computed: {
     },
     methods: {
       validateBeforeSubmit(stepName) {
         this.$validator.validateAll().then((result) => {
+          console.log('work');
+          console.log(result);
           if (result) {
             this.progress[stepName] = true;
             this.progress.currentStep++;
@@ -105,6 +109,18 @@ $(function() {
         this.formPayby = null;
         this.formPayment = JSON.parse(JSON.stringify(formPayment));
       },
+      formatCreditNumber(e) {
+        let val = e.target.value.replace(/-/g, '');
+        let valArr = val.split('');
+        let temp = [];
+        valArr.map((val, i) => {
+          temp.push(val);
+          if((i + 1) % 4 === 0 && temp.length < 19) {
+            temp.push('-');
+          }
+        });
+        this.formPayment.cardNumberInput = temp.join('');
+      },
     },
     created() {
       // 參加人數的客製化驗證
@@ -117,7 +133,7 @@ $(function() {
     },
     mounted() {
       let timer = null;
-      $(window).on('scroll', function(){
+      $(window).on('scroll', () => {
         if ($(window).width() <= 767) {
           clearTimeout(timer);
           timer = setTimeout(() => {
@@ -128,6 +144,9 @@ $(function() {
         }else {
           $('.popup_wrapper').attr('style', '');
         }
+      });
+      $(window).on('resize', () => {
+        this.isMobile = $(window).width() <= 575 ? true : false;
       });
     },
   });

@@ -130,6 +130,8 @@ $(function () {
               top: $(window).scrollTop()
             }, 300);
           }, 100);
+        } else {
+          $('.popup_wrapper').attr('style', '');
         }
       });
     }

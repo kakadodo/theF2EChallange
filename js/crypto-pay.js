@@ -119,6 +119,19 @@ $(function () {
         }
       });
       this.initFormData();
+    },
+    mounted: function mounted() {
+      var timer = null;
+      $(window).on('scroll', function () {
+        if ($(window).width() <= 767) {
+          clearTimeout(timer);
+          timer = setTimeout(function () {
+            $('.popup_wrapper').animate({
+              top: $(window).scrollTop()
+            }, 300);
+          }, 100);
+        }
+      });
     }
   });
 });

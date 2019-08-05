@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
 var vm = null;
 var formProfile = {
   name: null,
   mobile: null,
   email: null,
-  date: '2019/08/09',
+  date: "2019/08/09",
   nop: {
     adult: 0,
     child: 0
@@ -16,7 +16,7 @@ var formProfile = {
 };
 var formPayment = {
   name: null,
-  cardNumber: ['', '', '', ''],
+  cardNumber: ["", "", "", ""],
   cardNumberInput: null,
   expiredMonth: null,
   expiredYear: null,
@@ -28,21 +28,21 @@ $(function () {
   Vue.use(VeeValidate, {
     classes: true,
     classNames: {
-      valid: 'is-valid',
-      invalid: 'is-invalid'
+      valid: "is-valid",
+      invalid: "is-invalid"
     }
   });
   vm = new Vue({
-    el: '#app',
+    el: "#app",
     data: {
       progress: {
-        steps: ['profile', 'payby', 'payment'],
-        currentStep: 2,
+        steps: ["profile", "payby", "payment"],
+        currentStep: 0,
         profile: false,
         payby: false,
         payment: false
       },
-      payby: ['超商代碼 7-11', 'ATM轉帳', '街口支付', '信用卡', 'LINE Pay'],
+      payby: ["超商代碼 7-11", "ATM轉帳", "街口支付", "信用卡", "LINE Pay"],
       formProfile: null,
       formPayby: null,
       formPayment: null,
@@ -55,33 +55,33 @@ $(function () {
         var _this = this;
 
         this.$validator.validateAll().then(function (result) {
-          console.log('work');
+          console.log("work");
           console.log(result);
           if (result) {
             _this.progress[stepName] = true;
             _this.progress.currentStep++;
             return;
           }
-          if (stepName === 'payby') {
-            $('.alert_payby').removeClass('hide').addClass('show');
+          if (stepName === "payby") {
+            $(".alert_payby").removeClass("hide").addClass("show");
             setTimeout(function () {
-              $('.alert_payby').removeClass('show').addClass('hide');
+              $(".alert_payby").removeClass("show").addClass("hide");
             }, 2000);
           }
         });
       },
       resetForm: function resetForm(formName) {
         switch (formName) {
-          case 'formProfile':
+          case "formProfile":
             this.formProfile = JSON.parse(JSON.stringify(formProfile));
             this.$validator.reset();
             return;
-          case 'formPayby':
+          case "formPayby":
             this.formPayby = null;
             this.progress.profile = false;
             this.progress.currentStep--;
             return;
-          case 'formPayment':
+          case "formPayment":
             this.formPayment = JSON.parse(JSON.stringify(formPayment));
             this.progress.payby = false;
             this.progress.currentStep--;
@@ -96,10 +96,10 @@ $(function () {
         }
       },
       resetAllStep: function resetAllStep() {
-        console.log('work');
+        console.log("work");
         for (var key in this.progress) {
-          if (key === 'steps') continue;
-          if (key === 'currentStep') {
+          if (key === "steps") continue;
+          if (key === "currentStep") {
             this.progress[key] = 0;
             continue;
           }
@@ -113,23 +113,23 @@ $(function () {
         this.formPayment = JSON.parse(JSON.stringify(formPayment));
       },
       formatCreditNumber: function formatCreditNumber(e) {
-        var val = e.target.value.replace(/-/g, '');
-        var valArr = val.split('');
+        var val = e.target.value.replace(/-/g, "");
+        var valArr = val.split("");
         var temp = [];
         valArr.map(function (val, i) {
           temp.push(val);
           if ((i + 1) % 4 === 0 && temp.length < 19) {
-            temp.push('-');
+            temp.push("-");
           }
         });
-        this.formPayment.cardNumberInput = temp.join('');
+        this.formPayment.cardNumberInput = temp.join("");
       }
     },
     created: function created() {
       var _this2 = this;
 
       // 參加人數的客製化驗證
-      this.$validator.extend('nop', {
+      this.$validator.extend("nop", {
         validate: function validate() {
           return _this2.formProfile.nop.adult + _this2.formProfile.nop.child > 0;
         }
@@ -140,19 +140,19 @@ $(function () {
       var _this3 = this;
 
       var timer = null;
-      $(window).on('scroll', function () {
+      $(window).on("scroll", function () {
         if ($(window).width() <= 767) {
           clearTimeout(timer);
           timer = setTimeout(function () {
-            $('.popup_wrapper').animate({
+            $(".popup_wrapper").animate({
               top: $(window).scrollTop()
             }, 300);
           }, 100);
         } else {
-          $('.popup_wrapper').attr('style', '');
+          $(".popup_wrapper").attr("style", "");
         }
       });
-      $(window).on('resize', function () {
+      $(window).on("resize", function () {
         _this3.isMobile = $(window).width() <= 575 ? true : false;
       });
     }

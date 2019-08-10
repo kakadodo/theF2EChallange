@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-115362207-1" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-115362207-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 線上支付">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week4.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="2nd Week 4 - Crypto Pay">
+<meta itemprop="description" content="the F2E - 線上支付">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week4.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="2nd Week 4 - Crypto Pay">
+<meta property="og:description" content="the F2E - 線上支付">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week4.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/crypto-pay.html">
+<meta property="og:site_name" content="2nd Week 4 - Crypto Pay">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
+    <title>2nd Week 4 - Crypto Pay</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="./css/crypto-pay.css">
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <div class="container">
+        <div class="row justify-content-center progress_group_wrapper">
+          <div class="col-md-6">
+            <ul class="progress_group">
+              <li class="progress_group_item" :class="{done:progress.profile || progress.steps[progress.currentStep]=== 'profile'}" data-title="填寫資料"><i class="far fa-user" v-if="!progress.profile"></i><i class="fas fa-check" v-else></i></li>
+              <li class="progress progress_group_bar">
+                <div class="progress-bar" role="progressbar" :class="{done:progress.profile}"></div>
+              </li>
+              <li class="progress_group_item" :class="{done:progress.payby || progress.steps[progress.currentStep]=== 'payby'}" data-title="選擇付款方式"><i class="fas fa-dollar-sign" v-if="!progress.payby"></i><i class="fas fa-check" v-else></i></li>
+              <li class="progress progress_group_bar">
+                <div class="progress-bar" role="progressbar" :class="{done:progress.payby}"></div>
+              </li>
+              <li class="progress_group_item" :class="{done:progress.payment || progress.steps[progress.currentStep]=== 'payment'}" data-title="前往付款"><i class="far fa-credit-card" v-if="!progress.payment"></i><i class="fas fa-check" v-else></i></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row no-gutters step_wrapper">
+          <div class="col-md-4 popup_wrapper" :class="{hideOrder: hideOrder}">
+            <aside class="popup">
+              <div class="popup_body"><img class="popup_body_img img-fluid" src="./img/2nd-week4/item.jpg">
+                <div class="popup_body_title">玩具解剖展｜夜間加場：紐約街頭潮 玩派對 Special Guest DJ RayRay</div>
+                <ul class="popup_body_descriptionList">
+                  <li class="popup_body_descriptionList_item">2019-08-09(五) 19:30 ~ 21:00 (GMT+8)</li>
+                  <li class="popup_body_descriptionList_item">台灣台北市中正區八德路一段1號</li>
+                  <li class="popup_body_descriptionList_item">訂單編號：1908020833432821107310</li>
+                </ul>
+              </div>
+              <div class="popup_footer">
+                <div class="popup_footer_price">總價: 1688 元</div>
+              </div>
+              <button class="btn popup_btn" @click="hideOrder=!hideOrder">訂單資訊</button>
+            </aside>
+          </div>
+          <div class="col-md-8">
+            <transition enter-active-class="animated bounceIn" mode="out-in">
+              <main class="form_wrapper" v-if="progress.steps[progress.currentStep] === 'profile'" key="profile">
+                <section class="step">
+                  <h1 class="step_title"><strong>Step.1</strong>填寫聯絡人資訊</h1>
+                  <form novalidate @submit.prevent="validateBeforeSubmit('profile')">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label class="step_required">姓名</label>
+                        <input class="form-control" type="text" name="name" v-model="formProfile.name" v-validate="'required|min:1'">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="step_required">行動電話</label>
+                        <input class="form-control" type="tel" name="mobile" v-model="formProfile.mobile" v-validate="'required|numeric|length:10'">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label class="step_required">電子郵件</label>
+                        <input class="form-control" type="email" name="email" v-model="formProfile.email" v-validate="'required|email'">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label>活動日期</label>
+                        <input class="form-control" type="text" name="date" v-model="formProfile.date" readonly>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label class="step_required">參加人數</label>
+                        <div class="form-row">
+                          <div class="col-12 col-sm-6 form_inline">
+                            <label>成人</label>
+                            <input class="form-control" type="number" name="adult" min="0" v-model="formProfile.nop.adult" v-validate="'required|nop'">
+                          </div>
+                          <div class="col-12 col-sm-6 form_inline mt-2 mt-sm-0">
+                            <label>小孩</label>
+                            <input class="form-control" type="number" name="child" min="0" v-model="formProfile.nop.child" v-validate="'required|nop'">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label>優惠代碼</label>
+                        <input class="form-control" type="text" name="code" v-model="formProfile.code">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>備註</label>
+                      <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-check">
+                        <input class="form-check-input" id="gridCheck" type="checkbox" name="agree" v-model="formProfile.agree" v-validate="'required'">
+                        <label class="form-check-label" for="gridCheck">我已閱讀並同意<strong>票券訂購暨使用須知</strong>內容所有條款</label>
+                      </div>
+                    </div>
+                    <div class="form_footer">
+                      <div class="btn_group">
+                        <button class="btn btn_normal" @click.prevent="resetForm('formProfile')">取消</button>
+                        <button class="btn btn_primary" type="submit">下一步</button>
+                      </div>
+                    </div>
+                  </form>
+                </section>
+              </main>
+              <main class="form_wrapper" v-else-if="progress.steps[progress.currentStep] === 'payby'" key="payby">
+                <section class="step">
+                  <h1 class="step_title"><strong>Step.2</strong>選擇付款方式</h1>
+                  <form class="form_payby" novalidate @submit.prevent="validateBeforeSubmit('payby')">
+                    <div class="row">
+                      <div class="form_payby_item col-12 col-md-6 col-lg-4" :class="{active: formPayby===0}">
+                        <label>
+                          <input type="radio" name="payby" :value="0" v-model="formPayby" v-validate="'required'">
+                          <div class="form_payby_img"></div><span>超商代碼 7-11</span>
+                        </label>
+                      </div>
+                      <div class="form_payby_item col-12 col-md-6 col-lg-4" :class="{active: formPayby===1}">
+                        <label>
+                          <input type="radio" name="payby" :value="1" v-model="formPayby" v-validate="'required'">
+                          <div class="form_payby_img" style="background-position: 0px -72px"></div><span>ATM 轉帳</span>
+                        </label>
+                      </div>
+                      <div class="form_payby_item col-12 col-md-6 col-lg-4" :class="{active: formPayby===2}">
+                        <label>
+                          <input type="radio" name="payby" :value="2" v-model="formPayby" v-validate="'required'">
+                          <div class="form_payby_img" style="background-position: 0px -144px"></div><span>街口支付</span>
+                        </label>
+                      </div>
+                      <div class="form_payby_item col-12 col-md-6 col-lg-4" :class="{active: formPayby===3}">
+                        <label>
+                          <input type="radio" name="payby" :value="3" v-model="formPayby" v-validate="'required'">
+                          <div class="form_payby_img useIcon"><i class="far fa-credit-card"></i></div><span>信用卡</span>
+                        </label>
+                      </div>
+                      <div class="form_payby_item col-12 col-md-6 col-lg-4" :class="{active: formPayby===4}">
+                        <label>
+                          <input type="radio" name="payby" :value="4" v-model="formPayby" v-validate="'required'">
+                          <div class="form_payby_img" style="background-position: 0px -216px"></div><span>LINE Pay</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form_footer"><span class="form_payby_price">總價：1688元</span>
+                      <div class="btn_group">
+                        <button class="btn btn_normal" @click.prevent="resetForm('formPayby')">取消</button>
+                        <button class="btn btn_primary" type="submit">下一步</button>
+                      </div>
+                    </div>
+                    <div class="alert alert_payby mt-3 fade hide" role="alert">請選擇一種付款方式</div>
+                  </form>
+                </section>
+              </main>
+              <main class="form_wrapper" v-else-if="progress.steps[progress.currentStep] === 'payment'" key="payment">
+                <section class="step">
+                  <h1 class="step_title"><strong>Step.3</strong>填寫付款資訊</h1>
+                  <form novalidate @submit.prevent="validateBeforeSubmit('payment')">
+                    <div class="form-group">
+                      <label>持卡人</label>
+                      <input class="form-control" type="text" name="name" v-model="formPayment.name" v-validate="'required|min:1'">
+                    </div>
+                    <div class="form-group">
+                      <label>卡號</label>
+                      <div class="form-row">
+                        <div class="col" v-if="!isMobile" v-for="(number, index) in formPayment.cardNumber">
+                          <input class="form-control" type="text" :name="`cardNumber${index}`" ref="cardNumber" v-model="formPayment.cardNumber[index]" v-validate="'required|numeric|length:4'" @input="checkCardNumberInput(formPayment.cardNumber[index], index)">
+                        </div>
+                        <div class="col" v-if="isMobile">
+                          <input class="form-control" type="text" name="cardNumber" :value="formPayment.cardNumberInput" v-validate="{ required: true,	regex: /^([0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4})$/}" @input="formatCreditNumber($event)">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>到期日期</label>
+                      <div class="form-row">
+                        <div class="col-6 col-md-3 input-group">
+                          <input class="form-control" type="text" name="expiredMonth" v-model="formPayment.expiredMonth" v-validate="'required|numeric|min_value:1|max_value:12'">
+                          <div class="input-group-append"><span class="input-group-text">月</span></div>
+                        </div>
+                        <div class="col-6 col-md-3 input-group">
+                          <input class="form-control" type="text" name="expiredYear" v-model="formPayment.expiredYear" v-validate="'required|numeric|min_value:20|max_value:30'">
+                          <div class="input-group-append"><span class="input-group-text">年</span></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>CVV (卡片背面末三碼)</label>
+                      <div class="form-row">
+                        <div class="col-md-3">
+                          <input class="form-control" type="text" name="cvv" v-model="formPayment.cvv" v-validate="'required|numeric|length:3'">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form_footer">
+                      <div class="btn_group">
+                        <button class="btn btn_normal" @click.prevent="resetForm('formPayment')">取消</button>
+                        <button class="btn btn_primary" type="submit">下一步</button>
+                      </div>
+                    </div>
+                  </form>
+                </section>
+              </main>
+              <main class="form_wrapper" v-else>
+                <section class="step_done">
+                  <h2 class="step_done_title">您的訂單已完成付款</h2><img class="step_done_img img-fluid my-5" src="./img/2nd-week4/icon-done.png"><span class="step_done_message">恭喜您成功完成訂單，稍後將寄送詳細資訊至您的E-mail。</span>
+                  <button class="step_done_btn btn btn_primary" @click="resetAllStep">回首頁</button>
+                </section>
+              </main>
+            </transition>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/vendors.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/2.2.13/vee-validate.min.js"></script>
+    <script src="./js/crypto-pay.js"></script>
+  </body>
+</html>

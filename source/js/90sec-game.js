@@ -36,7 +36,7 @@ const uiConfig = {
   gameTime: 90
 };
 
-window.onload = function() {
+window.onload = function () {
   WebFont.load({
     google: {
       families: ["Roboto"]
@@ -77,8 +77,7 @@ class SceneLoad extends Phaser.Scene {
     this.progressText = this.add.text(
       game.config.width / 2,
       game.config.height / 2,
-      "0%",
-      {
+      "0%", {
         color: "#ffffff",
         fontFamily: uiConfig.fontFamily,
         fontSize: game.config.width / 40
@@ -104,16 +103,14 @@ class SceneLoad extends Phaser.Scene {
     });
     this.load.spritesheet(
       "btnLeftSprite",
-      "./img/2nd-week5/btnLeft_sprite.png",
-      {
+      "./img/2nd-week5/btnLeft_sprite.png", {
         frameWidth: 50,
         frameHeight: 55
       }
     );
     this.load.spritesheet(
       "btnRightSprite",
-      "./img/2nd-week5/btnRight_sprite.png",
-      {
+      "./img/2nd-week5/btnRight_sprite.png", {
         frameWidth: 50,
         frameHeight: 55
       }
@@ -135,8 +132,7 @@ class SceneLoad extends Phaser.Scene {
     this.title = this.add.text(
       game.config.width / 2,
       game.config.height / 2 - 250,
-      "90sec Game",
-      {
+      "90sec Game", {
         color: "#FDD23F",
         stroke: "#F49C24",
         strokeThickness: 6,
@@ -158,10 +154,18 @@ class SceneLoad extends Phaser.Scene {
     );
     this.anims.create({
       key: "walk",
-      frames: [
-        { key: "duckSprite", frame: 0 },
-        { key: "duckSprite", frame: 1 },
-        { key: "duckSprite", frame: 2 }
+      frames: [{
+        key: "duckSprite",
+        frame: 0
+      },
+      {
+        key: "duckSprite",
+        frame: 1
+      },
+      {
+        key: "duckSprite",
+        frame: 2
+      }
       ],
       frameRate: 8,
       repeat: -1
@@ -220,14 +224,20 @@ class SceneStart extends Phaser.Scene {
       x: game.config.width / 2,
       y: game.config.height - 121,
       key: "bgBottom",
-      origin: { x: 0.5, y: 0 }
+      origin: {
+        x: 0.5,
+        y: 0
+      }
     });
     this.bgTop = new Wall({
       scene: this,
       x: game.config.width / 2,
       y: -121,
       key: "bgTop",
-      origin: { x: 0.5, y: 0 }
+      origin: {
+        x: 0.5,
+        y: 0
+      }
     });
 
     this.ballGroup = this.physics.add.group();
@@ -241,10 +251,18 @@ class SceneStart extends Phaser.Scene {
     this.duck.setCollideWorldBounds(true);
     this.anims.create({
       key: "swim",
-      frames: [
-        { key: "duckSprite", frame: 0 },
-        { key: "duckSprite", frame: 1 },
-        { key: "duckSprite", frame: 2 }
+      frames: [{
+        key: "duckSprite",
+        frame: 0
+      },
+      {
+        key: "duckSprite",
+        frame: 1
+      },
+      {
+        key: "duckSprite",
+        frame: 2
+      }
       ],
       frameRate: 3,
       repeat: -1
@@ -252,10 +270,18 @@ class SceneStart extends Phaser.Scene {
     this.duck.play("swim");
     this.anims.create({
       key: "rush",
-      frames: [
-        { key: "duckSprite", frame: 3 },
-        { key: "duckSprite", frame: 4 },
-        { key: "duckSprite", frame: 5 }
+      frames: [{
+        key: "duckSprite",
+        frame: 3
+      },
+      {
+        key: "duckSprite",
+        frame: 4
+      },
+      {
+        key: "duckSprite",
+        frame: 5
+      }
       ],
       frameRate: 8,
       repeat: -1
@@ -319,14 +345,14 @@ class SceneStart extends Phaser.Scene {
         this.boss2.setVisible(false);
         this.boss2.destroy();
       }
-      this.ballGroup.children.iterate(function(ball) {
+      this.ballGroup.children.iterate(function (ball) {
         if (ball && ball.y > game.config.height + ball.height / 2) {
           ball.setActive(false);
           ball.setVisible(false);
           ball.destroy();
         }
       }, this);
-      this.superStarGroup.children.iterate(function(star) {
+      this.superStarGroup.children.iterate(function (star) {
         if (star && star.y > game.config.height + star.height / 2) {
           star.setActive(false);
           star.setVisible(false);
@@ -376,8 +402,7 @@ class SceneStart extends Phaser.Scene {
     this.countDownText = this.add.text(
       game.config.width / 2,
       game.config.height / 2,
-      this.countDownTimer.getRepeatCount(),
-      {
+      this.countDownTimer.getRepeatCount(), {
         fontFamily: uiConfig.fontFamily,
         fontSize: 150
       }
@@ -413,18 +438,27 @@ class SceneStart extends Phaser.Scene {
       if (modal.gameDueTime % 5 === 0 && modal.gameDueTime < 80) {
         this.fireSuperStar();
       }
+      if (modal.gameDueTime === 30) {
+        modal.objSpeed += 50;
+        modal.fireBallTime = 2;
+      }
       if (modal.gameDueTime === 50) {
         this.fireBoss1();
+      }
+      if (modal.gameDueTime === 60) {
+        modal.objSpeed += 50;
+        modal.fireBallTime = 1;
       }
       if (modal.gameDueTime === 80) {
         this.fireBoss2();
       }
-      if (modal.gameDueTime === 88) {
+      if (modal.gameDueTime === uiConfig.gameTime) {
         this.tweens.add({
           targets: this.bgTop,
           duration: 1000,
           y: 0
         });
+        this.createGoal();
         this.endGame();
       }
       this.checkGameTime();
@@ -462,8 +496,7 @@ class SceneStart extends Phaser.Scene {
     this.timeText = this.add.text(
       uiConfig.gridColWidth + uiConfig.gridColWidth / 2,
       uiConfig.gridColHeight - 50,
-      "01:30",
-      {
+      "01:30", {
         fontFamily: uiConfig.fontFamily,
         fontSize: 60
       }
@@ -476,7 +509,7 @@ class SceneStart extends Phaser.Scene {
     this.timeBoxCon.x = uiConfig.gridColWidth * 13;
     this.timeBoxCon.y = -20;
   }
-  endGame() {
+  createGoal() {
     this.goal = this.add.image(0, 0, "goal");
     alignGrid.placeAt(8, 1, this.goal);
     this.goal.setScale(0);
@@ -488,39 +521,44 @@ class SceneStart extends Phaser.Scene {
       scale: 1,
       opacity: 1
     });
-    this.tweens.add({
-      targets: this.duck,
-      duration: 1500,
-      delay: 2500,
-      x: 650,
-      y: 370
-    });
-    setTimeout(() => {
-      this.gameOverScreen = new GameOverScreen({
-        scene: this,
-        x: game.config.width / 2,
-        y: game.config.height / 2,
-        title: "Congratulations! 恭喜過關!",
-        btnText: "再來一次..",
-        gameSuccess: true
+  }
+  endGame() {
+    if (modal.isPlay) {
+      this.tweens.add({
+        targets: this.duck,
+        duration: 1500,
+        delay: 2000,
+        x: 650,
+        y: 370
       });
-      for (let i = 1; i <= 3; i++) {
-        this.tweens.add({
-          targets: this.gameOverScreen[`clear${i}`],
-          duration: 1500,
-          delay: i * 500,
-          alpha: 1
+      setTimeout(() => {
+        this.gameOverScreen = new GameOverScreen({
+          scene: this,
+          x: game.config.width / 2,
+          y: game.config.height / 2,
+          title: "Congratulations! 恭喜過關!",
+          btnText: "再來一次..",
+          gameSuccess: true
         });
-      }
-    }, 4200);
+        for (let i = 1; i <= 3; i++) {
+          this.tweens.add({
+            targets: this.gameOverScreen[`clear${i}`],
+            duration: 1500,
+            delay: i * 500,
+            alpha: 1
+          });
+        }
+      }, 4200);
+    }
   }
   fireBall() {
     let ball = this.ballGroup.getFirstDead(false);
     if (!ball) {
       ball = this.ballGroup.create(0, 0, "ballSprite");
     }
-    alignGrid.placeAt(getRandomColumn(), 0, ball);
-    ball.y = -uiConfig.gridColHeight / 2;
+    alignGrid.placeAt(getRandomColumn(3, 9), 0, ball);
+    ball.y = -ball.height;
+    ball.setScale(0.7);
     ball.setImmovable();
     ball.setFrame(Math.floor(Math.random() * 4));
     ball.setActive(true);
@@ -529,7 +567,8 @@ class SceneStart extends Phaser.Scene {
   }
   fireBoss1() {
     this.boss1 = this.physics.add.sprite(0, 0, "boss1");
-    alignGrid.placeAt(getRandomColumn(), 0, this.boss1);
+    alignGrid.placeAt(getRandomColumn(4, 6), 0, this.boss1);
+    this.boss1.y = -this.boss1.height;
     this.boss1.setImmovable();
     this.boss1.setActive(true);
     this.boss1.setVisible(true);
@@ -537,7 +576,9 @@ class SceneStart extends Phaser.Scene {
   }
   fireBoss2() {
     this.boss2 = this.physics.add.sprite(0, 0, "boss2");
-    alignGrid.placeAt(getRandomColumn(), 0, this.boss2);
+    alignGrid.placeAt(getRandomColumn(5, 4), 0, this.boss2);
+    this.boss2.y = -this.boss2.height;
+    this.boss2.setScale(0.9);
     this.boss2.setImmovable();
     this.boss2.setActive(true);
     this.boss2.setVisible(true);
@@ -548,8 +589,8 @@ class SceneStart extends Phaser.Scene {
     if (!superStar) {
       superStar = this.superStarGroup.create(0, 0, "superStar");
     }
-    alignGrid.placeAt(getRandomColumn(), 0, superStar);
-    superStar.y = -uiConfig.gridColHeight / 2;
+    alignGrid.placeAt(getRandomColumn(3, 9), 0, superStar);
+    superStar.y = -superStar.height;
     superStar.setImmovable();
     superStar.setActive(true);
     superStar.setVisible(true);
@@ -605,20 +646,29 @@ class SceneStart extends Phaser.Scene {
       this.duck.anims.stop();
       this.duck.play("rush");
       modal.duckMoveSpeed = 300;
-      this.tweens.add({
-        targets: star,
-        duration: 500,
-        opacity: 0
-      });
       this.killSprite("ballGroup");
       this.killSprite("superStarGroup");
       if (this.boss1) {
-        this.boss1.body = null;
-        this.boss1.destroy();
+        this.tweens.add({
+          targets: this.boss1,
+          duration: 500,
+          alpha: 0,
+          onComplete: () => {
+            this.boss1.body = null;
+            this.boss1.destroy();
+          }
+        });
       }
       if (this.boss2) {
-        this.boss2.body = null;
-        this.boss2.destroy();
+        this.tweens.add({
+          targets: this.boss2,
+          duration: 500,
+          alpha: 0,
+          onComplete: () => {
+            this.boss2.body = null;
+            this.boss2.destroy();
+          }
+        });
       }
       this.becomeSuperTimer = this.time.addEvent({
         delay: 1000,
@@ -659,7 +709,9 @@ class FlatButton extends Phaser.GameObjects.Container {
       this.y = config.y;
     }
     if (config.event) {
-      this.btn.setInteractive({ cursor: "pointer" });
+      this.btn.setInteractive({
+        cursor: "pointer"
+      });
       this.btn.on("pointerdown", this.onPointerdown, this);
       this.btn.on("pointerup", this.onPointerup, this);
     }
@@ -703,7 +755,10 @@ class Wall extends Phaser.GameObjects.Container {
       this.y = config.y;
     }
     if (config.origin) {
-      const { x, y } = config.origin;
+      const {
+        x,
+        y
+      } = config.origin;
       this.wall.setOrigin(x, y);
     }
     this.scene.add.existing(this);
@@ -870,6 +925,6 @@ class AlignGrid {
   }
 }
 
-function getRandomColumn() {
-  return Math.floor(Math.random() * 10) + 3;
+function getRandomColumn(min, max) {
+  return Math.floor(Math.random() * max) + min;
 }

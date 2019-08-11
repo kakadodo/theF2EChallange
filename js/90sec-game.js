@@ -172,7 +172,16 @@ var SceneLoad = function (_Phaser$Scene) {
       this.duck = this.add.sprite(game.config.width / 2, game.config.height / 2 - 110, "duckSprite");
       this.anims.create({
         key: "walk",
-        frames: [{ key: "duckSprite", frame: 0 }, { key: "duckSprite", frame: 1 }, { key: "duckSprite", frame: 2 }],
+        frames: [{
+          key: "duckSprite",
+          frame: 0
+        }, {
+          key: "duckSprite",
+          frame: 1
+        }, {
+          key: "duckSprite",
+          frame: 2
+        }],
         frameRate: 8,
         repeat: -1
       });
@@ -237,14 +246,20 @@ var SceneStart = function (_Phaser$Scene2) {
         x: game.config.width / 2,
         y: game.config.height - 121,
         key: "bgBottom",
-        origin: { x: 0.5, y: 0 }
+        origin: {
+          x: 0.5,
+          y: 0
+        }
       });
       this.bgTop = new Wall({
         scene: this,
         x: game.config.width / 2,
         y: -121,
         key: "bgTop",
-        origin: { x: 0.5, y: 0 }
+        origin: {
+          x: 0.5,
+          y: 0
+        }
       });
 
       this.ballGroup = this.physics.add.group();
@@ -254,14 +269,32 @@ var SceneStart = function (_Phaser$Scene2) {
       this.duck.setCollideWorldBounds(true);
       this.anims.create({
         key: "swim",
-        frames: [{ key: "duckSprite", frame: 0 }, { key: "duckSprite", frame: 1 }, { key: "duckSprite", frame: 2 }],
+        frames: [{
+          key: "duckSprite",
+          frame: 0
+        }, {
+          key: "duckSprite",
+          frame: 1
+        }, {
+          key: "duckSprite",
+          frame: 2
+        }],
         frameRate: 3,
         repeat: -1
       });
       this.duck.play("swim");
       this.anims.create({
         key: "rush",
-        frames: [{ key: "duckSprite", frame: 3 }, { key: "duckSprite", frame: 4 }, { key: "duckSprite", frame: 5 }],
+        frames: [{
+          key: "duckSprite",
+          frame: 3
+        }, {
+          key: "duckSprite",
+          frame: 4
+        }, {
+          key: "duckSprite",
+          frame: 5
+        }],
         frameRate: 8,
         repeat: -1
       });
@@ -388,18 +421,27 @@ var SceneStart = function (_Phaser$Scene2) {
         if (modal.gameDueTime % 5 === 0 && modal.gameDueTime < 80) {
           this.fireSuperStar();
         }
+        if (modal.gameDueTime === 30) {
+          modal.objSpeed += 50;
+          modal.fireBallTime = 2;
+        }
         if (modal.gameDueTime === 50) {
           this.fireBoss1();
+        }
+        if (modal.gameDueTime === 60) {
+          modal.objSpeed += 50;
+          modal.fireBallTime = 1;
         }
         if (modal.gameDueTime === 80) {
           this.fireBoss2();
         }
-        if (modal.gameDueTime === 88) {
+        if (modal.gameDueTime === uiConfig.gameTime) {
           this.tweens.add({
             targets: this.bgTop,
             duration: 1000,
             y: 0
           });
+          this.createGoal();
           this.endGame();
         }
         this.checkGameTime();
@@ -439,10 +481,8 @@ var SceneStart = function (_Phaser$Scene2) {
       this.timeBoxCon.y = -20;
     }
   }, {
-    key: "endGame",
-    value: function endGame() {
-      var _this3 = this;
-
+    key: "createGoal",
+    value: function createGoal() {
       this.goal = this.add.image(0, 0, "goal");
       alignGrid.placeAt(8, 1, this.goal);
       this.goal.setScale(0);
@@ -454,31 +494,39 @@ var SceneStart = function (_Phaser$Scene2) {
         scale: 1,
         opacity: 1
       });
-      this.tweens.add({
-        targets: this.duck,
-        duration: 1500,
-        delay: 2500,
-        x: 650,
-        y: 370
-      });
-      setTimeout(function () {
-        _this3.gameOverScreen = new GameOverScreen({
-          scene: _this3,
-          x: game.config.width / 2,
-          y: game.config.height / 2,
-          title: "Congratulations! 恭喜過關!",
-          btnText: "再來一次..",
-          gameSuccess: true
+    }
+  }, {
+    key: "endGame",
+    value: function endGame() {
+      var _this3 = this;
+
+      if (modal.isPlay) {
+        this.tweens.add({
+          targets: this.duck,
+          duration: 1500,
+          delay: 2000,
+          x: 650,
+          y: 370
         });
-        for (var i = 1; i <= 3; i++) {
-          _this3.tweens.add({
-            targets: _this3.gameOverScreen["clear" + i],
-            duration: 1500,
-            delay: i * 500,
-            alpha: 1
+        setTimeout(function () {
+          _this3.gameOverScreen = new GameOverScreen({
+            scene: _this3,
+            x: game.config.width / 2,
+            y: game.config.height / 2,
+            title: "Congratulations! 恭喜過關!",
+            btnText: "再來一次..",
+            gameSuccess: true
           });
-        }
-      }, 4200);
+          for (var i = 1; i <= 3; i++) {
+            _this3.tweens.add({
+              targets: _this3.gameOverScreen["clear" + i],
+              duration: 1500,
+              delay: i * 500,
+              alpha: 1
+            });
+          }
+        }, 4200);
+      }
     }
   }, {
     key: "fireBall",
@@ -487,8 +535,9 @@ var SceneStart = function (_Phaser$Scene2) {
       if (!ball) {
         ball = this.ballGroup.create(0, 0, "ballSprite");
       }
-      alignGrid.placeAt(getRandomColumn(), 0, ball);
-      ball.y = -uiConfig.gridColHeight / 2;
+      alignGrid.placeAt(getRandomColumn(3, 9), 0, ball);
+      ball.y = -ball.height;
+      ball.setScale(0.7);
       ball.setImmovable();
       ball.setFrame(Math.floor(Math.random() * 4));
       ball.setActive(true);
@@ -499,7 +548,8 @@ var SceneStart = function (_Phaser$Scene2) {
     key: "fireBoss1",
     value: function fireBoss1() {
       this.boss1 = this.physics.add.sprite(0, 0, "boss1");
-      alignGrid.placeAt(getRandomColumn(), 0, this.boss1);
+      alignGrid.placeAt(getRandomColumn(4, 6), 0, this.boss1);
+      this.boss1.y = -this.boss1.height;
       this.boss1.setImmovable();
       this.boss1.setActive(true);
       this.boss1.setVisible(true);
@@ -509,7 +559,9 @@ var SceneStart = function (_Phaser$Scene2) {
     key: "fireBoss2",
     value: function fireBoss2() {
       this.boss2 = this.physics.add.sprite(0, 0, "boss2");
-      alignGrid.placeAt(getRandomColumn(), 0, this.boss2);
+      alignGrid.placeAt(getRandomColumn(5, 4), 0, this.boss2);
+      this.boss2.y = -this.boss2.height;
+      this.boss2.setScale(0.9);
       this.boss2.setImmovable();
       this.boss2.setActive(true);
       this.boss2.setVisible(true);
@@ -522,8 +574,8 @@ var SceneStart = function (_Phaser$Scene2) {
       if (!superStar) {
         superStar = this.superStarGroup.create(0, 0, "superStar");
       }
-      alignGrid.placeAt(getRandomColumn(), 0, superStar);
-      superStar.y = -uiConfig.gridColHeight / 2;
+      alignGrid.placeAt(getRandomColumn(3, 9), 0, superStar);
+      superStar.y = -superStar.height;
       superStar.setImmovable();
       superStar.setActive(true);
       superStar.setVisible(true);
@@ -581,24 +633,35 @@ var SceneStart = function (_Phaser$Scene2) {
   }, {
     key: "hitTheSuperStar",
     value: function hitTheSuperStar(duck, star) {
+      var _this4 = this;
+
       if (modal.isPlay) {
         this.duck.anims.stop();
         this.duck.play("rush");
         modal.duckMoveSpeed = 300;
-        this.tweens.add({
-          targets: star,
-          duration: 500,
-          opacity: 0
-        });
         this.killSprite("ballGroup");
         this.killSprite("superStarGroup");
         if (this.boss1) {
-          this.boss1.body = null;
-          this.boss1.destroy();
+          this.tweens.add({
+            targets: this.boss1,
+            duration: 500,
+            alpha: 0,
+            onComplete: function onComplete() {
+              _this4.boss1.body = null;
+              _this4.boss1.destroy();
+            }
+          });
         }
         if (this.boss2) {
-          this.boss2.body = null;
-          this.boss2.destroy();
+          this.tweens.add({
+            targets: this.boss2,
+            duration: 500,
+            alpha: 0,
+            onComplete: function onComplete() {
+              _this4.boss2.body = null;
+              _this4.boss2.destroy();
+            }
+          });
         }
         this.becomeSuperTimer = this.time.addEvent({
           delay: 1000,
@@ -630,36 +693,38 @@ var FlatButton = function (_Phaser$GameObjects$C) {
     _classCallCheck(this, FlatButton);
 
     if (!config.scene) {
-      return _possibleConstructorReturn(_this4);
+      return _possibleConstructorReturn(_this5);
     }
 
-    var _this4 = _possibleConstructorReturn(this, (FlatButton.__proto__ || Object.getPrototypeOf(FlatButton)).call(this, config.scene));
+    var _this5 = _possibleConstructorReturn(this, (FlatButton.__proto__ || Object.getPrototypeOf(FlatButton)).call(this, config.scene));
 
-    _this4.scene = config.scene;
-    _this4.config = config;
-    _this4.btn = _this4.scene.add.sprite(0, 0, config.key);
-    _this4.add(_this4.btn);
+    _this5.scene = config.scene;
+    _this5.config = config;
+    _this5.btn = _this5.scene.add.sprite(0, 0, config.key);
+    _this5.add(_this5.btn);
     if (config.text) {
-      _this4.text = _this4.scene.add.text(0, 0, config.text, {
+      _this5.text = _this5.scene.add.text(0, 0, config.text, {
         fontFamily: uiConfig.fontFamily,
         fontSize: 30
       });
-      _this4.text.setOrigin(0.5);
-      _this4.add(_this4.text);
+      _this5.text.setOrigin(0.5);
+      _this5.add(_this5.text);
     }
     if (config.x) {
-      _this4.x = config.x;
+      _this5.x = config.x;
     }
     if (config.y) {
-      _this4.y = config.y;
+      _this5.y = config.y;
     }
     if (config.event) {
-      _this4.btn.setInteractive({ cursor: "pointer" });
-      _this4.btn.on("pointerdown", _this4.onPointerdown, _this4);
-      _this4.btn.on("pointerup", _this4.onPointerup, _this4);
+      _this5.btn.setInteractive({
+        cursor: "pointer"
+      });
+      _this5.btn.on("pointerdown", _this5.onPointerdown, _this5);
+      _this5.btn.on("pointerup", _this5.onPointerup, _this5);
     }
-    _this4.scene.add.existing(_this4);
-    return _this4;
+    _this5.scene.add.existing(_this5);
+    return _this5;
   }
 
   _createClass(FlatButton, [{
@@ -690,34 +755,34 @@ var Wall = function (_Phaser$GameObjects$C2) {
     _classCallCheck(this, Wall);
 
     if (!config.scene) {
-      return _possibleConstructorReturn(_this5);
+      return _possibleConstructorReturn(_this6);
     }
 
-    var _this5 = _possibleConstructorReturn(this, (Wall.__proto__ || Object.getPrototypeOf(Wall)).call(this, config.scene));
+    var _this6 = _possibleConstructorReturn(this, (Wall.__proto__ || Object.getPrototypeOf(Wall)).call(this, config.scene));
 
-    _this5.scene = config.scene;
-    _this5.config = config;
-    _this5.wall = _this5.scene.add.image(0, 0, config.key);
-    _this5.graphics = _this5.scene.add.graphics();
-    _this5.graphics.fillStyle(0x000000);
-    _this5.graphics.fillRect(-game.config.width, 0, game.config.width + game.config.width / 2, 121);
-    _this5.add(_this5.graphics);
-    _this5.add(_this5.wall);
+    _this6.scene = config.scene;
+    _this6.config = config;
+    _this6.wall = _this6.scene.add.image(0, 0, config.key);
+    _this6.graphics = _this6.scene.add.graphics();
+    _this6.graphics.fillStyle(0x000000);
+    _this6.graphics.fillRect(-game.config.width, 0, game.config.width + game.config.width / 2, 121);
+    _this6.add(_this6.graphics);
+    _this6.add(_this6.wall);
     if (config.x) {
-      _this5.x = config.x;
+      _this6.x = config.x;
     }
     if (config.y) {
-      _this5.y = config.y;
+      _this6.y = config.y;
     }
     if (config.origin) {
       var _config$origin = config.origin,
           x = _config$origin.x,
           y = _config$origin.y;
 
-      _this5.wall.setOrigin(x, y);
+      _this6.wall.setOrigin(x, y);
     }
-    _this5.scene.add.existing(_this5);
-    return _this5;
+    _this6.scene.add.existing(_this6);
+    return _this6;
   }
 
   _createClass(Wall, [{
@@ -747,55 +812,55 @@ var GameOverScreen = function (_Phaser$GameObjects$C3) {
     _classCallCheck(this, GameOverScreen);
 
     if (!config.scene) {
-      return _possibleConstructorReturn(_this6);
+      return _possibleConstructorReturn(_this7);
     }
 
-    var _this6 = _possibleConstructorReturn(this, (GameOverScreen.__proto__ || Object.getPrototypeOf(GameOverScreen)).call(this, config.scene));
+    var _this7 = _possibleConstructorReturn(this, (GameOverScreen.__proto__ || Object.getPrototypeOf(GameOverScreen)).call(this, config.scene));
 
-    _this6.scene = config.scene;
-    _this6.config = config;
-    _this6.graphics = _this6.scene.add.graphics();
-    _this6.graphics.fillStyle(0x000000, 0.5);
-    _this6.graphics.fillRect(-game.config.width / 2, -game.config.height / 2, game.config.width, game.config.height);
-    _this6.graphics.fillStyle(0xffffff);
-    _this6.graphics.fillRoundedRect(0 - uiConfig.gridColWidth * 4, 0 - uiConfig.gridColHeight, uiConfig.gridColWidth * 8, uiConfig.gridColHeight * 2, 30);
-    _this6.add(_this6.graphics);
+    _this7.scene = config.scene;
+    _this7.config = config;
+    _this7.graphics = _this7.scene.add.graphics();
+    _this7.graphics.fillStyle(0x000000, 0.5);
+    _this7.graphics.fillRect(-game.config.width / 2, -game.config.height / 2, game.config.width, game.config.height);
+    _this7.graphics.fillStyle(0xffffff);
+    _this7.graphics.fillRoundedRect(0 - uiConfig.gridColWidth * 4, 0 - uiConfig.gridColHeight, uiConfig.gridColWidth * 8, uiConfig.gridColHeight * 2, 30);
+    _this7.add(_this7.graphics);
     if (config.gameSuccess) {
-      _this6.title = _this6.scene.add.text(0, -110, config.title, {
+      _this7.title = _this7.scene.add.text(0, -110, config.title, {
         color: "#ff952b",
         fontFamily: uiConfig.fontFamily,
         fontSize: 36
       });
     } else {
-      _this6.title = _this6.scene.add.text(0, -60, config.title, {
+      _this7.title = _this7.scene.add.text(0, -60, config.title, {
         color: "#ff952b",
         fontFamily: uiConfig.fontFamily,
         fontSize: 36
       });
     }
-    _this6.title.setOrigin(0.5);
-    _this6.add(_this6.title);
+    _this7.title.setOrigin(0.5);
+    _this7.add(_this7.title);
     if (config.gameSuccess) {
-      _this6.clear1 = _this6.scene.add.sprite(-200, 0, "clearSprite", 0);
-      _this6.clear2 = _this6.scene.add.sprite(0, 0, "clearSprite", 1);
-      _this6.clear3 = _this6.scene.add.sprite(200, 0, "clearSprite", 2);
-      _this6.clear1.alpha = 0;
-      _this6.clear2.alpha = 0;
-      _this6.clear3.alpha = 0;
-      _this6.add(_this6.clear1);
-      _this6.add(_this6.clear2);
-      _this6.add(_this6.clear3);
+      _this7.clear1 = _this7.scene.add.sprite(-200, 0, "clearSprite", 0);
+      _this7.clear2 = _this7.scene.add.sprite(0, 0, "clearSprite", 1);
+      _this7.clear3 = _this7.scene.add.sprite(200, 0, "clearSprite", 2);
+      _this7.clear1.alpha = 0;
+      _this7.clear2.alpha = 0;
+      _this7.clear3.alpha = 0;
+      _this7.add(_this7.clear1);
+      _this7.add(_this7.clear2);
+      _this7.add(_this7.clear3);
     } else {
-      _this6.subTitle = _this6.scene.add.text(0, -10, config.subTitle, {
+      _this7.subTitle = _this7.scene.add.text(0, -10, config.subTitle, {
         color: "#707070",
         fontFamily: uiConfig.fontFamily,
         fontSize: 20
       });
-      _this6.subTitle.setOrigin(0.5);
-      _this6.add(_this6.subTitle);
+      _this7.subTitle.setOrigin(0.5);
+      _this7.add(_this7.subTitle);
     }
     if (config.gameSuccess) {
-      _this6.btnRestart = new FlatButton({
+      _this7.btnRestart = new FlatButton({
         scene: config.scene,
         key: "btnStart",
         text: config.btnText,
@@ -804,7 +869,7 @@ var GameOverScreen = function (_Phaser$GameObjects$C3) {
         event: "restartGame"
       });
     } else {
-      _this6.btnRestart = new FlatButton({
+      _this7.btnRestart = new FlatButton({
         scene: config.scene,
         key: "btnStart",
         text: config.btnText,
@@ -813,15 +878,15 @@ var GameOverScreen = function (_Phaser$GameObjects$C3) {
         event: "restartGame"
       });
     }
-    _this6.add(_this6.btnRestart);
+    _this7.add(_this7.btnRestart);
     if (config.x) {
-      _this6.x = config.x;
+      _this7.x = config.x;
     }
     if (config.y) {
-      _this6.y = config.y;
+      _this7.y = config.y;
     }
-    _this6.scene.add.existing(_this6);
-    return _this6;
+    _this7.scene.add.existing(_this7);
+    return _this7;
   }
 
   _createClass(GameOverScreen, [{
@@ -911,7 +976,7 @@ var AlignGrid = function () {
   return AlignGrid;
 }();
 
-function getRandomColumn() {
-  return Math.floor(Math.random() * 10) + 3;
+function getRandomColumn(min, max) {
+  return Math.floor(Math.random() * max) + min;
 }
 //# sourceMappingURL=90sec-game.js.map

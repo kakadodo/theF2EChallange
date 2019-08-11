@@ -5,7 +5,7 @@ class GameModal {
     this.gameDueTime = 0;
     this.isPlay = false;
     this.duckMoveSpeed = 150;
-    this.objSpeed = 100;
+    this.objSpeed = 150;
     this.fireBallTime = 3;
   }
 }
@@ -197,10 +197,10 @@ class SceneStart extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     // 限制邊界在池塘中
     this.physics.world.setBounds(
-      uiConfig.gridColWidth * 2,
-      uiConfig.gridColHeight * 1,
-      uiConfig.gridColWidth * 12,
-      uiConfig.gridColHeight * 4
+      uiConfig.gridColWidth * 3,
+      - uiConfig.gridColHeight * 5,
+      uiConfig.gridColWidth * 10,
+      uiConfig.gridColHeight * 15
     );
     this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
   }
@@ -249,6 +249,8 @@ class SceneStart extends Phaser.Scene {
       "duckSprite"
     );
     this.duck.setCollideWorldBounds(true);
+    this.duck.setImmovable(true);
+    this.duck.setSize(60, 120);
     this.anims.create({
       key: "swim",
       frames: [{
@@ -264,7 +266,7 @@ class SceneStart extends Phaser.Scene {
         frame: 2
       }
       ],
-      frameRate: 3,
+      frameRate: 5,
       repeat: -1
     });
     this.duck.play("swim");
@@ -310,6 +312,24 @@ class SceneStart extends Phaser.Scene {
       game.config.width - 145,
       game.config.height - 100,
       "btnRightSprite"
+    );
+
+    this.physics.add.collider(
+      this.ballGroup
+    );
+    this.physics.add.collider(
+      this.duck,
+      this.ballGroup,
+      this.hitTheBall.bind(this)
+    );
+    this.physics.add.collider(
+      this.ballGroup,
+      this.superStarGroup,
+    );
+    this.physics.add.overlap(
+      this.duck,
+      this.superStarGroup,
+      this.hitTheSuperStar.bind(this)
     );
   }
   update() {
@@ -359,10 +379,15 @@ class SceneStart extends Phaser.Scene {
           star.destroy();
         }
       }, this);
+
+      // physics collider
       this.physics.add.collider(
-        this.duck,
         this.ballGroup,
-        this.hitTheBall.bind(this)
+        this.boss1,
+      );
+      this.physics.add.collider(
+        this.ballGroup,
+        this.boss2,
       );
       this.physics.add.collider(
         this.duck,
@@ -373,11 +398,6 @@ class SceneStart extends Phaser.Scene {
         this.duck,
         this.boss2,
         this.hitTheBoss.bind(this)
-      );
-      this.physics.add.overlap(
-        this.duck,
-        this.superStarGroup,
-        this.hitTheSuperStar.bind(this)
       );
     }
   }
@@ -429,27 +449,28 @@ class SceneStart extends Phaser.Scene {
     if (modal.isPlay) {
       // console.log(this.ballGroup.getChildren());
       modal.gameDueTime++;
+      if (modal.gameDueTime % 20 === 0) {
+        modal.objSpeed += 50;
+      }
       if (
         modal.gameDueTime % modal.fireBallTime === 0 &&
         modal.gameDueTime < 80
       ) {
         this.fireBall();
       }
-      if (modal.gameDueTime % 5 === 0 && modal.gameDueTime < 80) {
+      if (modal.gameDueTime % 10 === 0 && modal.gameDueTime < 85) {
         this.fireSuperStar();
       }
       if (modal.gameDueTime === 30) {
-        modal.objSpeed += 50;
         modal.fireBallTime = 2;
       }
       if (modal.gameDueTime === 50) {
         this.fireBoss1();
       }
       if (modal.gameDueTime === 60) {
-        modal.objSpeed += 50;
         modal.fireBallTime = 1;
       }
-      if (modal.gameDueTime === 80) {
+      if (modal.gameDueTime === 82) {
         this.fireBoss2();
       }
       if (modal.gameDueTime === uiConfig.gameTime) {
@@ -552,49 +573,55 @@ class SceneStart extends Phaser.Scene {
     }
   }
   fireBall() {
-    let ball = this.ballGroup.getFirstDead(false);
-    if (!ball) {
-      ball = this.ballGroup.create(0, 0, "ballSprite");
+    let amount = Math.floor(Math.random() * 3 + 1);
+    for (let i = 0; i < amount; i++) {
+      let ball = this.ballGroup.getFirstDead(false);
+      if (!ball) {
+        ball = this.ballGroup.create(0, 0, "ballSprite");
+      }
+      alignGrid.placeAt(getRandomColumn(3, 10), 0, ball);
+      ball.y = -ball.height;
+      ball.setSize(90, 90);
+      ball.setScale(0.7);
+      ball.setCollideWorldBounds(true);
+      ball.setFrame(Math.floor(Math.random() * 4));
+      ball.setActive(true);
+      ball.setVisible(true);
+      ball.setVelocityY(modal.objSpeed);
     }
-    alignGrid.placeAt(getRandomColumn(3, 9), 0, ball);
-    ball.y = -ball.height;
-    ball.setScale(0.7);
-    ball.setImmovable();
-    ball.setFrame(Math.floor(Math.random() * 4));
-    ball.setActive(true);
-    ball.setVisible(true);
-    ball.setVelocityY(modal.objSpeed);
   }
   fireBoss1() {
     this.boss1 = this.physics.add.sprite(0, 0, "boss1");
-    alignGrid.placeAt(getRandomColumn(4, 6), 0, this.boss1);
+    alignGrid.placeAt(getRandomColumn(4, 7), 0, this.boss1);
     this.boss1.y = -this.boss1.height;
-    this.boss1.setImmovable();
+    this.boss1.setSize(350, 250);
     this.boss1.setActive(true);
     this.boss1.setVisible(true);
-    this.boss1.setVelocityY(modal.objSpeed);
+    this.boss1.setCollideWorldBounds(true);
+    this.boss1.setVelocityY(modal.objSpeed * 0.8);
   }
   fireBoss2() {
     this.boss2 = this.physics.add.sprite(0, 0, "boss2");
-    alignGrid.placeAt(getRandomColumn(5, 4), 0, this.boss2);
+    alignGrid.placeAt(getRandomColumn(5, 5), 0, this.boss2);
     this.boss2.y = -this.boss2.height;
+    this.boss2.setSize(550, 300);
     this.boss2.setScale(0.9);
-    this.boss2.setImmovable();
     this.boss2.setActive(true);
     this.boss2.setVisible(true);
-    this.boss2.setVelocityY(modal.objSpeed);
+    this.boss2.setCollideWorldBounds(true);
+    this.boss2.setVelocityY(modal.objSpeed * 0.8);
   }
   fireSuperStar() {
     let superStar = this.superStarGroup.getFirstDead(false);
     if (!superStar) {
       superStar = this.superStarGroup.create(0, 0, "superStar");
     }
-    alignGrid.placeAt(getRandomColumn(3, 9), 0, superStar);
+    alignGrid.placeAt(getRandomColumn(3, 10), 0, superStar);
     superStar.y = -superStar.height;
-    superStar.setImmovable();
+    superStar.setSize(70, 70);
     superStar.setActive(true);
     superStar.setVisible(true);
-    superStar.setVelocityY(modal.objSpeed);
+    superStar.setVelocityY(modal.objSpeed * 0.6);
   }
   hitTheBall(duck, ball) {
     if (modal.isPlay) {

@@ -22,6 +22,7 @@ var GameModal = function GameModal() {
   this.duckMoveSpeed = 150;
   this.objSpeed = 150;
   this.fireBallTime = 3;
+  this.isSuperDuck = false;
 };
 // emitter controler
 
@@ -47,6 +48,7 @@ var Controller = function () {
       modal.duckMoveSpeed = 150;
       modal.objSpeed = 100;
       modal.fireBallTime = 3;
+      modal.isSuperDuck = false;
       game.scene.start("SceneStart", true);
     }
   }]);
@@ -240,7 +242,7 @@ var SceneStart = function (_Phaser$Scene2) {
       alignGrid = new AlignGrid(gridConfig);
 
       // create game objects
-      this.bgMiddle = this.add.image(game.config.width / 2, game.config.height / 2, "bgMiddle");
+      this.bgMiddle = this.add.tileSprite(game.config.width / 2, game.config.height / 2, game.config.width, game.config.height, "bgMiddle");
       this.bgBottom = new Wall({
         scene: this,
         x: game.config.width / 2,
@@ -327,6 +329,11 @@ var SceneStart = function (_Phaser$Scene2) {
     key: "update",
     value: function update() {
       if (modal.isPlay) {
+        if (modal.isSuperDuck) {
+          this.bgMiddle.tilePositionY -= 0.02 * modal.objSpeed;
+        } else {
+          this.bgMiddle.tilePositionY -= 0.005 * modal.objSpeed;
+        }
         this.duck.body.velocity.x = 0;
         if (this.cursors.left.isDown) {
           this.duck.body.velocity.x = -modal.duckMoveSpeed;
@@ -463,6 +470,7 @@ var SceneStart = function (_Phaser$Scene2) {
       if (this.becomeSuperTimer.getRepeatCount() === 0) {
         this.duck.anims.stop();
         this.duck.play("swim");
+        modal.isSuperDuck = false;
         modal.duckMoveSpeed = 150;
       }
     }
@@ -556,6 +564,11 @@ var SceneStart = function (_Phaser$Scene2) {
         ball.setActive(true);
         ball.setVisible(true);
         ball.setVelocityY(modal.objSpeed);
+        if (modal.gameDueTime > 60) {
+          var randomDirection = Math.random() < 0.5;
+          ball.setVelocityX(randomDirection ? modal.objSpeed / 2 : -modal.objSpeed / 2);
+          ball.setBounceX(0.5);
+        }
       }
     }
   }, {
@@ -655,6 +668,7 @@ var SceneStart = function (_Phaser$Scene2) {
         this.duck.anims.stop();
         this.duck.play("rush");
         modal.duckMoveSpeed = 300;
+        modal.isSuperDuck = true;
         this.killSprite("ballGroup");
         this.killSprite("superStarGroup");
         if (this.boss1) {

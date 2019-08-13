@@ -7,6 +7,7 @@ class GameModal {
     this.duckMoveSpeed = 150;
     this.objSpeed = 150;
     this.fireBallTime = 3;
+    this.isSuperDuck = false;
   }
 }
 // emitter controler
@@ -24,6 +25,7 @@ class Controller {
     modal.duckMoveSpeed = 150;
     modal.objSpeed = 100;
     modal.fireBallTime = 3;
+    modal.isSuperDuck = false;
     game.scene.start("SceneStart", true);
   }
 }
@@ -214,9 +216,11 @@ class SceneStart extends Phaser.Scene {
     alignGrid = new AlignGrid(gridConfig);
 
     // create game objects
-    this.bgMiddle = this.add.image(
+    this.bgMiddle = this.add.tileSprite(
       game.config.width / 2,
       game.config.height / 2,
+      game.config.width,
+      game.config.height,
       "bgMiddle"
     );
     this.bgBottom = new Wall({
@@ -334,6 +338,11 @@ class SceneStart extends Phaser.Scene {
   }
   update() {
     if (modal.isPlay) {
+      if (modal.isSuperDuck) {
+        this.bgMiddle.tilePositionY -= 0.02 * modal.objSpeed;
+      } else {
+        this.bgMiddle.tilePositionY -= 0.005 * modal.objSpeed;
+      }
       this.duck.body.velocity.x = 0;
       if (this.cursors.left.isDown) {
         this.duck.body.velocity.x = -modal.duckMoveSpeed;
@@ -489,6 +498,7 @@ class SceneStart extends Phaser.Scene {
     if (this.becomeSuperTimer.getRepeatCount() === 0) {
       this.duck.anims.stop();
       this.duck.play("swim");
+      modal.isSuperDuck = false;
       modal.duckMoveSpeed = 150;
     }
   }
@@ -588,6 +598,11 @@ class SceneStart extends Phaser.Scene {
       ball.setActive(true);
       ball.setVisible(true);
       ball.setVelocityY(modal.objSpeed);
+      if (modal.gameDueTime > 60) {
+        const randomDirection = Math.random() < 0.5;
+        ball.setVelocityX(randomDirection ? modal.objSpeed / 2 : -modal.objSpeed / 2);
+        ball.setBounceX(0.5);
+      }
     }
   }
   fireBoss1() {
@@ -673,6 +688,7 @@ class SceneStart extends Phaser.Scene {
       this.duck.anims.stop();
       this.duck.play("rush");
       modal.duckMoveSpeed = 300;
+      modal.isSuperDuck = true;
       this.killSprite("ballGroup");
       this.killSprite("superStarGroup");
       if (this.boss1) {

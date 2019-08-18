@@ -84,15 +84,15 @@ block content
                     .room_price
                       span Total: 
                       span.strong $
-                      span.strong.num {{ roomDetail.room[0].normalDayPrice }}
+                      span.strong.num {{ bookingTotalPrice }}
                     .room_date
-                      el-date-picker.hidden-xs-only(v-model='formDate' type='daterange' value-format="yyyy-MM-dd" range-separator='🡒' start-placeholder='開始日期' end-placeholder='結束日期' :picker-options='pickerOptions')
+                      el-date-picker.hidden-xs-only(v-model='formDate' type='daterange' value-format="yyyy-MM-dd" range-separator='🡒' start-placeholder='開始日期' end-placeholder='結束日期' :picker-options='pickerOptions' @change='checkIfSameDate')
                       div.show-xs-only
                         el-date-picker(v-model='formDateSeparate[0]' type='date' :picker-options='pickerOptions'
-                          value-format="yyyy-MM-dd" placeholder='開始日期')
+                          value-format="yyyy-MM-dd" placeholder='開始日期' @change='formatToFormDate')
                       div.show-xs-only(style='margin-top: 5px')
                         el-date-picker(v-model='formDateSeparate[1]' type='date' :picker-options='pickerOptions'
-                          value-format="yyyy-MM-dd" placeholder='結束日期')
+                          value-format="yyyy-MM-dd" placeholder='結束日期' @change='formatToFormDate')
                       el-button.custom_btn(type="primary" @click.native='showSubmitDialog') BOOK NOW
                     ul.room_group.room_group_flex
                       li.room_group_item

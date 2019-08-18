@@ -68,7 +68,7 @@ window.onload = () => {
         return dates;
       },
       bookingTotalPrice() {
-        return this.roomDetail.room[0].normalDayPrice * this.bookingTotalDays;
+        return this.formDate ? this.roomDetail.room[0].normalDayPrice * this.bookingTotalDays : 0;
       }
     },
     methods: {
@@ -102,6 +102,34 @@ window.onload = () => {
           }, 0);
         }
       },
+      formatToFormDate() {
+        // 將小螢幕的 datePick 值轉換到 formDate
+        // 如果開始與結束日沒有輸入完全就直接跳過
+        if (!this.formDateSeparate[0] || !this.formDateSeparate[0]) return;
+        if (this.formDateSeparate[0] === this.formDateSeparate[1]) {
+          this.$message.error('開始及結束日期不能相同');
+          this.formDateSeparate = [null, null];
+          return;
+        }
+        // 如果兩個都有輸入就轉換，轉換會把日期順序重新排列
+        if (this.formDateSeparate[0] && this.formDateSeparate[1]) {
+          let tempArr = this.formDateSeparate.slice().sort((a, b) => {
+            const aa = new Date(a).getTime();
+            const bb = new Date(b).getTime();
+            return aa - bb;
+          });
+          this.formDateSeparate = tempArr;
+          this.formDate = tempArr;
+        }
+      },
+      checkIfSameDate() {
+        if (this.formDate[0] === this.formDate[1]) {
+          this.$message.error('開始及結束日期不能相同');
+          this.formDate = null;
+          return;
+        }
+        this.formDateSeparate = [...this.formDate];
+      },
       showRoomDetail(roomId) {
         this.bookingStep = 2;
         this.roomDetailisLoading = true;
@@ -116,16 +144,6 @@ window.onload = () => {
         });
       },
       showSubmitDialog() {
-        // 小螢幕的 datePicker 判斷前先 format 日期
-        if (this.formDateSeparate[0] && this.formDateSeparate[1]) {
-          let tempArr = this.formDateSeparate.slice().sort((a, b) => {
-            const aa = new Date(a).getTime();
-            const bb = new Date(b).getTime();
-            return aa - bb;
-          });
-          this.formDateSeparate = tempArr;
-          this.formDate = tempArr;
-        }
         if (!this.formDate) {
           this.$message.error('請選擇開始及結束日期');
         } else {

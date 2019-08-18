@@ -22,7 +22,7 @@ window.onload = () => {
                 isDisabled = true;
               }
             });
-            return isDisabled ? isDisabled : time.getTime() < Date.now();
+            return isDisabled ? isDisabled : (time.getTime() < new Date().getTime() || time.getTime() > (new Date().getTime() + 1000 * 60 * 60 * 24 * 92));
           },
         },
         formBooking: {
@@ -31,7 +31,7 @@ window.onload = () => {
           email: '',
         },
         formDate: null,
-        formDateSeparate:[null, null],
+        formDateSeparate: [null, null],
         formBookingRule: {
           name: [
             { required: true, message: '請輸入姓名', trigger: 'blur' }
@@ -51,18 +51,18 @@ window.onload = () => {
       bookingTotalDays() {
         const start = new Date(this.formDate[0]).getTime();
         const end = new Date(this.formDate[1]).getTime();
-        const days = (end - start)/1000/60/60/24;
+        const days = (end - start) / 1000 / 60 / 60 / 24;
         return days;
       },
       bookingTotalDates() {
         const start = new Date(this.formDate[0]).getTime();
         let dates = [this.formDate[0]];
-        for (let i=1; i<= this.bookingTotalDays; i++) {
-          const dayTime = 1000*60*60*24;
-          let newDay = new Date(start + (dayTime*i));
+        for (let i = 1; i <= this.bookingTotalDays; i++) {
+          const dayTime = 1000 * 60 * 60 * 24;
+          let newDay = new Date(start + (dayTime * i));
           const year = newDay.getFullYear();
-          const month = (newDay.getMonth() + 1).toString().padStart(2,0);
-          const date = (newDay.getDate()).toString().padStart(2,0);
+          const month = (newDay.getMonth() + 1).toString().padStart(2, 0);
+          const date = (newDay.getDate()).toString().padStart(2, 0);
           dates.push(`${year}-${month}-${date}`);
         }
         return dates;
@@ -77,7 +77,7 @@ window.onload = () => {
         this.scrollToElement('.title');
       },
       scrollToElement(el) {
-        const roomsTitleOffset = document.querySelector(`${el}`).getBoundingClientRect().top - document.querySelector('.title').offsetHeight*2;
+        const roomsTitleOffset = document.querySelector(`${el}`).getBoundingClientRect().top - document.querySelector('.title').offsetHeight * 2;
         let scrollY = window.scrollY;
         let currentScroll = scrollY;
         let scrollSpeed = 5;
@@ -118,7 +118,7 @@ window.onload = () => {
       showSubmitDialog() {
         // 小螢幕的 datePicker 判斷前先 format 日期
         if (this.formDateSeparate[0] && this.formDateSeparate[1]) {
-          let tempArr = this.formDateSeparate.slice().sort((a,b)=>{
+          let tempArr = this.formDateSeparate.slice().sort((a, b) => {
             const aa = new Date(a).getTime();
             const bb = new Date(b).getTime();
             return aa - bb;
@@ -141,9 +141,9 @@ window.onload = () => {
             bodyFormData.append('tel', this.formBooking.tel);
             this.bookingTotalDates.forEach((date, i) => {
               bodyFormData.append(`date[${i}]`, date);
-            });      
+            });
             this.axios.post(`/room/${this.roomDetail.room[0].id}`, bodyFormData, {
-              headers: {'Content-Type': 'multipart/form-data' }
+              headers: { 'Content-Type': 'multipart/form-data' }
             }).then((res) => {
               if (res.data.success) {
                 this.bookingStep = 3;

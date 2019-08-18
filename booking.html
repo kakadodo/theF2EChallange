@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-115362207-1" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-115362207-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 旅館預約服務">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week6.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="2nd Week 6 - Booking">
+<meta itemprop="description" content="the F2E - 旅館預約服務">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week6.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="2nd Week 6 - Booking">
+<meta property="og:description" content="the F2E - 旅館預約服務">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week6.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/booking.html">
+<meta property="og:site_name" content="2nd Week 6 - Booking">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
+    <title>2nd Week 6 - Booking</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/booking.css">
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <header class="header">
+        <el-col :span="20" :offset="2">
+          <el-row type="flex" align="middle">
+            <el-col :xs="8" :sm="22"><img class="img_fluid" src="./img/2nd-week6/logo.svg"></el-col>
+            <el-col :xs="{span: 8, offset: 8}" :sm="2">
+              <el-link href="#" @click.native.prevent="scrollToRooms">ROOMS</el-link>
+            </el-col>
+          </el-row>
+        </el-col>
+      </header>
+      <section class="hero">
+        <el-image src="./img/2nd-week6/hero.png" fit="fill" style="width:100%"></el-image>
+      </section>
+      <transition name="el-zoom-in-center" mode="out-in">
+        <section class="main" v-if="bookingStep === 1" key="1">
+          <el-row>
+            <el-col :span="20" :offset="2">
+              <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item :to="{ path: '/' }" @click.native="bookingStep = 1">Home</el-breadcrumb-item>
+                <el-breadcrumb-item>Rooms</el-breadcrumb-item>
+              </el-breadcrumb>
+            </el-col>
+          </el-row>
+          <el-row>
+            <h1 class="title">ROOMS</h1>
+            <el-col :span="20" :offset="2">
+              <el-row :gutter="15">
+                <el-col class="card" :sm="12" v-for="room in roomsInfo" :key="room.id" @click.native="showRoomDetail(room.id)">
+                  <el-image fit="cover" :src="room.imageUrl" lazy></el-image>
+                  <div class="card_info">
+                    <h3 class="card_info_title">{{room.name}}</h3><span class="card_info_price">$<span class="strong">{{room.normalDayPrice}}</span> up</span>
+                  </div>
+                </el-col>
+              </el-row>
+            </el-col>
+          </el-row>
+        </section>
+        <section class="main" v-else-if="bookingStep === 2" key="2">
+          <transition name="el-fade-in" mode="out-in">
+            <el-row v-if="roomDetailisLoading" key="4">
+              <div class="fa-3x" style="text-align: center; color: #B19E73"><i class="fas fa-spinner fa-pulse"></i></div>
+            </el-row>
+            <el-row v-else key="5">
+              <el-row>
+                <el-col :span="20" :offset="2">
+                  <el-breadcrumb separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item :to="{ path: '/' }" @click.native="bookingStep = 1">Home</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{ path: '/' }" @click.native="bookingStep = 1">Rooms</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{ roomDetail.room[0].name }}</el-breadcrumb-item>
+                  </el-breadcrumb>
+                </el-col>
+              </el-row>
+              <el-row style="margin-top:70px">
+                <el-col :span="20" :offset="2">
+                  <el-row :gutter="10">
+                    <el-col :sm="6">
+                      <ul class="list_group">
+                        <li class="list_group_item" v-for="room in roomsInfo" :key="room.id"><a class="list_group_item_link" href="#" @click.prevent="showRoomDetail(room.id)" :class="{active: room.name === roomDetail.room[0].name}">{{ room.name }}</a></li>
+                      </ul>
+                    </el-col>
+                    <el-col :sm="18">
+                      <h1 class="title">{{ roomDetail.room[0].name }}</h1>
+                      <el-carousel height="50vh" direction="vertical" :autoplay="false">
+                        <el-carousel-item v-for="img in roomDetail.room[0].imageUrl" :key="img">
+                          <el-image fit="contain" :src="img"></el-image>
+                        </el-carousel-item>
+                      </el-carousel>
+                      <div class="room_price"><span>Total: </span><span class="strong">$</span><span class="strong num">{{ roomDetail.room[0].normalDayPrice }}</span></div>
+                      <div class="room_date">
+                        <el-date-picker class="hidden-xs-only" v-model="formDate" type="daterange" value-format="yyyy-MM-dd" range-separator="🡒" start-placeholder="開始日期" end-placeholder="結束日期" :picker-options="pickerOptions"></el-date-picker>
+                        <div class="show-xs-only">
+                          <el-date-picker v-model="formDateSeparate[0]" type="date" :picker-options="pickerOptions" value-format="yyyy-MM-dd" placeholder="開始日期"></el-date-picker>
+                        </div>
+                        <div class="show-xs-only" style="margin-top: 5px">
+                          <el-date-picker v-model="formDateSeparate[1]" type="date" :picker-options="pickerOptions" value-format="yyyy-MM-dd" placeholder="結束日期"></el-date-picker>
+                        </div>
+                        <el-button class="custom_btn" type="primary" @click.native="showSubmitDialog">BOOK NOW</el-button>
+                      </div>
+                      <ul class="room_group room_group_flex">
+                        <li class="room_group_item"><img src="./img/2nd-week6/person.svg"><span>{{ roomDetail.room[0].descriptionShort.GuestMax }} Guest</span></li>
+                        <li class="room_group_item"><img src="./img/2nd-week6/bed.svg"><span>{{ roomDetail.room[0].descriptionShort.Bed[0] }}</span></li>
+                        <li class="room_group_item" v-if="roomDetail.room[0].descriptionShort[&quot;Private-Bath&quot;] === 1"><img src="./img/2nd-week6/bath.svg"><span>Private-Bath</span></li>
+                        <li class="room_group_item"><img src="./img/2nd-week6/person.svg"><span>{{ roomDetail.room[0].descriptionShort.Footage }} ㎡</span></li>
+                      </ul>
+                      <div class="room_description">{{ roomDetail.room[0].description }}</div>
+                      <ul class="room_group">
+                        <li class="room_group_item"><i class="fas fa-circle"></i><span>Check In : {{ roomDetail.room[0].checkInAndOut.checkInEarly }} ~ {{ roomDetail.room[0].checkInAndOut.checkInLate }}</span></li>
+                        <li class="room_group_item"><i class="fas fa-circle"></i><span>Check Out : {{ roomDetail.room[0].checkInAndOut.checkOut }}</span></li>
+                      </ul>
+                      <h2 class="subTitle">Room Details
+                        <ul class="room_group room_group_flexWrap">
+                          <li class="room_group_item" v-for="(value, detail) in roomDetail.room[0].amenities"><i class="fas fa-check" v-if="value"></i><i class="fas fa-times disabled" v-else></i><span :class="{disabled: !value}">{{ detail }}</span></li>
+                        </ul>
+                      </h2>
+                    </el-col>
+                  </el-row>
+                </el-col>
+              </el-row>
+            </el-row>
+          </transition>
+        </section>
+        <section class="main" v-else key="3">
+          <el-row>
+            <el-col :span="20" :offset="2">
+              <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item :to="{ path: '/' }" @click.native="bookingStep = 1">Home</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: '/' }" @click.native="bookingStep = 1">Rooms</el-breadcrumb-item>
+                <el-breadcrumb-item>Reservation Details</el-breadcrumb-item>
+              </el-breadcrumb>
+            </el-col>
+          </el-row>
+          <el-row>
+            <h1 class="title">Thank You For Reservation</h1>
+            <div class="title_description">We Look Forward To Seeing You</div>
+            <el-col :span="20" :offset="2" v-if="roomDetail.room">
+              <el-row :gutter="30">
+                <el-col :span="12">
+                  <div style="height: 50vh">
+                    <el-image :src="roomDetail.room[0].imageUrl[0]" fit="cover" style="width:100%"></el-image>
+                  </div>
+                </el-col>
+                <el-col :span="12">
+                  <ul class="room_group" style="margin-top:0">
+                    <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Name: </span><span>{{ formBooking.name }}</span></li>
+                    <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Phone Number: </span><span>{{ formBooking.tel }}</span></li>
+                    <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Mail: </span><span>{{ formBooking.email }}</span></li>
+                    <li class="room_group_item" style="margin-top: 60px"><i class="fas fa-circle"></i><span class="room_group_item_title">Room Type: </span><span>{{ roomDetail.room[0].name }}</span></li>
+                    <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Check In: </span><span>{{ formDate[0] }}</span></li>
+                    <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Check Out: </span><span>{{ formDate[1] }}</span></li>
+                    <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Total: </span><span>${{ bookingTotalPrice }}</span></li>
+                  </ul>
+                </el-col>
+              </el-row>
+            </el-col>
+          </el-row>
+        </section>
+      </transition>
+      <el-dialog class="booking_dialog" v-if="submitDialogVisible" title="Reservation Information" :visible.sync="submitDialogVisible" :before-close="resetForm" width="80%">
+        <el-row>
+          <el-col :span="20" :offset="2">
+            <el-col :md="12" :sm="24">
+              <ul class="room_group" style="margin-top:0">
+                <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Room Type: </span><span>{{ roomDetail.room[0].name }}</span></li>
+                <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Check In: </span><span>{{ formDate[0] }}</span></li>
+                <li class="room_group_item"><i class="fas fa-circle"></i><span class="room_group_item_title">Check Out: </span><span>{{ formDate[1] }}</span></li>
+                <li class="room_group_item" style="margin-top:60px"><i class="fas fa-circle"></i><span class="room_group_item_title">Total: </span><span>${{ bookingTotalPrice }}</span></li>
+              </ul>
+            </el-col>
+            <el-col :md="10" :sm="24">
+              <el-form label-position="top" label-width="80px" :rules="formBookingRule" :model="formBooking" ref="formBooking">
+                <el-form-item label="Name" prop="name">
+                  <el-input v-model="formBooking.name"></el-input>
+                </el-form-item>
+                <el-form-item label="Phone Number" prop="tel">
+                  <el-input v-model="formBooking.tel"></el-input>
+                </el-form-item>
+                <el-form-item label="Email" prop="email">
+                  <el-input v-model="formBooking.email"></el-input>
+                </el-form-item>
+              </el-form>
+            </el-col>
+          </el-col>
+        </el-row><span class="dialog-footer" slot="footer">
+          <el-button class="custom_btn" type="primary" @click="submitBooking">BOOK NOW<span v-if="submitLoading" style="color: white; margin-left: 10px"><i class="fas fa-spinner fa-pulse"></i></span></el-button></span>
+      </el-dialog>
+      <footer class="footer">
+        <el-col :span="20" :offset="2">
+          <el-row type="flex" align="middle" justify="space-between">
+            <el-col :sm="3"><img class="img_fluid" src="./img/2nd-week6/logo.svg"></el-col>
+            <el-col :sm="3"><span>(847) 797 7339</span></el-col>
+            <el-col :sm="6"><span>lavik-hostel@hostel.com</span></el-col>
+            <el-col :sm="6"><span>Kata Road, Karon Sub District, Slovenia</span></el-col>
+            <el-col :sm="3"><span class="socialIcon"><i class="fab fa-instagram"></i></span><span class="socialIcon"><i class="fab fa-twitter"></i></span><span class="socialIcon"><i class="fab fa-facebook-f"></i></span></el-col>
+          </el-row>
+        </el-col>
+      </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="./js/booking.js"></script>
+  </body>
+</html>

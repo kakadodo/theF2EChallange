@@ -1,4 +1,11 @@
 [{
+    "title": "2nd Week 6 - Booking",
+    "imgSrc": "./img/2nd-week6.jpg",
+    "skills": ["Pug", "Vue", "Element UI", "API 串接"],
+    "date": "2019/8/18",
+    "edition": "2nd",
+    "href": "./booking.html"
+  },{
     "title": "2nd Week 5 - 90sec Game",
     "imgSrc": "./img/2nd-week5.jpg",
     "skills": ["Phaser 3"],

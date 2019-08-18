@@ -1,0 +1,231 @@
+extends ./partials/layout.jade
+
+block socialMeta
+  <!-- Search Engine -->
+  <meta name="description" content="the F2E - 旅館預約服務">
+  <meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week6.jpg">
+  <!-- Schema.org for Google -->
+  <meta itemprop="name" content="2nd Week 6 - Booking">
+  <meta itemprop="description" content="the F2E - 旅館預約服務">
+  <meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week6.jpg">
+  <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+  <meta property="og:title" content="2nd Week 6 - Booking">
+  <meta property="og:description" content="the F2E - 旅館預約服務">
+  <meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week6.jpg">
+  <meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/booking.html">
+  <meta property="og:site_name" content="2nd Week 6 - Booking">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="fb:admins" content="1420062581">
+  <meta property="fb:app_id" content="333459487173924">
+  <meta property="og:type" content="website">
+
+block pageTitle
+  title 2nd Week 6 - Booking
+
+block css
+  link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+  link(rel="stylesheet", href="./css/booking.css")
+
+block content
+  #app(v-cloak)
+    header.header
+      el-col(:span='20' :offset='2')
+        el-row(type='flex' align='middle')
+          el-col(:xs='8' :sm='22')
+            img.img_fluid(src="./img/2nd-week6/logo.svg")
+          el-col(:xs='{span: 8, offset: 8}' :sm='2')
+            el-link(href="#" @click.native.prevent='scrollToRooms') ROOMS
+    section.hero
+      el-image(src='./img/2nd-week6/hero.png' fit='fill' style='width:100%')
+    transition(name="el-zoom-in-center" mode='out-in')
+      section.main(v-if='bookingStep === 1' key='1')
+        el-row
+          el-col(:span='20' :offset='2')
+            el-breadcrumb(separator-class='el-icon-arrow-right')
+              el-breadcrumb-item(:to="{ path: '/' }" @click.native='bookingStep = 1') Home
+              el-breadcrumb-item Rooms
+        el-row
+          h1.title ROOMS
+          el-col(:span='20' :offset='2')
+            el-row(:gutter="15")
+              el-col.card(:sm='12' v-for='room in roomsInfo' :key='room.id' @click.native='showRoomDetail(room.id)')
+                el-image(fit='cover' :src="room.imageUrl" lazy)
+                .card_info
+                  h3.card_info_title {{room.name}}
+                  span.card_info_price
+                    | $
+                    span.strong {{room.normalDayPrice}}
+                    |  up
+      section.main(v-else-if='bookingStep === 2' key='2')
+        transition(name="el-fade-in" mode='out-in')
+          el-row(v-if='roomDetailisLoading' key='4')
+            .fa-3x(style='text-align: center; color: #B19E73')
+              i.fas.fa-spinner.fa-pulse
+          el-row(v-else key='5')
+            el-row
+              el-col(:span='20' :offset='2')
+                el-breadcrumb(separator-class='el-icon-arrow-right')
+                  el-breadcrumb-item(:to="{ path: '/' }" @click.native='bookingStep = 1') Home
+                  el-breadcrumb-item(:to="{ path: '/' }" @click.native='bookingStep = 1') Rooms
+                  el-breadcrumb-item {{ roomDetail.room[0].name }}
+            el-row(style="margin-top:70px")
+              el-col(:span='20' :offset='2')
+                el-row(:gutter='10')
+                  el-col(:sm='6')
+                    ul.list_group
+                      li.list_group_item(v-for='room in roomsInfo' :key='room.id')
+                        a.list_group_item_link(href="#" @click.prevent='showRoomDetail(room.id)'
+                          :class='{active: room.name === roomDetail.room[0].name}') {{ room.name }}
+                  el-col(:sm='18')
+                    h1.title {{ roomDetail.room[0].name }}
+                    el-carousel(height='50vh' direction='vertical' :autoplay='false')
+                      el-carousel-item(v-for='img in roomDetail.room[0].imageUrl' :key='img')
+                        el-image(fit='contain' :src="img")
+                    .room_price
+                      span Total: 
+                      span.strong $
+                      span.strong.num {{ roomDetail.room[0].normalDayPrice }}
+                    .room_date
+                      el-date-picker.hidden-xs-only(v-model='formDate' type='daterange' value-format="yyyy-MM-dd" range-separator='🡒' start-placeholder='開始日期' end-placeholder='結束日期' :picker-options='pickerOptions')
+                      div.show-xs-only
+                        el-date-picker(v-model='formDateSeparate[0]' type='date' :picker-options='pickerOptions'
+                          value-format="yyyy-MM-dd" placeholder='開始日期')
+                      div.show-xs-only(style='margin-top: 5px')
+                        el-date-picker(v-model='formDateSeparate[1]' type='date' :picker-options='pickerOptions'
+                          value-format="yyyy-MM-dd" placeholder='結束日期')
+                      el-button.custom_btn(type="primary" @click.native='showSubmitDialog') BOOK NOW
+                    ul.room_group.room_group_flex
+                      li.room_group_item
+                        img(src="./img/2nd-week6/person.svg")
+                        span {{ roomDetail.room[0].descriptionShort.GuestMax }} Guest
+                      li.room_group_item
+                        img(src="./img/2nd-week6/bed.svg")
+                        span {{ roomDetail.room[0].descriptionShort.Bed[0] }}
+                      li.room_group_item(v-if='roomDetail.room[0].descriptionShort["Private-Bath"] === 1')
+                        img(src="./img/2nd-week6/bath.svg")
+                        span Private-Bath
+                      li.room_group_item
+                        img(src="./img/2nd-week6/person.svg")
+                        span {{ roomDetail.room[0].descriptionShort.Footage }} ㎡
+                    .room_description {{ roomDetail.room[0].description }}
+                    ul.room_group
+                      li.room_group_item
+                        i.fas.fa-circle
+                        span Check In : {{ roomDetail.room[0].checkInAndOut.checkInEarly }} ~ {{ roomDetail.room[0].checkInAndOut.checkInLate }}
+                      li.room_group_item
+                        i.fas.fa-circle
+                        span Check Out : {{ roomDetail.room[0].checkInAndOut.checkOut }}
+                    h2.subTitle Room Details
+                      ul.room_group.room_group_flexWrap
+                        li.room_group_item(v-for='(value, detail) in roomDetail.room[0].amenities')
+                          i.fas.fa-check(v-if='value')
+                          i.fas.fa-times.disabled(v-else)
+                          span(:class='{disabled: !value}') {{ detail }}
+      section.main(v-else key='3')
+        el-row
+          el-col(:span='20' :offset='2')
+            el-breadcrumb(separator-class='el-icon-arrow-right')
+              el-breadcrumb-item(:to="{ path: '/' }" @click.native='bookingStep = 1') Home
+              el-breadcrumb-item(:to="{ path: '/' }" @click.native='bookingStep = 1') Rooms
+              el-breadcrumb-item Reservation Details
+        el-row
+          h1.title Thank You For Reservation
+          .title_description We Look Forward To Seeing You
+          el-col(:span='20' :offset='2' v-if='roomDetail.room')
+            el-row(:gutter='30')
+              el-col(:span='12')
+                div(style='height: 50vh')
+                  el-image(:src='roomDetail.room[0].imageUrl[0]' fit='cover' style='width:100%')
+              el-col(:span='12')
+                ul.room_group(style='margin-top:0')
+                  li.room_group_item
+                    i.fas.fa-circle
+                    span.room_group_item_title Name: 
+                    span {{ formBooking.name }}
+                  li.room_group_item
+                    i.fas.fa-circle
+                    span.room_group_item_title Phone Number: 
+                    span {{ formBooking.tel }}
+                  li.room_group_item
+                    i.fas.fa-circle
+                    span.room_group_item_title Mail: 
+                    span {{ formBooking.email }}
+                  li.room_group_item(style='margin-top: 60px')
+                    i.fas.fa-circle
+                    span.room_group_item_title Room Type: 
+                    span {{ roomDetail.room[0].name }}
+                  li.room_group_item
+                    i.fas.fa-circle
+                    span.room_group_item_title Check In: 
+                    span {{ formDate[0] }}
+                  li.room_group_item
+                    i.fas.fa-circle
+                    span.room_group_item_title Check Out: 
+                    span {{ formDate[1] }}
+                  li.room_group_item
+                    i.fas.fa-circle
+                    span.room_group_item_title Total: 
+                    span ${{ bookingTotalPrice }}
+            
+    el-dialog.booking_dialog(v-if='submitDialogVisible' title='Reservation Information' :visible.sync='submitDialogVisible'
+      :before-close="resetForm" width='80%')
+      el-row
+        el-col(:span='20' :offset='2')
+          el-col(:md='12' :sm='24')
+            ul.room_group(style='margin-top:0')
+              li.room_group_item
+                i.fas.fa-circle
+                span.room_group_item_title Room Type: 
+                span {{ roomDetail.room[0].name }}
+              li.room_group_item
+                i.fas.fa-circle
+                span.room_group_item_title Check In: 
+                span {{ formDate[0] }}
+              li.room_group_item
+                i.fas.fa-circle
+                span.room_group_item_title Check Out: 
+                span {{ formDate[1] }}
+              li.room_group_item(style='margin-top:60px')
+                i.fas.fa-circle
+                span.room_group_item_title Total: 
+                span ${{ bookingTotalPrice }}
+          el-col(:md='10' :sm='24')
+            el-form(label-position='top' label-width='80px' :rules="formBookingRule" :model='formBooking' ref='formBooking')
+              el-form-item(label='Name' prop="name")
+                el-input(v-model='formBooking.name')
+              el-form-item(label='Phone Number' prop="tel")
+                el-input(v-model='formBooking.tel')
+              el-form-item(label='Email' prop="email")
+                el-input(v-model='formBooking.email')
+      span.dialog-footer(slot='footer')
+        el-button.custom_btn(type='primary' @click='submitBooking')
+          | BOOK NOW
+          span(v-if='submitLoading' style='color: white; margin-left: 10px')
+            i.fas.fa-spinner.fa-pulse
+
+    footer.footer
+      el-col(:span='20' :offset='2')
+        el-row(type='flex' align='middle' justify='space-between')
+          el-col(:sm='3')
+            img.img_fluid(src="./img/2nd-week6/logo.svg")
+          el-col(:sm='3')
+            span (847) 797 7339
+          el-col(:sm='6')
+            span lavik-hostel@hostel.com
+          el-col(:sm='6')
+            span Kata Road, Karon Sub District, Slovenia
+          el-col(:sm='3')
+            span.socialIcon
+              i.fab.fa-instagram
+            span.socialIcon
+              i.fab.fa-twitter
+            span.socialIcon
+              i.fab.fa-facebook-f
+
+
+block script
+  //- script(src="./js/vendors.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js")
+  script(src="https://unpkg.com/element-ui/lib/index.js")
+  script(src="./js/booking.js")

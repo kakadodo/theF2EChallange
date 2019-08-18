@@ -7,9 +7,9 @@ var browserSync = require('browser-sync').create();
 //clean開發時的資料夾
 function clean() {
   return src(['./public'], {
-      allowEmpty: true,
-      read: false
-    })
+    allowEmpty: true,
+    read: false
+  })
     .pipe($.clean());
 }
 
@@ -91,10 +91,16 @@ function imageMin() {
 };
 
 // 搬移 json 檔到 public
-function copyFiles() {
+function copyJSONFiles() {
   return src('./source/json/**/*.json')
     .pipe(dest('./public/json'))
     .pipe(browserSync.stream());
+};
+
+// 搬移 fonts 到 public
+function copyFontsFiles() {
+  return src('./source/fonts/*')
+    .pipe(dest('./public/fonts'));
 };
 
 // 網頁伺服器
@@ -109,7 +115,7 @@ function runBrowserSync() {
 
 // 自動監聽檔案的變更(監聽來源,任務名稱)
 function watchFiles() {
-  watch('./source/json/**/*.json', copyFiles);
+  watch('./source/json/**/*.json', copyJSONFiles);
   watch('./source/**/*.pug', pug);
   watch('./source/scss/**/*.scss', sass);
   watch('./source/js/**/*.js', babel);
@@ -122,9 +128,9 @@ function deploy() {
 };
 
 // 專案完成時的導出任務
-exports.build = series(clean, pug, sass, babel, vendorJS, imageMin, copyFiles);
+exports.build = series(clean, pug, sass, babel, vendorJS, imageMin, copyJSONFiles, copyFontsFiles);
 
 exports.deploy = deploy;
 
 // 預設輸入gulp，一次啟動所有gulp任務
-exports.default = parallel(pug, sass, babel, vendorJS, imageMin, copyFiles, runBrowserSync, watchFiles);
+exports.default = parallel(pug, sass, babel, vendorJS, imageMin, copyJSONFiles, copyFontsFiles, runBrowserSync, watchFiles);

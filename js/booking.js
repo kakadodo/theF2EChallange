@@ -22,7 +22,7 @@ window.onload = function () {
                 isDisabled = true;
               }
             });
-            return isDisabled ? isDisabled : time.getTime() < Date.now();
+            return isDisabled ? isDisabled : time.getTime() < new Date().getTime() || time.getTime() > new Date().getTime() + 1000 * 60 * 60 * 24 * 92;
           }
         },
         formBooking: {

@@ -1,5 +1,7 @@
 'use strict';
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var vm = null;
 
 window.onload = function () {
@@ -62,7 +64,7 @@ window.onload = function () {
         return dates;
       },
       bookingTotalPrice: function bookingTotalPrice() {
-        return this.roomDetail.room[0].normalDayPrice * this.bookingTotalDays;
+        return this.formDate ? this.roomDetail.room[0].normalDayPrice * this.bookingTotalDays : 0;
       }
     },
     methods: {
@@ -96,6 +98,34 @@ window.onload = function () {
           }, 0);
         }
       },
+      formatToFormDate: function formatToFormDate() {
+        // 將小螢幕的 datePick 值轉換到 formDate
+        // 如果開始與結束日沒有輸入完全就直接跳過
+        if (!this.formDateSeparate[0] || !this.formDateSeparate[0]) return;
+        if (this.formDateSeparate[0] === this.formDateSeparate[1]) {
+          this.$message.error('開始及結束日期不能相同');
+          this.formDateSeparate = [null, null];
+          return;
+        }
+        // 如果兩個都有輸入就轉換，轉換會把日期順序重新排列
+        if (this.formDateSeparate[0] && this.formDateSeparate[1]) {
+          var tempArr = this.formDateSeparate.slice().sort(function (a, b) {
+            var aa = new Date(a).getTime();
+            var bb = new Date(b).getTime();
+            return aa - bb;
+          });
+          this.formDateSeparate = tempArr;
+          this.formDate = tempArr;
+        }
+      },
+      checkIfSameDate: function checkIfSameDate() {
+        if (this.formDate[0] === this.formDate[1]) {
+          this.$message.error('開始及結束日期不能相同');
+          this.formDate = null;
+          return;
+        }
+        this.formDateSeparate = [].concat(_toConsumableArray(this.formDate));
+      },
       showRoomDetail: function showRoomDetail(roomId) {
         var _this = this;
 
@@ -112,16 +142,6 @@ window.onload = function () {
         });
       },
       showSubmitDialog: function showSubmitDialog() {
-        // 小螢幕的 datePicker 判斷前先 format 日期
-        if (this.formDateSeparate[0] && this.formDateSeparate[1]) {
-          var tempArr = this.formDateSeparate.slice().sort(function (a, b) {
-            var aa = new Date(a).getTime();
-            var bb = new Date(b).getTime();
-            return aa - bb;
-          });
-          this.formDateSeparate = tempArr;
-          this.formDate = tempArr;
-        }
         if (!this.formDate) {
           this.$message.error('請選擇開始及結束日期');
         } else {

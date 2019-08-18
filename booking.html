@@ -100,14 +100,14 @@
                           <el-image fit="contain" :src="img"></el-image>
                         </el-carousel-item>
                       </el-carousel>
-                      <div class="room_price"><span>Total: </span><span class="strong">$</span><span class="strong num">{{ roomDetail.room[0].normalDayPrice }}</span></div>
+                      <div class="room_price"><span>Total: </span><span class="strong">$</span><span class="strong num">{{ bookingTotalPrice }}</span></div>
                       <div class="room_date">
-                        <el-date-picker class="hidden-xs-only" v-model="formDate" type="daterange" value-format="yyyy-MM-dd" range-separator="🡒" start-placeholder="開始日期" end-placeholder="結束日期" :picker-options="pickerOptions"></el-date-picker>
+                        <el-date-picker class="hidden-xs-only" v-model="formDate" type="daterange" value-format="yyyy-MM-dd" range-separator="🡒" start-placeholder="開始日期" end-placeholder="結束日期" :picker-options="pickerOptions" @change="checkIfSameDate"></el-date-picker>
                         <div class="show-xs-only">
-                          <el-date-picker v-model="formDateSeparate[0]" type="date" :picker-options="pickerOptions" value-format="yyyy-MM-dd" placeholder="開始日期"></el-date-picker>
+                          <el-date-picker v-model="formDateSeparate[0]" type="date" :picker-options="pickerOptions" value-format="yyyy-MM-dd" placeholder="開始日期" @change="formatToFormDate"></el-date-picker>
                         </div>
                         <div class="show-xs-only" style="margin-top: 5px">
-                          <el-date-picker v-model="formDateSeparate[1]" type="date" :picker-options="pickerOptions" value-format="yyyy-MM-dd" placeholder="結束日期"></el-date-picker>
+                          <el-date-picker v-model="formDateSeparate[1]" type="date" :picker-options="pickerOptions" value-format="yyyy-MM-dd" placeholder="結束日期" @change="formatToFormDate"></el-date-picker>
                         </div>
                         <el-button class="custom_btn" type="primary" @click.native="showSubmitDialog">BOOK NOW</el-button>
                       </div>

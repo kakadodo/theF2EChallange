@@ -70,6 +70,11 @@ $(function () {
         var _this = this;
 
         if (val === routeMapping.chatRoom) {
+          this.chatData = {
+            search: '',
+            input: '',
+            imageUrl: ''
+          };
           setTimeout(function () {
             _this.$refs.chatRoomList.scrollTo(0, _this.$refs.chatRoomList.scrollHeight + 500);
           }, 1000);

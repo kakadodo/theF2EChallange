@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-115362207-1" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-115362207-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 匿名聊天室">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week7.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="2nd Week 7 - Chat Room">
+<meta itemprop="description" content="the F2E - 匿名聊天室">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week7.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="2nd Week 7 - Chat Room">
+<meta property="og:description" content="the F2E - 匿名聊天室">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week7.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/booking.html">
+<meta property="og:site_name" content="2nd Week 7 - Chat Room">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
+    <title>2nd Week 7 - Chat Room</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="./css/chatroom.css">
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <transition mode="out-in" :enter-active-class="controlTransition.enter" :leave-active-class="controlTransition.leave">
+        <div class="container h-100 bg_img d-flex flex-column justify-content-center align-items-center" v-if="currentRoute === 1" key="index">
+          <h1 class="logo">To Chat</h1><span class="logo_description mt-2">create a room for whatever you're into</span>
+          <button class="btn btn-warning btn_lgw mt-5" type="button" @click="validateAndGoRoute(2)">開始聊天</button>
+        </div>
+        <div class="container h-100 bg_primary" v-else-if="currentRoute === 2" key="setUserData" style="padding-top: 50px;">
+          <header class="header">
+            <h2 class="header_title">To Chat</h2>
+            <button class="header_back_btn" @click="validateAndGoRoute(1)"><i class="fas fa-chevron-left fa-lg"></i></button>
+          </header>
+          <div class="chat_list_group">
+            <div class="media chat_list_item" v-for="dialog in setUsernameDialogs" :key="dialog.text" :class="{user: dialog.target === userData.username}">
+              <div class="chat_list_item_img align-self-start"></div>
+              <div class="media-body">
+                <p class="media_body_text">{{ dialog.text }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" v-show="inputStatus.getUsername" type="text" placeholder="請輸入你的暱稱" v-model="userData.username" @keyup.enter="submitUserData(&quot;name&quot;)">
+            <input class="form-control" v-show="inputStatus.getUserdate" type="text" placeholder="YYYY/MM/DD" v-model="userData.userdate" @keyup.enter="submitUserData(&quot;date&quot;)">
+            <input class="form-control" v-show="inputStatus.getUsergender" type="text" placeholder="請輸入男或女" v-model="userData.usergender" @keyup.enter="submitUserData(&quot;gender&quot;)">
+          </div>
+        </div>
+        <div class="h-100 bg-white" v-else-if="currentRoute === 3" key="roomLobby" style="padding-top:50px; position:relative;">
+          <header class="header">
+            <h2 class="header_title" v-show="isMenuOpen">創建新聊天室</h2>
+            <button class="header_menu_btn" @click="toggleMenu"><i class="fas fa-plus fa-sm" :class="{rotate: isMenuOpen}"></i></button>
+          </header>
+          <div class="roomTag">聊天室列表</div>
+          <div class="room_list_group" style="height: calc(100vh - 106px)">
+            <div class="media room_list_item" v-for="room in roomList" :key="room.id" style="margin-top: -1px;">
+              <div class="room_list_item_img align-self-start"></div>
+              <div class="media-body">
+                <h5 class="media_body_title mt-0">{{ room.name }}</h5>
+                <p class="media_body_text">{{ room.description }}</p>
+              </div>
+              <div class="media_aside">
+                <div class="room_person mb-2"><i class="fas fa-comment"></i><small> {{ showRoomCommentAmount(room) }}</small></div>
+                <button class="btn btn-info btn-sm" @click="goChatRoom(room)">加入</button>
+              </div>
+            </div>
+          </div>
+          <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <div class="room_menu" v-if="isMenuOpen">
+              <div class="container h-100 mt-5 d-flex flex-column align-items-center">
+                <div class="room_menu_title">房間名稱</div>
+                <div class="form-group">
+                  <input class="form-control" type="text" v-model="newRoomData.name">
+                </div>
+                <div class="room_menu_title">房間描述</div>
+                <div class="form-group">
+                  <input class="form-control" type="text" v-model="newRoomData.description">
+                </div>
+                <button class="btn btn-info btn_lgw mt-3" type="button" @click="createNewRoom">創建聊天室</button>
+                <transition mode="out-in" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
+                  <div class="alert alert-warning mt-5" role="alert" v-show="inValid">請完成全部選項</div>
+                </transition>
+              </div>
+            </div>
+          </transition>
+        </div>
+        <div class="container h-100 bg_img" v-else-if="currentRoute === 4" key="chatRoom" style="padding-top: 50px;">
+          <header class="header">
+            <h2 class="header_title">{{ currentRoomData.name }}</h2>
+            <button class="header_back_btn" @click="validateAndGoRoute(3)"><i class="fas fa-chevron-left fa-lg"></i></button>
+          </header>
+          <div class="chat_list_group" ref="chatRoomList" style="height: calc(100vh - 120px)">
+            <div class="media chat_list_item" v-for="dialog in chatRoomDialogs" :key="dialog.timeStamp" :class="{user: dialog.target === userData.username}">
+              <div class="chat_list_item_img align-self-start"></div>
+              <div class="media-body"><small class="chat_list_item_name">{{ dialog.target }}</small>
+                <p class="media_body_text" v-if="dialog.text">{{ dialog.text }}</p><img class="img-fluid" v-if="dialog.imageUrl" :src="dialog.imageUrl"><small class="chat_list_item_time">{{ dialog.timeStamp | formatTime }}</small>
+              </div>
+            </div>
+          </div>
+          <div class="toolBox">
+            <div class="input_group">
+              <input class="form-control" type="text" placeholder="輸入內容" v-model="chatData.input" @keyup.enter="addChat(&quot;text&quot;)">
+              <div class="input-group-append">
+                <button class="btn" type="button" @click="addChat(&quot;text&quot;)"><i class="fas fa-paper-plane"></i></button>
+              </div>
+            </div>
+            <emoji-picker @emoji="appendEmoji" :search="chatData.search">
+              <div class="emoji-invoker" slot="emoji-invoker" slot-scope="{ events: { click: clickEvent } }" @click.stop="clickEvent">
+                <div class="input-group-append">
+                  <button class="btn" type="button"><i class="far fa-smile fa-lg"></i></button>
+                </div>
+              </div>
+              <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
+                <div class="emoji-picker">
+                  <div class="emoji-picker__search">
+                    <input type="text" v-model="chatData.search">
+                  </div>
+                  <div>
+                    <div v-for="(emojiGroup, category) in emojis" :key="category">
+                      <h5>{{ category }}</h5>
+                      <div class="emojis"><span v-for="(emoji, emojiName) in emojiGroup" :key="emojiName" @click="insert(emoji)" :title="emojiName">{{ emoji }}</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </emoji-picker>
+            <div class="input-group-append">
+              <button class="btn" type="button" data-toggle="modal" data-target="#setImageModal"><i class="fas fa-image fa-lg"></i></button>
+            </div>
+          </div>
+        </div>
+      </transition>
+      <div class="modal fade" id="setImageModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">請輸入圖片網址</h5>
+              <button class="close" type="button" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <input class="form-control" type="text" v-model="chatData.imageUrl">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-info" type="button" @click="addChat(&quot;imageUrl&quot;)">確定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+        <div class="mask" v-if="isMaskOpen">
+          <div class="mask_content h-100 d-flex flex-column justify-content-center align-items-center">
+            <h3 class="mask_content_title">{{ maskTitle }}</h3>
+            <div class="mask_content_icon animated flash delay-1s"><i class="far fa-check-circle fa-3x"></i></div>
+          </div>
+        </div>
+      </transition>
+    </div>
+    <script src="./js/vendors.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://unpkg.com/vue-emoji-picker/dist/vue-emoji-picker.js"></script>
+    <script src="./js/chatroom.js"></script>
+  </body>
+</html>

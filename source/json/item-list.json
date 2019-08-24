@@ -1,95 +1,102 @@
 [{
-    "title": "2nd Week 6 - Booking",
-    "imgSrc": "./img/2nd-week6.jpg",
-    "skills": ["Pug", "Vue", "Element UI", "API 串接"],
-    "date": "2019/8/18",
-    "edition": "2nd",
-    "href": "./booking.html"
-  },{
-    "title": "2nd Week 5 - 90sec Game",
-    "imgSrc": "./img/2nd-week5.jpg",
-    "skills": ["Phaser 3"],
-    "date": "2019/8/10",
-    "edition": "2nd",
-    "href": "./90sec-game.html"
-  },{
+  "title": "2nd Week 7 - Chat Room",
+  "imgSrc": "./img/2nd-week7.jpg",
+  "skills": ["Pug", "Vue", "vue-emoji-picker", "Firebase API", "Bootstrap 4"],
+  "date": "2019/8/25",
+  "edition": "2nd",
+  "href": "./chatroom.html"
+}, {
+  "title": "2nd Week 6 - Booking",
+  "imgSrc": "./img/2nd-week6.jpg",
+  "skills": ["Pug", "Vue", "Element UI", "API 串接"],
+  "date": "2019/8/18",
+  "edition": "2nd",
+  "href": "./booking.html"
+}, {
+  "title": "2nd Week 5 - 90sec Game",
+  "imgSrc": "./img/2nd-week5.jpg",
+  "skills": ["Phaser 3"],
+  "date": "2019/8/10",
+  "edition": "2nd",
+  "href": "./90sec-game.html"
+}, {
   "title": "2nd Week 4 - Crypto Pay",
   "imgSrc": "./img/2nd-week4.jpg",
   "skills": ["Pug", "Vue", "VeeValidate", "Bootstrap 4", "RWD"],
   "date": "2019/8/3",
   "edition": "2nd",
   "href": "./crypto-pay.html"
-},{
+}, {
   "title": "2nd Week 3 - MP3 Player",
   "imgSrc": "./img/2nd-week3.jpg",
   "skills": ["Pug", "Vue", "Youtube IFrame Player API"],
   "date": "2019/7/29",
   "edition": "2nd",
   "href": "./mp3player.html"
-},{
+}, {
   "title": "2nd Week 2 - Free Cell",
   "imgSrc": "./img/2nd-week2.jpg",
   "skills": ["Pug", "Vue", "Animate.css"],
   "date": "2019/7/22",
   "edition": "2nd",
   "href": "./free-cell.html"
-},{
+}, {
   "title": "2nd Week 1 - Pomodoro",
   "imgSrc": "./img/2nd-week1.jpg",
   "skills": ["Pug", "Vue", "Chart.js", "Animate.css"],
   "date": "2019/7/11",
   "edition": "2nd",
   "href": "./pomodoro.html"
-},{
+}, {
   "title": "Week 9 - Skill Tree",
   "imgSrc": "./img/week9.jpg",
   "skills": ["Pug", "Flexbox", "Vue"],
   "date": "2018/8/2",
   "edition": "1st",
   "href": "./skill-tree.html"
-},{
+}, {
   "title": "Week 8 - Parallax Scrolling",
   "imgSrc": "./img/week8.jpg",
   "skills": ["Pug", "CSS animation", "parallax-scrolling plugin"],
   "date": "2018/7/26",
   "edition": "1st",
   "href": "./parallax-scrolling.html"
-},{
+}, {
   "title": "Week 6 - Validation",
   "imgSrc": "./img/week6.jpg",
   "skills": ["Pug", "HTML5 validation", "Vue"],
   "date": "2018/7/10",
   "edition": "1st",
   "href": "./validation.html"
-},{
+}, {
   "title": "Week 5 - Comic Viewer",
   "imgSrc": "./img/week5.jpg",
   "skills": ["Pug", "SCSS", "jQuery"],
   "date": "2018/7/3",
   "edition": "1st",
   "href": "./comic-viewer.html"
-},{
+}, {
   "title": "Week 4 - Product Gallery",
   "imgSrc": "./img/week4.jpg",
   "skills": ["Pug", "CSS Grid", "SCSS"],
   "date": "2018/6/27",
   "edition": "1st",
   "href": "./product-gallery.html"
-},{
+}, {
   "title": "Week 3 - Admin Order",
   "imgSrc": "./img/week3.jpg",
   "skills": ["Pug", "Bootstrap 4", "C3.js"],
   "date": "2018/6/20",
   "edition": "1st",
   "href": "./admin-order.html"
-},{
+}, {
   "title": "Week 2 - filter",
   "imgSrc": "./img/week2.jpg",
   "skills": ["Pug", "Bootstrap 4", "Google Map API"],
   "date": "2018/6/13",
   "edition": "1st",
   "href": "./filter.html"
-},{
+}, {
   "title": "Week 1 - Todolist",
   "imgSrc": "./img/week1.jpg",
   "skills": ["Pug", "jQuery", "localStorage"],

@@ -68,6 +68,11 @@ $(function () {
     watch: {
       currentRoute(val) {
         if (val === routeMapping.chatRoom) {
+          this.chatData = {
+            search: '',
+            input: '',
+            imageUrl: '',
+          };
           setTimeout(() => {
             this.$refs.chatRoomList.scrollTo(0, this.$refs.chatRoomList.scrollHeight + 500);
           }, 1000);

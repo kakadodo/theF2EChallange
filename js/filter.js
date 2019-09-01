@@ -1,2 +1,183 @@
-"use strict";$(function(){var i=new Vue({el:"#app",data:{loading:!0,listsData:[],pageData:[],pagination:[],currentPage:1,filterMode:!1,filterData:[],filterInputData:{LocName:"",City:"",District:"",AvailableTime:!1},filterOpen:!1,modalLocName:"",googleMap:{map:{},marker:{},infowindow:{}}},computed:{showPages:function(){var e={min:this.currentPage%10==0?this.currentPage-9:10*Math.floor(this.currentPage/10)+1,max:this.currentPage%10==0?this.currentPage:10*Math.ceil(this.currentPage/10)};return e.max>this.pagination.length&&(e.max=this.pagination.length),this.pagination.filter(function(t,a){return t>=e.min-1&&t<=e.max-1})},getCity:function(){return this.listsData.map(function(t,a){return JSON.parse(t.City).List[1].Value}).filter(function(t,a,e){return e.indexOf(t)==a})},getDistrict:function(){var e=this.filterInputData.City;if(""==e)return"";var i=[];return this.listsData.forEach(function(t,a){JSON.parse(t.City).List[1].Value==e&&i.push(JSON.parse(t.District).List[1].Value)}),i.filter(function(t,a,e){return e.indexOf(t)==a})}},methods:{getAPIData:function(){axios.get("https://wapi.gogoro.com/tw/api/vm/list").then(function(t){i.listsData=t.data.data,i.combineDataByPages()}).catch(function(t){alert("資料載入有誤，請稍後再試! error: "+t)})},combineDataByPages:function(){for(var t=JSON.parse(JSON.stringify(i.listsData)),a=t.length%20==0?t.length/20:parseInt(t.length/20)+1,e=0;e<a;e++)this.pageData.push(t.splice(0,20)),i.pagination.push(e);this.loading=!1},movePage:function(t){"prev"==t?this.currentPage--:"next"==t?this.currentPage++:this.currentPage=parseInt(t)},showMap:function(t){this.modalLocName=JSON.parse(t.LocName).List[1].Value;var a={lat:t.Latitude,lng:t.Longitude},e=JSON.parse(t.Address).List[1].Value.replace(/\(.+\)/g,""),i="\n          <div>\n            <h5>"+JSON.parse(t.LocName).List[1].Value+"</h5>\n            <p>\n              <a href='https://www.google.com/maps/place/"+e+"' target='_blank'>\n                "+JSON.parse(t.Address).List[1].Value+"\n              </a>\n            </p>\n          </div>\n        ";this.googleMap.map=new google.maps.Map(document.getElementById("map"),{center:a,zoom:15}),this.googleMap.marker=new google.maps.Marker({position:a,map:this.googleMap.map,icon:"https://raw.githubusercontent.com/kakadodo/theF2EChallange/gh-pages/img/week2/battery-icon.png",animation:google.maps.Animation.DROP}),this.googleMap.infowindow=new google.maps.InfoWindow({content:i}),this.googleMap.infowindow.open(this.googleMap.map,this.googleMap.marker)},filterLists:function(){var i=this;""==this.filterInputData.LocName&&""==this.filterInputData.City&&""==this.filterInputData.District&&0==this.filterInputData.AvailableTime?this.filterMode=!1:this.filterMode=!0;function t(e){""!==i.filterInputData[e]&&"AvailableTime"!==e&&(a=a.filter(function(t,a){return"LocName"==e?-1!==JSON.parse(t[e]).List[1].Value.toLowerCase().indexOf(i.filterInputData[e].toLowerCase()):JSON.parse(t[e]).List[1].Value==i.filterInputData[e]})),"AvailableTime"==e&&i.filterInputData[e]&&(a=a.filter(function(t,a){return"24HR"==t[e]}))}var a=JSON.parse(JSON.stringify(this.listsData));for(var e in this.filterInputData)t(e);this.filterData=a.filter(function(t,a){return!0})}},watch:{"filterInputData.LocName":function(t){this.debounce(t)},"filterInputData.City":function(t){this.filterInputData.District="",i.filterLists()},"filterInputData.AvailableTime":function(t,a){t!==a&&i.filterLists()}},created:function(){this.debounce=_.debounce(this.filterLists,500)},mounted:function(){this.getAPIData()}})});
+'use strict';
+
+$(function () {
+  var API = 'https://wapi.gogoro.com/tw/api/vm/list';
+
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      loading: true,
+      listsData: [],
+      pageData: [],
+      pagination: [],
+      currentPage: 1,
+      filterMode: false,
+      filterData: [],
+      filterInputData: {
+        LocName: '',
+        City: '',
+        District: '',
+        AvailableTime: false
+      },
+      filterOpen: false,
+      modalLocName: '',
+      googleMap: {
+        map: {},
+        marker: {},
+        infowindow: {}
+      }
+    },
+    computed: {
+      showPages: function showPages() {
+        //依 currentPage 決定當前的頁數範圍
+        var pageRange = {
+          min: this.currentPage % 10 == 0 ? this.currentPage - 9 : Math.floor(this.currentPage / 10) * 10 + 1,
+          max: this.currentPage % 10 == 0 ? this.currentPage : Math.ceil(this.currentPage / 10) * 10
+        };
+        // max 計算超過 pagination 總長度的話，max 就改為總長度
+        if (pageRange.max > this.pagination.length) pageRange.max = this.pagination.length;
+        return this.pagination.filter(function (page, i) {
+          return page >= pageRange.min - 1 && page <= pageRange.max - 1;
+        });
+      },
+      getCity: function getCity() {
+        var citys = this.listsData.map(function (list, i) {
+          return JSON.parse(list.City).List[1].Value;
+        });
+        return citys.filter(function (city, i, arr) {
+          return arr.indexOf(city) == i;
+        });
+      },
+      getDistrict: function getDistrict() {
+        var inputCity = this.filterInputData.City;
+        if (inputCity == '') {
+          return '';
+        } else {
+          var district = [];
+          this.listsData.forEach(function (list, i) {
+            if (JSON.parse(list.City).List[1].Value == inputCity) {
+              district.push(JSON.parse(list.District).List[1].Value);
+            } else {
+              return;
+            }
+          });
+          return district.filter(function (dist, i, arr) {
+            return arr.indexOf(dist) == i;
+          });
+        }
+      }
+    },
+    methods: {
+      getAPIData: function getAPIData() {
+        axios.get(API).then(function (response) {
+          vm.listsData = response.data.data;
+          // console.log(vm.listsData);
+          vm.combineDataByPages();
+        }).catch(function (error) {
+          alert('資料載入有誤，請稍後再試! error: ' + error);
+        });
+      },
+      combineDataByPages: function combineDataByPages() {
+        //複製一份原始資料
+        var dataCopy = JSON.parse(JSON.stringify(vm.listsData));
+        //需要render的總頁數 31頁
+        var pageCount = dataCopy.length % 20 == 0 ? dataCopy.length / 20 : parseInt(dataCopy.length / 20) + 1;
+        //重組成以頁數區分的資料，1頁20筆
+        for (var i = 0; i < pageCount; i++) {
+          this.pageData.push(dataCopy.splice(0, 20));
+          vm.pagination.push(i);
+        }
+        this.loading = false;
+      },
+      movePage: function movePage(move) {
+        if (move == 'prev') {
+          this.currentPage--;
+        } else if (move == 'next') {
+          this.currentPage++;
+        } else {
+          this.currentPage = parseInt(move);
+        }
+      },
+      showMap: function showMap(data) {
+        this.modalLocName = JSON.parse(data.LocName).List[1].Value;
+        var _this = this;
+        var pos = { lat: data.Latitude, lng: data.Longitude };
+        var icon = 'https://raw.githubusercontent.com/kakadodo/theF2EChallange/gh-pages/img/week2/battery-icon.png';
+        var address = JSON.parse(data.Address).List[1].Value.replace(/\(.+\)/g, '');
+        var content = '\n          <div>\n            <h5>' + JSON.parse(data.LocName).List[1].Value + '</h5>\n            <p>\n              <a href=\'https://www.google.com/maps/place/' + address + '\' target=\'_blank\'>\n                ' + JSON.parse(data.Address).List[1].Value + '\n              </a>\n            </p>\n          </div>\n        ';
+        this.googleMap.map = new google.maps.Map(document.getElementById('map'), {
+          center: pos,
+          zoom: 15
+        });
+        this.googleMap.marker = new google.maps.Marker({
+          position: pos,
+          map: _this.googleMap.map,
+          icon: icon,
+          animation: google.maps.Animation.DROP
+        });
+        this.googleMap.infowindow = new google.maps.InfoWindow({
+          content: content
+        });
+        this.googleMap.infowindow.open(this.googleMap.map, this.googleMap.marker);
+      },
+      filterLists: function filterLists() {
+        var _this2 = this;
+
+        //判斷是否為 filter mode
+        if (this.filterInputData.LocName == '' && this.filterInputData.City == '' && this.filterInputData.District == '' && this.filterInputData.AvailableTime == false) {
+          this.filterMode = false;
+        } else {
+          this.filterMode = true;
+        }
+        var tempData = JSON.parse(JSON.stringify(this.listsData));
+
+        var _loop = function _loop(key) {
+          //檢查 LocName、City、District
+          if (_this2.filterInputData[key] !== '' && key !== 'AvailableTime') {
+            tempData = tempData.filter(function (list, i) {
+              if (key == 'LocName') {
+                return JSON.parse(list[key]).List[1].Value.toLowerCase().indexOf(_this2.filterInputData[key].toLowerCase()) !== -1;
+              } else {
+                return JSON.parse(list[key]).List[1].Value == _this2.filterInputData[key];
+              }
+            });
+          }
+          //檢查 AvailableTime
+          if (key == 'AvailableTime' && _this2.filterInputData[key]) {
+            tempData = tempData.filter(function (list, i) {
+              return list[key] == '24HR';
+            });
+          }
+        };
+
+        for (var key in this.filterInputData) {
+          _loop(key);
+        }
+        //將篩選後的結果篩回 filterData
+        this.filterData = tempData.filter(function (list, i) {
+          return true;
+        });
+      }
+    },
+    watch: {
+      'filterInputData.LocName': function filterInputDataLocName(val) {
+        this.debounce(val);
+      },
+      'filterInputData.City': function filterInputDataCity(val) {
+        this.filterInputData.District = '';
+        vm.filterLists();
+      },
+      'filterInputData.AvailableTime': function filterInputDataAvailableTime(val, oldVal) {
+        if (val !== oldVal) vm.filterLists();
+      }
+    },
+    created: function created() {
+      //定義 underscore debounce 讓 vue 使用
+      this.debounce = _.debounce(this.filterLists, 500);
+    },
+    mounted: function mounted() {
+      this.getAPIData();
+    }
+  });
+});
 //# sourceMappingURL=filter.js.map

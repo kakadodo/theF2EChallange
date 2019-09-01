@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-115362207-1" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-115362207-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><!-- Search Engine -->
+<meta name="description" content="the F2E - 雲端硬碟">
+<meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week7.jpg">
+<!-- Schema.org for Google -->
+<meta itemprop="name" content="2nd Week 8 - Cloud Drive">
+<meta itemprop="description" content="the F2E - 雲端硬碟">
+<meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week8.jpg">
+<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+<meta property="og:title" content="2nd Week 8 - Cloud Drive">
+<meta property="og:description" content="the F2E - 雲端硬碟">
+<meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week8.jpg">
+<meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/booking.html">
+<meta property="og:site_name" content="2nd Week 8 - Cloud Drive">
+<meta property="og:locale" content="zh_TW">
+<meta property="fb:admins" content="1420062581">
+<meta property="fb:app_id" content="333459487173924">
+<meta property="og:type" content="website">
+    <title>2nd Week 8 - Cloud Drive</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="./css/cloud-drive.css">
+  </head>
+  <body>
+    <div class="h-100" id="app" v-cloak>
+      <div class="row no-gutters h-100">
+        <div class="col-5 col-md-3 bg_secondary h-100">
+          <div class="user_panel p-4">
+            <div class="d-flex align-items-center">
+              <div class="user_panel_avatar"></div>
+              <div class="user_panel_name text-white pl-3">Chelsea.Chang</div>
+            </div>
+            <div class="mark_btn_group d-flex mt-5">
+              <button class="mark_btn red" @click="getSearchResult(&quot;red&quot;)"></button>
+              <button class="mark_btn orange" @click="getSearchResult(&quot;orange&quot;)"></button>
+              <button class="mark_btn green" @click="getSearchResult(&quot;green&quot;)"></button>
+              <button class="mark_btn purple" @click="getSearchResult(&quot;purple&quot;)"></button>
+            </div>
+            <div class="searchBar input-group mt-3">
+              <input class="form-control" type="text" v-model="searchMode.searchInput" @keyup.enter="getSearchResult(null)">
+              <div class="input-group-append">
+                <button class="btn btn_search" type="button" @click="getSearchResult(null)"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="home_control px-4 py-3"><i class="fas fa-home fa-lg"></i><span class="ml-2 mr-auto">Home</span><a href="#" @click.prevent="showModal(&quot;addProject&quot;)"><i class="fas fa-plus fa-lg"></i></a></div>
+          <div class="accordion" id="accordion">
+            <div class="card" v-for="project in projectData" :key="project.id">
+              <div class="card-header">
+                <h2 class="mb-0 ml-4"><a class="btn btn-link d-flex justify-content-between" href="#" data-toggle="collapse" :data-target="`#collapse${project.id}`" @click.prevent="changeCurrentDriveTarget(project)"><span>{{ project.name }}</span><i class="fas fa-chevron-down"></i></a></h2>
+              </div>
+              <div class="collapse show" data-parent="#accordion" :id="`collapse${project.id}`">
+                <div class="list-group list-group-flush" v-if="child.type === &quot;folder&quot;" v-for="child in project.children" :key="child.id"><a class="list-group-item list-group-item-action border-0" href="#" @click.prevent="changeCurrentDriveTarget(child)">{{ child.name }}</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-7 col-md-9 p-5" v-if="searchMode.isSearch">
+          <div class="drive">
+            <div class="drive_title">
+              <h1 class="d-flex align-items-center"><i class="fas fa-search"></i>{{searchMode.searchContent}}</h1>
+            </div>
+            <div class="drive_list_group py-5" v-if="searchMode.searchResult.length &gt; 0">
+              <div class="drive_list_item" v-for="result in searchMode.searchResult" :key="result.id" @click="intoFolder(result)"><i class="far fa-3x fa-fw" :class="showTypeIcon(result.type)"></i>
+                <div class="drive_list_item_name">{{ result.name }}
+                  <button class="mark_btn red" v-if="result.colorTag" :class="showColorTag(result.colorTag)"></button>
+                </div>
+                <div class="drive_list_item_markBox"><span>add mark</span>
+                  <button class="mark_btn outline" @click.stop="toggleMarkBox(result)"></button>
+                  <div class="markBox mark_btn_group d-flex mt-5" :class="{show: result.isMarkBoxOpen}">
+                    <button class="mark_btn red" @click.stop="setColorTag(&quot;red&quot;, result)"></button>
+                    <button class="mark_btn orange" @click.stop="setColorTag(&quot;orange&quot;, result)"></button>
+                    <button class="mark_btn green" @click.stop="setColorTag(&quot;green&quot;, result)"></button>
+                    <button class="mark_btn purple" @click.stop="setColorTag(&quot;purple&quot;, result)"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="drive_list_group py-5" v-else>查無搜尋結果</div>
+          </div>
+        </div>
+        <div class="col-7 col-md-9 p-5" v-else><a class="back_btn py-3" href="#" v-if="currentDriveTarget.type === &quot;folder&quot;" @click.prevent="backToParent"><i class="fas fa-long-arrow-alt-left fa-2x"></i></a>
+          <div class="drive">
+            <div class="drive_title">
+              <h1 class="d-flex align-items-center">{{ currentDriveTarget.name }}</h1>
+            </div>
+            <div class="drive_list_group py-5" v-if="currentDriveTarget.children.length &gt; 0">
+              <div class="drive_list_item" v-for="child in currentDriveTarget.children" :key="child.id" @click="intoFolder(child)"><i class="far fa-3x fa-fw" :class="showTypeIcon(child.type)"></i>
+                <div class="drive_list_item_name">{{ child.name }}
+                  <button class="mark_btn red" v-if="child.colorTag" :class="showColorTag(child.colorTag)"></button>
+                </div>
+                <div class="drive_list_item_markBox"><span>add mark</span>
+                  <button class="mark_btn outline" @click.stop="toggleMarkBox(child)"></button>
+                  <div class="markBox mark_btn_group d-flex mt-5" :class="{show: child.isMarkBoxOpen}">
+                    <button class="mark_btn red" @click.stop="setColorTag(&quot;red&quot;, child)"></button>
+                    <button class="mark_btn orange" @click.stop="setColorTag(&quot;orange&quot;, child)"></button>
+                    <button class="mark_btn green" @click.stop="setColorTag(&quot;green&quot;, child)"></button>
+                    <button class="mark_btn purple" @click.stop="setColorTag(&quot;purple&quot;, child)"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="drive_list_group py-5" v-else>暫無資料</div>
+          </div>
+        </div>
+      </div>
+      <div class="fixed_tool_group">
+        <button class="tool_list tool_list_addFolder" @click="showModal(&quot;addFolder&quot;)"><i class="far fa-folder-open fa-3x fa-fw"></i></button>
+        <button class="tool_list tool_list_addFile active" @click="showModal(&quot;addFile&quot;)"><i class="fas fa-plus fa-3x fa-fw"></i></button>
+      </div>
+      <div class="modal fade" id="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg_primary">
+              <h5 class="modal-title" id="exampleModalCenterTitle">{{ modalTodo[currentModalTodo].title }}</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close" @click="resetModalData"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" v-if="currentModalTodo === &quot;addProject&quot;">
+              <div class="form-group">
+                <label for="projectName">專案目錄名稱</label>
+                <input class="form-control" id="projectName" type="text" v-model="modalTodo[currentModalTodo].name">
+              </div>
+            </div>
+            <div class="modal-body" v-else-if="currentModalTodo === &quot;addFile&quot;"><small>當前目錄: {{ getCurrentDrivePath }}</small>
+              <hr>
+              <div class="form-group">
+                <label for="fileName">檔案名稱</label>
+                <input class="form-control" id="fileName" type="text" v-model="modalTodo[currentModalTodo].name">
+              </div>
+              <div class="form-group">
+                <label>選擇顏色標籤(非必選)</label>
+                <div class="mark_btn_group d-flex">
+                  <button class="mark_btn red" :class="{active: modalTodo[currentModalTodo].colorTag === &quot;red&quot;}" @click="addColorTag(&quot;red&quot;)"></button>
+                  <button class="mark_btn orange" :class="{active: modalTodo[currentModalTodo].colorTag === &quot;orange&quot;}" @click="addColorTag(&quot;orange&quot;)"></button>
+                  <button class="mark_btn green" :class="{active: modalTodo[currentModalTodo].colorTag === &quot;green&quot;}" @click="addColorTag(&quot;green&quot;)"></button>
+                  <button class="mark_btn purple" :class="{active: modalTodo[currentModalTodo].colorTag === &quot;purple&quot;}" @click="addColorTag(&quot;purple&quot;)"></button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>檔案類型</label>
+                <div>
+                  <button class="btn_fileType" :class="{active: modalTodo[currentModalTodo].type === &quot;img&quot;}" @click="addFileType(&quot;img&quot;)"><i class="far fa-image fa-3x fa-fw"></i></button>
+                  <button class="btn_fileType" :class="{active: modalTodo[currentModalTodo].type === &quot;mp4&quot;}" @click="addFileType(&quot;mp4&quot;)"><i class="far fa-play-circle fa-3x fa-fw"></i></button>
+                  <button class="btn_fileType" :class="{active: modalTodo[currentModalTodo].type === &quot;word&quot;}" @click="addFileType(&quot;word&quot;)"><i class="far fa-file-word fa-3x fa-fw"></i></button>
+                  <button class="btn_fileType" :class="{active: modalTodo[currentModalTodo].type === &quot;pdf&quot;}" @click="addFileType(&quot;pdf&quot;)"><i class="far fa-file-pdf fa-3x fa-fw"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="modal-body" v-else><small>當前目錄: {{ getCurrentDrivePath }}</small>
+              <hr>
+              <div class="form-group">
+                <label for="folderName">資料夾名稱</label>
+                <input class="form-control" id="folderName" type="text" v-model="modalTodo[currentModalTodo].name">
+              </div>
+              <div class="form-group">
+                <label>選擇顏色標籤(非必選)</label>
+                <div class="mark_btn_group d-flex">
+                  <button class="mark_btn red" :class="{active: modalTodo[currentModalTodo].colorTag === &quot;red&quot;}" @click="addColorTag(&quot;red&quot;)"></button>
+                  <button class="mark_btn orange" :class="{active: modalTodo[currentModalTodo].colorTag === &quot;orange&quot;}" @click="addColorTag(&quot;orange&quot;)"></button>
+                  <button class="mark_btn green" :class="{active: modalTodo[currentModalTodo].colorTag === &quot;green&quot;}" @click="addColorTag(&quot;green&quot;)"></button>
+                  <button class="mark_btn purple" :class="{active: modalTodo[currentModalTodo].colorTag === &quot;purple&quot;}" @click="addColorTag(&quot;purple&quot;)"></button>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn bg_primary" type="button" @click="submitModalData">確定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/vendors.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="./js/cloud-drive.js"></script>
+  </body>
+</html>

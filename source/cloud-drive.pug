@@ -1,0 +1,191 @@
+extends ./partials/layout.jade
+
+block socialMeta
+  <!-- Search Engine -->
+  <meta name="description" content="the F2E - 雲端硬碟">
+  <meta name="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week7.jpg">
+  <!-- Schema.org for Google -->
+  <meta itemprop="name" content="2nd Week 8 - Cloud Drive">
+  <meta itemprop="description" content="the F2E - 雲端硬碟">
+  <meta itemprop="image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week8.jpg">
+  <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+  <meta property="og:title" content="2nd Week 8 - Cloud Drive">
+  <meta property="og:description" content="the F2E - 雲端硬碟">
+  <meta property="og:image" content="https://kakadodo.github.io/theF2EChallange/img/2nd-week8.jpg">
+  <meta property="og:url" content="https://kakadodo.github.io/theF2EChallange/booking.html">
+  <meta property="og:site_name" content="2nd Week 8 - Cloud Drive">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="fb:admins" content="1420062581">
+  <meta property="fb:app_id" content="333459487173924">
+  <meta property="og:type" content="website">
+
+block pageTitle
+  title 2nd Week 8 - Cloud Drive
+
+block css
+  link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css")
+  link(rel="stylesheet", href="./css/cloud-drive.css")
+
+block content
+  #app.h-100(v-cloak)
+    .row.no-gutters.h-100
+      .col-5.col-md-3.bg_secondary.h-100
+        .user_panel.p-4
+          .d-flex.align-items-center
+            .user_panel_avatar
+            .user_panel_name.text-white.pl-3 Chelsea.Chang
+          .mark_btn_group.d-flex.mt-5
+            button.mark_btn.red(@click='getSearchResult("red")')
+            button.mark_btn.orange(@click='getSearchResult("orange")')
+            button.mark_btn.green(@click='getSearchResult("green")')
+            button.mark_btn.purple(@click='getSearchResult("purple")')
+          .searchBar.input-group.mt-3
+            input.form-control(type='text' v-model='searchMode.searchInput' @keyup.enter='getSearchResult(null)')
+            .input-group-append
+              button.btn.btn_search(type='button' @click='getSearchResult(null)')
+                i.fas.fa-search
+        .home_control.px-4.py-3
+          i.fas.fa-home.fa-lg
+          span.ml-2.mr-auto Home
+          a(href="#" @click.prevent='showModal("addProject")')
+            i.fas.fa-plus.fa-lg
+        #accordion.accordion
+          .card(v-for='project in projectData' :key='project.id')
+            .card-header
+              h2.mb-0.ml-4
+                a.btn.btn-link.d-flex.justify-content-between(href="#" data-toggle='collapse' :data-target='`#collapse${project.id}`'
+                  @click.prevent='changeCurrentDriveTarget(project)')
+                  span
+                    | {{ project.name }}
+                  i.fas.fa-chevron-down
+            .collapse.show(data-parent='#accordion' :id="`collapse${project.id}`")
+              .list-group.list-group-flush(v-if='child.type === "folder"' v-for='child in project.children' :key='child.id')
+                a.list-group-item.list-group-item-action.border-0(href="#"
+                  @click.prevent='changeCurrentDriveTarget(child)') {{ child.name }}
+
+      .col-7.col-md-9.p-5(v-if='searchMode.isSearch')
+        .drive
+          .drive_title
+            h1.d-flex.align-items-center
+              i.fas.fa-search
+              | {{searchMode.searchContent}}
+          .drive_list_group.py-5(v-if='searchMode.searchResult.length > 0')
+            .drive_list_item(v-for='result in searchMode.searchResult' :key='result.id'
+              @click='intoFolder(result)')
+              i.far.fa-3x.fa-fw(:class='showTypeIcon(result.type)')
+              .drive_list_item_name
+                | {{ result.name }}
+                button.mark_btn.red(v-if='result.colorTag' :class='showColorTag(result.colorTag)')
+              .drive_list_item_markBox
+                span add mark
+                button.mark_btn.outline(@click.stop='toggleMarkBox(result)')
+                .markBox.mark_btn_group.d-flex.mt-5(:class='{show: result.isMarkBoxOpen}')
+                  button.mark_btn.red(@click.stop='setColorTag("red", result)')
+                  button.mark_btn.orange(@click.stop='setColorTag("orange", result)')
+                  button.mark_btn.green(@click.stop='setColorTag("green", result)')
+                  button.mark_btn.purple(@click.stop='setColorTag("purple", result)')
+          .drive_list_group.py-5(v-else)
+            | 查無搜尋結果
+
+      .col-7.col-md-9.p-5(v-else)
+        a.back_btn.py-3(href="#" v-if='currentDriveTarget.type === "folder"'
+          @click.prevent="backToParent")
+          i.fas.fa-long-arrow-alt-left.fa-2x
+        .drive
+          .drive_title
+            h1.d-flex.align-items-center
+              | {{ currentDriveTarget.name }}
+          .drive_list_group.py-5(v-if='currentDriveTarget.children.length > 0')
+            .drive_list_item(v-for='child in currentDriveTarget.children' :key='child.id'
+              @click='intoFolder(child)')
+              i.far.fa-3x.fa-fw(:class='showTypeIcon(child.type)')
+              .drive_list_item_name
+                | {{ child.name }}
+                button.mark_btn.red(v-if='child.colorTag' :class='showColorTag(child.colorTag)')
+              .drive_list_item_markBox
+                span add mark
+                button.mark_btn.outline(@click.stop='toggleMarkBox(child)')
+                .markBox.mark_btn_group.d-flex.mt-5(:class='{show: child.isMarkBoxOpen}')
+                  button.mark_btn.red(@click.stop='setColorTag("red", child)')
+                  button.mark_btn.orange(@click.stop='setColorTag("orange", child)')
+                  button.mark_btn.green(@click.stop='setColorTag("green", child)')
+                  button.mark_btn.purple(@click.stop='setColorTag("purple", child)')
+          .drive_list_group.py-5(v-else)
+            | 暫無資料
+
+    .fixed_tool_group
+      button.tool_list.tool_list_addFolder(@click='showModal("addFolder")')
+        i.far.fa-folder-open.fa-3x.fa-fw
+      button.tool_list.tool_list_addFile.active(@click='showModal("addFile")')
+        i.fas.fa-plus.fa-3x.fa-fw
+
+    #modal.modal.fade(tabindex='-1' role='dialog')
+      .modal-dialog.modal-dialog-centered(role='document')
+        .modal-content
+          .modal-header.bg_primary
+            h5#exampleModalCenterTitle.modal-title {{ modalTodo[currentModalTodo].title }}
+            button.close(type='button' data-dismiss='modal' aria-label='Close'
+              @click='resetModalData')
+              span(aria-hidden='true') &times;
+          .modal-body(v-if='currentModalTodo === "addProject"')
+            .form-group
+              label(for='projectName') 專案目錄名稱
+              input#projectName.form-control(type='text' v-model='modalTodo[currentModalTodo].name')
+          .modal-body(v-else-if='currentModalTodo === "addFile"')
+            small 當前目錄: {{ getCurrentDrivePath }}
+            hr
+            .form-group
+              label(for='fileName') 檔案名稱
+              input#fileName.form-control(type='text' v-model='modalTodo[currentModalTodo].name')
+            .form-group
+              label 選擇顏色標籤(非必選)
+              .mark_btn_group.d-flex
+                button.mark_btn.red(:class='{active: modalTodo[currentModalTodo].colorTag === "red"}'
+                  @click='addColorTag("red")')
+                button.mark_btn.orange(:class='{active: modalTodo[currentModalTodo].colorTag === "orange"}'
+                  @click='addColorTag("orange")')
+                button.mark_btn.green(:class='{active: modalTodo[currentModalTodo].colorTag === "green"}'
+                  @click='addColorTag("green")')
+                button.mark_btn.purple(:class='{active: modalTodo[currentModalTodo].colorTag === "purple"}'
+                  @click='addColorTag("purple")')
+            .form-group
+              label 檔案類型
+              div
+                button.btn_fileType(:class='{active: modalTodo[currentModalTodo].type === "img"}'
+                  @click='addFileType("img")')
+                  i.far.fa-image.fa-3x.fa-fw
+                button.btn_fileType(:class='{active: modalTodo[currentModalTodo].type === "mp4"}'
+                  @click='addFileType("mp4")')
+                  i.far.fa-play-circle.fa-3x.fa-fw
+                button.btn_fileType(:class='{active: modalTodo[currentModalTodo].type === "word"}'
+                  @click='addFileType("word")')
+                  i.far.fa-file-word.fa-3x.fa-fw
+                button.btn_fileType(:class='{active: modalTodo[currentModalTodo].type === "pdf"}'
+                  @click='addFileType("pdf")')
+                  i.far.fa-file-pdf.fa-3x.fa-fw
+          .modal-body(v-else)
+            small 當前目錄: {{ getCurrentDrivePath }}
+            hr
+            .form-group
+              label(for='folderName') 資料夾名稱
+              input#folderName.form-control(type='text' v-model='modalTodo[currentModalTodo].name')
+            .form-group
+              label 選擇顏色標籤(非必選)
+              .mark_btn_group.d-flex
+                button.mark_btn.red(:class='{active: modalTodo[currentModalTodo].colorTag === "red"}'
+                  @click='addColorTag("red")')
+                button.mark_btn.orange(:class='{active: modalTodo[currentModalTodo].colorTag === "orange"}'
+                  @click='addColorTag("orange")')
+                button.mark_btn.green(:class='{active: modalTodo[currentModalTodo].colorTag === "green"}'
+                  @click='addColorTag("green")')
+                button.mark_btn.purple(:class='{active: modalTodo[currentModalTodo].colorTag === "purple"}'
+                  @click='addColorTag("purple")')
+          .modal-footer
+            button.btn.bg_primary(type='button' @click='submitModalData') 確定
+
+
+block script
+  script(src="./js/vendors.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js")
+  script(src="./js/cloud-drive.js")

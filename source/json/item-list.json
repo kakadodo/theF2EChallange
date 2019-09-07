@@ -1,4 +1,11 @@
 [{
+  "title": "2nd Week 9 - Notebook",
+  "imgSrc": "./img/2nd-week9.jpg",
+  "skills": ["Pug", "Vue", "Quill Editor", "localStorage"],
+  "date": "2019/9/7",
+  "edition": "2nd",
+  "href": "./notebook.html"
+}, {
   "title": "2nd Week 8 - Cloud Drive",
   "imgSrc": "./img/2nd-week8.jpg",
   "skills": ["Pug", "Vue", "Bootstrap 4"],

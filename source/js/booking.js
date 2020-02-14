@@ -2,7 +2,7 @@ let vm = null;
 
 window.onload = () => {
   vm = new Vue({
-    el: "#app",
+    el: '#app',
     data() {
       return {
         axios: null,
@@ -16,13 +16,19 @@ window.onload = () => {
             const booking = vm.roomDetail.booking;
             let isDisabled = false;
             booking.forEach(date => {
-              if (time.getFullYear() == new Date(date.date).getFullYear()
-                && time.getMonth() == new Date(date.date).getMonth()
-                && time.getDate() == new Date(date.date).getDate()) {
+              if (
+                time.getFullYear() == new Date(date.date).getFullYear() &&
+                time.getMonth() == new Date(date.date).getMonth() &&
+                time.getDate() == new Date(date.date).getDate()
+              ) {
                 isDisabled = true;
               }
             });
-            return isDisabled ? isDisabled : (time.getTime() < new Date().getTime() || time.getTime() > (new Date().getTime() + 1000 * 60 * 60 * 24 * 92));
+            return isDisabled
+              ? isDisabled
+              : time.getTime() < new Date().getTime() ||
+                  time.getTime() >
+                    new Date().getTime() + 1000 * 60 * 60 * 24 * 92;
           },
         },
         formBooking: {
@@ -33,19 +39,19 @@ window.onload = () => {
         formDate: null,
         formDateSeparate: [null, null],
         formBookingRule: {
-          name: [
-            { required: true, message: '請輸入姓名', trigger: 'blur' }
-          ],
-          tel: [
-            { required: true, message: '請輸入聯絡電話', trigger: 'blur' },
-          ],
+          name: [{ required: true, message: '請輸入姓名', trigger: 'blur' }],
+          tel: [{ required: true, message: '請輸入聯絡電話', trigger: 'blur' }],
           email: [
             { required: true, message: '請輸入 email', trigger: 'blur' },
-            { type: 'email', message: '請輸入正確的 email 格式', trigger: ['blur', 'change'] }
-          ]
+            {
+              type: 'email',
+              message: '請輸入正確的 email 格式',
+              trigger: ['blur', 'change'],
+            },
+          ],
         },
         submitDialogVisible: false,
-      }
+      };
     },
     computed: {
       bookingTotalDays() {
@@ -59,17 +65,22 @@ window.onload = () => {
         let dates = [this.formDate[0]];
         for (let i = 1; i <= this.bookingTotalDays; i++) {
           const dayTime = 1000 * 60 * 60 * 24;
-          let newDay = new Date(start + (dayTime * i));
+          let newDay = new Date(start + dayTime * i);
           const year = newDay.getFullYear();
           const month = (newDay.getMonth() + 1).toString().padStart(2, 0);
-          const date = (newDay.getDate()).toString().padStart(2, 0);
+          const date = newDay
+            .getDate()
+            .toString()
+            .padStart(2, 0);
           dates.push(`${year}-${month}-${date}`);
         }
         return dates;
       },
       bookingTotalPrice() {
-        return this.formDate ? this.roomDetail.room[0].normalDayPrice * this.bookingTotalDays : 0;
-      }
+        return this.formDate
+          ? this.roomDetail.room[0].normalDayPrice * this.bookingTotalDays
+          : 0;
+      },
     },
     methods: {
       scrollToRooms() {
@@ -77,7 +88,9 @@ window.onload = () => {
         this.scrollToElement('.title');
       },
       scrollToElement(el) {
-        const roomsTitleOffset = document.querySelector(`${el}`).getBoundingClientRect().top - document.querySelector('.title').offsetHeight * 2;
+        const roomsTitleOffset =
+          document.querySelector(`${el}`).getBoundingClientRect().top -
+          document.querySelector('.title').offsetHeight * 2;
         let scrollY = window.scrollY;
         let currentScroll = scrollY;
         let scrollSpeed = 5;
@@ -133,7 +146,7 @@ window.onload = () => {
       showRoomDetail(roomId) {
         this.bookingStep = 2;
         this.roomDetailisLoading = true;
-        this.axios.get(`/room/${roomId}`).then((res) => {
+        this.axios.get(`/room/${roomId}`).then(res => {
           if (res.data.success) {
             this.roomDetail = res.data;
             this.roomDetailisLoading = false;
@@ -151,7 +164,7 @@ window.onload = () => {
         }
       },
       submitBooking() {
-        this.$refs.formBooking.validate((valid) => {
+        this.$refs.formBooking.validate(valid => {
           if (valid) {
             this.submitLoading = true;
             const bodyFormData = new FormData();
@@ -160,14 +173,16 @@ window.onload = () => {
             this.bookingTotalDates.forEach((date, i) => {
               bodyFormData.append(`date[${i}]`, date);
             });
-            this.axios.post(`/room/${this.roomDetail.room[0].id}`, bodyFormData, {
-              headers: { 'Content-Type': 'multipart/form-data' }
-            }).then((res) => {
-              if (res.data.success) {
-                this.bookingStep = 3;
-                this.submitDialogVisible = false;
-              }
-            });
+            this.axios
+              .post(`/room/${this.roomDetail.room[0].id}`, bodyFormData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+              })
+              .then(res => {
+                if (res.data.success) {
+                  this.bookingStep = 3;
+                  this.submitDialogVisible = false;
+                }
+              });
           } else {
             return false;
           }
@@ -185,14 +200,17 @@ window.onload = () => {
           email: '',
         };
         this.formDateSeparate = [null, null];
-      }
+      },
+      fixScrollDisappear() {
+        document.body.style.overflow = 'initial';
+      },
     },
     watch: {
       bookingStep(val) {
         if (val === 2) {
           this.resetAllData();
         }
-      }
+      },
     },
     created() {
       this.axios = axios.create({
@@ -200,15 +218,15 @@ window.onload = () => {
         timeout: 5000,
         headers: {
           Acctept: 'application/json',
-          Authorization: 'Bearer euQEgajjI9dbwkiVreUIsLvRDdKbqDQKAhnj678BLygJKajkPchRzS9COCc',
-        }
+          Authorization:
+            'Bearer euQEgajjI9dbwkiVreUIsLvRDdKbqDQKAhnj678BLygJKajkPchRzS9COCc',
+        },
       });
-      this.axios.get('/rooms').then((res) => {
+      this.axios.get('/rooms').then(res => {
         if (res.data.success) {
           this.roomsInfo = res.data.items;
         }
       });
     },
   });
-}
-
+};

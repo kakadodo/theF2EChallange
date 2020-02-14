@@ -23,11 +23,11 @@ block pageTitle
   title 2nd Week 6 - Booking
 
 block css
-  link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
-  link(rel="stylesheet", href="./css/booking.css")
+  link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.13/css/all.css' integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp' crossorigin='anonymous')
+  link(rel="stylesheet" href="./css/booking.css")
 
 block content
-  #app(v-cloak)
+  #app(v-cloak @click="fixScrollDisappear")
     header.header
       el-col(:span='20' :offset='2')
         el-row(type='flex' align='middle')
@@ -74,7 +74,7 @@ block content
                   el-col(:sm='6')
                     ul.list_group
                       li.list_group_item(v-for='room in roomsInfo' :key='room.id')
-                        a.list_group_item_link(href="#" @click.prevent='showRoomDetail(room.id)'
+                        a.list_group_item_link(href="#" @click.prevent='showRoomDetail(room.id)' 
                           :class='{active: room.name === roomDetail.room[0].name}') {{ room.name }}
                   el-col(:sm='18')
                     h1.title {{ roomDetail.room[0].name }}
@@ -166,7 +166,7 @@ block content
                     i.fas.fa-circle
                     span.room_group_item_title Total: 
                     span ${{ bookingTotalPrice }}
-            
+
     el-dialog.booking_dialog(v-if='submitDialogVisible' title='Reservation Information' :visible.sync='submitDialogVisible'
       :before-close="resetForm" width='80%')
       el-row

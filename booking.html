@@ -31,8 +31,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/booking.css">
   </head>
-  <body>
-    <div id="app" v-cloak>
+  <body style="overflow: initial;">
+    <div id="app" v-cloak @click="fixScrollDisappear">
       <header class="header">
         <el-col :span="20" :offset="2">
           <el-row type="flex" align="middle">

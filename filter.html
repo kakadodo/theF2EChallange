@@ -62,13 +62,7 @@
                     <option v-if="filterInputData.City" v-for="dist in getDistrict">{{dist}}</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label class="d-block">營運時間:</label>
-                  <label class="custom_checkbox" for="filter_time" :class="{active:filterInputData.AvailableTime}">
-                    <input id="filter_time" type="checkbox" v-model="filterInputData.AvailableTime">
-                  </label><span class="ml-2 align-top">24 HR</span>
-                </div>
-                <div class="copy_write"><i class="fas fa-pen-square"></i><span>Created by Chelsea Chang</span><small class="d-block">資料來源: <a class="text-white" href="https://wapi.gogoro.com/tw/api/vm/list" target="_blank">gogoro API</a></small></div>
+                <div class="copy_write"><i class="fas fa-pen-square"></i><span>Created by Chelsea Chang</span><small class="d-block">資料來源: <a class="text-white" href="https://network.gogoro.com/tw/coverage/" target="_blank">gogoro network</a></small></div>
               </div>
               <button class="side_menu_btn" v-if="!filterOpen" v-on:click="filterOpen = !filterOpen"></button>
               <button class="side_menu_btn cross" v-else v-on:click="filterOpen = !filterOpen"><i class="fas fa-times-circle fa-2x"></i></button>
@@ -79,11 +73,10 @@
             <transition-group class="filter_lists" tag="ul" name="fade">
               <!--篩選模式下顯示的列表-->
               <li class="list_item" v-if="filterMode" v-for="data in filterData" :key="data.Id" data-toggle="modal" data-target="#googleMapModal">
-                <h2 class="p-3 mb-0"><i class="fas fa-battery-full text-gogreen mr-3"></i>{{JSON.parse(data.LocName).List[1].Value}}</h2>
+                <h2 class="p-3 mb-0"><i class="fas fa-battery-full text-gogreen mr-3"></i>{{data.LocName['zh-TW']}}</h2>
                 <hr class="mt-0">
                 <div class="content px-3 py-2">
-                  <p><i class="fas fa-map-marker-alt fa-lg fa-fw text-danger mr-3"></i>{{JSON.parse(data.Address).List[1].Value}}</p>
-                  <p><i class="fas fa-clock fa-lg fa-fw text-goblue mr-3"></i>{{data.AvailableTime}}</p>
+                  <p><i class="fas fa-map-marker-alt fa-lg fa-fw text-danger mr-3"></i>{{data.Address['zh-TW']}}</p>
                 </div>
                 <div class="cover" v-on:click="showMap(data)"><i class="fas fa-map fa-3x"></i>
                   <h4>Google 位置</h4>
@@ -93,11 +86,10 @@
             </transition-group>
             <transition-group class="filter_lists" tag="ul" name="fade">
               <li class="list_item" v-if="!filterMode" v-for="data in pageData[currentPage-1]" :key="data.Id" data-toggle="modal" data-target="#googleMapModal">
-                <h2 class="p-3 mb-0"><i class="fas fa-battery-full text-gogreen mr-3"></i>{{JSON.parse(data.LocName).List[1].Value}}</h2>
+                <h2 class="p-3 mb-0"><i class="fas fa-battery-full text-gogreen mr-3"></i>{{data.LocName['zh-TW']}}</h2>
                 <hr class="mt-0">
                 <div class="content px-3 py-2">
-                  <p><i class="fas fa-map-marker-alt fa-lg fa-fw text-danger mr-3"></i>{{JSON.parse(data.Address).List[1].Value}}</p>
-                  <p><i class="fas fa-clock fa-lg fa-fw text-goblue mr-3"></i>{{data.AvailableTime}}</p>
+                  <p><i class="fas fa-map-marker-alt fa-lg fa-fw text-danger mr-3"></i>{{data.Address['zh-TW']}}</p>
                 </div>
                 <div class="cover" v-on:click="showMap(data)"><i class="fas fa-map fa-3x"></i>
                   <h4>Google 位置</h4>
@@ -132,7 +124,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIRUyJZX45SNydQS43paAqayP7J-irgVw" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGrnjpOGWbnu5YDYhHCVJjpCDS6AaQI6s" async defer></script>
     <script src="./js/filter.js"></script>
   </body>
 </html>

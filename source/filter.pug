@@ -52,16 +52,16 @@ block content
 								select.form-control.mt-2(v-model='filterInputData.District', v-on:change='filterLists')
 									option(value='') --
 									option(v-if='filterInputData.City' v-for='dist in getDistrict') {{dist}}
-							.form-group
-								label.d-block 營運時間:
-								label.custom_checkbox(for='filter_time', :class='{active:filterInputData.AvailableTime}')
-									input#filter_time(type="checkbox", v-model='filterInputData.AvailableTime')
-								span.ml-2.align-top 24 HR
+							//- .form-group
+							//- 	label.d-block 營運時間:
+							//- 	label.custom_checkbox(for='filter_time', :class='{active:filterInputData.AvailableTime}')
+							//- 		input#filter_time(type="checkbox", v-model='filterInputData.AvailableTime')
+							//- 	span.ml-2.align-top 24 HR
 							.copy_write
 								i.fas.fa-pen-square
 								span Created by Chelsea Chang
 								small.d-block 資料來源: 
-									a.text-white(href='https://wapi.gogoro.com/tw/api/vm/list' target='_blank') gogoro API
+									a.text-white(href='https://network.gogoro.com/tw/coverage/' target='_blank') gogoro network
 						button.side_menu_btn(v-if='!filterOpen' v-on:click='filterOpen = !filterOpen')
 						button.side_menu_btn.cross(v-else v-on:click='filterOpen = !filterOpen')
 							i.fas.fa-times-circle.fa-2x
@@ -75,15 +75,15 @@ block content
 						li.list_item(v-if='filterMode' v-for='data in filterData', :key='data.Id', data-toggle="modal", data-target="#googleMapModal")
 							h2.p-3.mb-0
 								i.fas.fa-battery-full.text-gogreen.mr-3
-								| {{JSON.parse(data.LocName).List[1].Value}}
+								| {{data.LocName['zh-TW']}}
 							hr.mt-0
 							.content.px-3.py-2
 								p
 									i.fas.fa-map-marker-alt.fa-lg.fa-fw.text-danger.mr-3
-									| {{JSON.parse(data.Address).List[1].Value}}
-								p
-									i.fas.fa-clock.fa-lg.fa-fw.text-goblue.mr-3
-									| {{data.AvailableTime}}
+									| {{data.Address['zh-TW']}}
+								//- p
+								//- 	i.fas.fa-clock.fa-lg.fa-fw.text-goblue.mr-3
+								//- 	| {{data.AvailableTime}}
 							.cover(v-on:click='showMap(data)')
 								i.fas.fa-map.fa-3x
 								h4 Google 位置
@@ -92,15 +92,15 @@ block content
 						li.list_item(v-if='!filterMode' v-for='data in pageData[currentPage-1]', :key='data.Id', data-toggle="modal", data-target="#googleMapModal")
 							h2.p-3.mb-0
 								i.fas.fa-battery-full.text-gogreen.mr-3
-								| {{JSON.parse(data.LocName).List[1].Value}}
+								| {{data.LocName['zh-TW']}}
 							hr.mt-0
 							.content.px-3.py-2
 								p
 									i.fas.fa-map-marker-alt.fa-lg.fa-fw.text-danger.mr-3
-									| {{JSON.parse(data.Address).List[1].Value}}
-								p
-									i.fas.fa-clock.fa-lg.fa-fw.text-goblue.mr-3
-									| {{data.AvailableTime}}
+									| {{data.Address['zh-TW']}}
+								//- p
+								//- 	i.fas.fa-clock.fa-lg.fa-fw.text-goblue.mr-3
+								//- 	| {{data.StartTime}} {{data.EndTime}}
 							.cover(v-on:click='showMap(data)')
 								i.fas.fa-map.fa-3x
 								h4 Google 位置
@@ -131,5 +131,5 @@ block script
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js")
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js")
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js")
-	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIRUyJZX45SNydQS43paAqayP7J-irgVw" async defer)
+	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGrnjpOGWbnu5YDYhHCVJjpCDS6AaQI6s" async defer)
 	script(src="./js/filter.js")

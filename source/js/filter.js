@@ -1,5 +1,5 @@
 $(function(){
-  let API = 'https://wapi.gogoro.com/tw/api/vm/list';
+  let API = 'https://official-site-pro.gogoroapp.com/PartnerService/Gogoro/GetVmList?offset=0&pageSize=10000';
 
   const vm = new Vue({
     el:'#app',
@@ -15,7 +15,6 @@ $(function(){
         LocName:'',
         City:'',
         District:'',
-        AvailableTime: false
       },
       filterOpen:false,
       modalLocName:'',
@@ -37,7 +36,7 @@ $(function(){
         return this.pagination.filter((page,i)=>{return page >= pageRange.min-1 && page <= pageRange.max-1});
       },
       getCity(){
-        const citys = this.listsData.map((list,i)=> JSON.parse(list.City).List[1].Value);
+        const citys = this.listsData.map((list,i)=> list.City['zh-TW']);
         return citys.filter((city,i,arr)=> arr.indexOf(city) == i);
       },
       getDistrict(){
@@ -47,8 +46,8 @@ $(function(){
         }else{
           const district = [];
           this.listsData.forEach((list,i)=>{
-            if(JSON.parse(list.City).List[1].Value == inputCity){
-              district.push(JSON.parse(list.District).List[1].Value);
+            if(list.City['zh-TW'] == inputCity){
+              district.push(list.District['zh-TW']);
             }else{
               return;
             }
@@ -61,8 +60,7 @@ $(function(){
       getAPIData(){
         axios.get(API)
         .then(function (response) {
-          vm.listsData = response.data.data;
-          // console.log(vm.listsData);
+          vm.listsData = response.data.Data;
           vm.combineDataByPages();
 
         })
@@ -72,14 +70,15 @@ $(function(){
       },
       combineDataByPages(){
         //複製一份原始資料
-        const dataCopy = JSON.parse(JSON.stringify(vm.listsData));
+        const dataCopy = [...this.listsData];
         //需要render的總頁數 31頁
         const pageCount = dataCopy.length%20 == 0? (dataCopy.length/20) : parseInt(dataCopy.length/20)+1;
         //重組成以頁數區分的資料，1頁20筆
         for(let i=0; i<pageCount; i++){
           this.pageData.push(dataCopy.splice(0,20));
-          vm.pagination.push(i);
+          this.pagination.push(i);
         }
+        // console.log(this.pageData);
         this.loading = false;
       },
       movePage(move){
@@ -92,17 +91,17 @@ $(function(){
         }
       },
       showMap(data){
-        this.modalLocName = JSON.parse(data.LocName).List[1].Value;
+        this.modalLocName = data.LocName['zh-TW'];
         const _this = this;
         const pos = {lat: data.Latitude, lng: data.Longitude};
         const icon = 'https://raw.githubusercontent.com/kakadodo/theF2EChallange/gh-pages/img/week2/battery-icon.png';
-        const address = JSON.parse(data.Address).List[1].Value.replace(/\(.+\)/g,'');
+        const address = data.Address['zh-TW'].replace(/\(.+\)/g,'');
         const content = `
           <div>
-            <h5>${JSON.parse(data.LocName).List[1].Value}</h5>
+            <h5>${data.LocName['zh-TW']}</h5>
             <p>
               <a href='https://www.google.com/maps/place/${address}' target='_blank'>
-                ${JSON.parse(data.Address).List[1].Value}
+                ${data.Address['zh-TW']}
               </a>
             </p>
           </div>
@@ -124,7 +123,7 @@ $(function(){
       },
       filterLists(){
         //判斷是否為 filter mode
-        if(this.filterInputData.LocName == '' && this.filterInputData.City == '' && this.filterInputData.District == '' && this.filterInputData.AvailableTime == false){
+        if(this.filterInputData.LocName == '' && this.filterInputData.City == '' && this.filterInputData.District == ''){
           this.filterMode = false;
         }else{
           this.filterMode = true;
@@ -132,19 +131,13 @@ $(function(){
         let tempData = JSON.parse(JSON.stringify(this.listsData));
         for(let key in this.filterInputData){
           //檢查 LocName、City、District
-          if(this.filterInputData[key]!=='' && key !== 'AvailableTime'){
+          if(this.filterInputData[key]!==''){
             tempData = tempData.filter((list,i)=>{
               if(key == 'LocName'){
-                return (JSON.parse(list[key]).List[1].Value).toLowerCase().indexOf((this.filterInputData[key]).toLowerCase())!== -1;
+                return list[key]['zh-TW'].toLowerCase().indexOf((this.filterInputData[key]).toLowerCase())!== -1;
               }else{
-                return JSON.parse(list[key]).List[1].Value == this.filterInputData[key];
+                return list[key]['zh-TW'] == this.filterInputData[key];
               }
-            });
-          }
-          //檢查 AvailableTime
-          if(key == 'AvailableTime' && this.filterInputData[key]){
-            tempData = tempData.filter((list,i)=>{
-              return list[key] == '24HR';
             });
           }
         }
@@ -162,9 +155,6 @@ $(function(){
         this.filterInputData.District = '';
         vm.filterLists();
       },
-      'filterInputData.AvailableTime':function(val,oldVal){
-        if(val !== oldVal) vm.filterLists();
-      }
     },
     created(){
       //定義 underscore debounce 讓 vue 使用

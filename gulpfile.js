@@ -1,4 +1,5 @@
 const { src, dest, watch, series, parallel } = require('gulp');
+const gulpSass = require('gulp-sass')(require('sass'));
 //有gulp前綴的插件不用宣告的功能
 var $ = require('gulp-load-plugins')();
 var autoprefixer = require('autoprefixer');
@@ -41,9 +42,9 @@ function sass() {
   return src('./source/scss/**/*.scss')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
-    .pipe($.sass({
+    .pipe(gulpSass({
       'includePaths': ['./node_modules/bootstrap/scss']
-    }).on('error', $.sass.logError))
+    }).on('error', gulpSass.logError))
     .pipe($.postcss(plugins))
     .pipe($.if(process.env.NODE_ENV === 'production', $.cleanCss()))
     .pipe($.sourcemaps.write('.'))
